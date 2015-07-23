@@ -13,7 +13,7 @@ fetch_strategy = custom.JenkinsSourceStrategy
 
 [katello-nightly-rhel5]
 disttag = .el5
-whitelist = katello-repos
+whitelist = katello-repos katello-agent
 
 [katello-nightly-rhel6]
 disttag = .el6
@@ -25,11 +25,11 @@ scl = ruby193
 
 [katello-nightly-fedora20]
 disttag = .fc20
-whitelist = katello-repos
+whitelist = katello-repos katello-agent
 
 [katello-nightly-fedora21]
 disttag = .fc21
-whitelist = katello-repos
+whitelist = katello-repos katello-agent
 
 [requirements]
 tito=0.5.6
