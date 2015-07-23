@@ -11,8 +11,10 @@ lib_dir = rel-eng/custom/
 [builder]
 fetch_strategy = custom.JenkinsSourceStrategy
 
-# Blacklist any non-SCL packages that are missing SCL macros or they get built
-# in the SCL tag rather than -nonscl.  Don't forget -rhel7 below too!
+[katello-nightly-rhel5]
+disttag = .el5
+whitelist = katello-repos
+
 [katello-nightly-rhel6]
 disttag = .el6
 scl = ruby193
@@ -20,6 +22,14 @@ scl = ruby193
 [katello-nightly-rhel7]
 disttag = .el7
 scl = ruby193
+
+[katello-nightly-fedora20]
+disttag = .fc20
+whitelist = katello-repos
+
+[katello-nightly-fedora21]
+disttag = .fc21
+whitelist = katello-repos
 
 [requirements]
 tito=0.5.6
