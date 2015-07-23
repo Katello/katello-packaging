@@ -1,0 +1,25 @@
+# vim: ts=2:sw=2:et
+#
+# Please keep blacklist/whitelist sorted
+#
+
+[buildconfig]
+builder = tito.builder.GitAnnexBuilder
+tagger = tito.tagger.ReleaseTagger
+lib_dir = rel-eng/custom/
+
+[builder]
+fetch_strategy = custom.JenkinsSourceStrategy
+
+# Blacklist any non-SCL packages that are missing SCL macros or they get built
+# in the SCL tag rather than -nonscl.  Don't forget -rhel7 below too!
+[katello-nightly-rhel6]
+disttag = .el6
+scl = ruby193
+
+[katello-nightly-rhel7]
+disttag = .el7
+scl = ruby193
+
+[requirements]
+tito=0.5.6
