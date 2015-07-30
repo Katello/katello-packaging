@@ -272,6 +272,9 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
+- new package built with tito
+
 * Mon Jul 06 2015 Stephen Benjamin <stbenjam@redhat.com> 2.4.0-2
 - Version bump to 2.4.0 (stbenjam@redhat.com)
 
