@@ -205,6 +205,9 @@ ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}
 %doc README.*
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
+- new package built with tito
+
 * Mon Jul 06 2015 Stephen Benjamin <stbenjam@redhat.com> 2.4.0-1
 - Version bump to 2.4.0 (stbenjam@redhat.com)
 
