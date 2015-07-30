@@ -65,6 +65,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.16-1
+- new package built with tito
+
 * Tue Jul 07 2015 Stephen Benjamin <stbenjam@redhat.com> 0.0.15-1
 - Version bump to 0.0.15 (stbenjam@redhat.com)
 - fixes #10948 - fix text for Limit field, BZ 1214675 (komidore64@gmail.com)
