@@ -8,7 +8,7 @@
 Summary: Gutterball commands for Hammer
 Name: rubygem-%{gem_name}
 Version: 1.0.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Development/Languages
 License: GPLv3
 URL: http://github.com/Katello/hammer-cli-gutterball
@@ -67,6 +67,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-2
+- new package built with tito
+
 * Tue Mar 03 2015 Adam Price <komidore64@gmail.com> 1.0.0-1
 - new package built with tito
 
