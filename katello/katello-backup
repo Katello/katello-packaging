@@ -1,0 +1,94 @@
+#!/bin/bash
+
+usage(){
+  echo "Usage: katello-backup <backup directory>"
+  echo " eg: $ katello-backup /tmp/katello-backup/"
+}
+
+if [ "$#" -ne 1 ]; then
+  echo "ERROR: Please specify an export directory"
+  usage
+  exit 1
+fi
+
+# Backup dir
+umask 0027
+BDIR=$1
+mkdir -p $BDIR
+chgrp postgres $BDIR
+chmod 770 $BDIR
+cd $BDIR
+echo "Creating backup folder $BDIR"
+echo ""
+
+# Stop services
+katello-service stop
+service postgresql stop
+
+CONFIGS=(
+    /etc/candlepin
+    /etc/elasticsearch
+    /etc/foreman
+    /etc/foreman-proxy
+    /etc/gutterball
+    /etc/hammer
+    /etc/httpd
+    /etc/katello
+    /etc/katello-installer
+    /etc/pki/content
+    /etc/pki/katello
+    /etc/pki/katello-certs-tools
+    /etc/pki/pulp
+    /etc/pki/tls/certs/katello-node.crt
+    /etc/pki/tls/certs/pulp_consumers_ca.crt
+    /etc/pki/tls/certs/pulp_ssl_cert.crt
+    /etc/pki/tls/private/katello-node.key
+    /etc/pulp
+    /etc/puppet
+    /etc/qpid
+    /etc/qpid-dispatch
+    /etc/sysconfig/elasticsearch
+    /etc/sysconfig/tomcat*
+    /etc/tomcat*
+    /root/ssl-build
+    /var/lib/foreman
+    /var/lib/katello
+    /var/lib/candlepin
+    /var/www/html/pub
+)
+
+# Conf files
+echo "Backing up config files... "
+tar --selinux -czvf config_files.tar.gz ${CONFIGS[*]}
+echo "Done."
+echo ""
+
+echo "Backing up Elastic Search data... "
+tar --selinux -czvf elastic_data.tar.gz /var/lib/elasticsearch
+echo "Done."
+echo ""
+
+echo "Backing up Pulp data... "
+tar --selinux -czvf pulp_data.tar.gz /var/lib/pulp/ /var/www/pub/
+echo "Done."
+echo ""
+
+echo "Backing up postgres db... "
+tar --selinux -czvf pgsql_data.tar.gz /var/lib/pgsql/data/
+echo "Done."
+echo ""
+
+echo "Backing up mongo db... "
+tar --selinux -czvf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/
+echo "Done."
+echo ""
+
+# Start services
+service postgresql restart
+katello-service restart
+
+echo ""
+echo ""
+echo "** BACKUP Complete, contents can be found in: $BDIR"
+echo ""
+echo ""
