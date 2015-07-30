@@ -60,6 +60,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
+- new package built with tito
+
 * Tue Mar 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.3.0-2
 - Fixes #7760: Adds client repo (ericdhelms@gmail.com)
 
