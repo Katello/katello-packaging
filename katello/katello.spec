@@ -146,6 +146,9 @@ Package that installs only the Subscription and basic Content Management parts o
 %files sam
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
+- new package built with tito
+
 * Tue Feb 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.3.0-1
 - Update katello to 2.3.0 (ericdhelms@gmail.com)
 - Fixed #9530 - installer logs are collected again by debug script
