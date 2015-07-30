@@ -7,7 +7,7 @@
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
 Version:        1.3.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A gem exposing Pulp's juiciest parts
 Group:          Applications/System
 License:        MIT
@@ -75,6 +75,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.3.5-2
+- new package built with tito
+
 * Fri Mar 27 2015 Justin Sherrill <jsherril@redhat.com> 1.3.3-1
 - bumping version to 1.3.3 (jsherril@redhat.com)
 
