@@ -104,6 +104,9 @@ install -m 0644 man/katello-disconnected.man1 %{buildroot}%{_mandir}/man1/katell
 
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1
+- new package built with tito
+
 * Tue Jul 07 2015 Stephen Benjamin <stbenjam@redhat.com> 2.4.0-1
 - Bump to 2.4.0
 
