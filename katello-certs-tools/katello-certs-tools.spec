@@ -47,6 +47,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/pki/%{name}/private
 %doc LICENSE
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1
+- new package built with tito
+
 * Tue Jul 07 2015 Stephen Benjamin <stbenjam@redhat.com> 2.4.0-1
 - Bump to 2.4.0 
 
