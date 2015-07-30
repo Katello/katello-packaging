@@ -127,6 +127,9 @@ fi
 %{_mandir}/man8/%{name}-relabel.8.gz
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.2-1
+- new package built with tito
+
 * Wed Feb 18 2015 Justin Sherrill <jsherril@redhat.com> 2.2.1-1
 - fixing spec file name and SOURCE extension (jsherril@redhat.com)
 
