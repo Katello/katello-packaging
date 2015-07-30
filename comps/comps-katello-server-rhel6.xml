@@ -36,8 +36,8 @@
        <packagereq type="default">katello-installer</packagereq>
        <packagereq type="default">katello-devel-installer</packagereq>
        <packagereq type="default">capsule-installer</packagereq>
-       <packagereq type="default">rubygem-hammer_cli_katello</packagereq>
-       <packagereq type="default">rubygem-hammer_cli_import</packagereq>
+       <packagereq type="default">ruby193-rubygem-hammer_cli_katello</packagereq>
+       <packagereq type="default">ruby193-rubygem-hammer_cli_import</packagereq>
 
        <!-- katello thirdparty rubygem packages -->
        <packagereq type="default">ruby193-rubygem-anemone</packagereq>
@@ -56,16 +56,16 @@
        <packagereq type="default">ruby193-rubygem-sexp_processor</packagereq>
        <packagereq type="default">ruby193-rubygem-strong_parameters</packagereq>
        <packagereq type="default">ruby193-rubygem-qpid_messaging</packagereq>
-       <packagereq type="default">rubygem-hammer_cli_csv</packagereq>
+       <packagereq type="default">ruby193-rubygem-hammer_cli_csv</packagereq>
        
        <!-- sam packages -->
        <packagereq type="default">sam-installer</packagereq>
        <packagereq type="default">ruby193-rubygem-foreman_sam</packagereq>
-       <packagereq type="default">rubygem-hammer_cli_sam</packagereq>
+       <packagereq type="default">ruby193-rubygem-hammer_cli_sam</packagereq>
 
        <!-- gutterball packages -->
        <packagereq type="default">ruby193-rubygem-foreman_gutterball</packagereq>
-       <packagereq type="default">rubygem-hammer_cli_gutterball</packagereq>
+       <packagereq type="default">ruby193-rubygem-hammer_cli_gutterball</packagereq>
     </packagelist>
   </group>
   <group>

@@ -1,71 +1,84 @@
+%{?scl:%scl_package rubygem-%{gem_name}}
+%{!?scl:%global pkg_name %{name}}
+
+%{!?_root_sysconfdir:%global _root_sysconfdir %{_sysconfdir}}
+
 %global gem_name hammer_cli_import
 %global confdir hammer
 
-Name:       rubygem-%{gem_name}
-Version:    0.10.21
-Release:    1%{?dist}
-Summary:    Sat5-import command plugin for the Hammer CLI
+Summary: Sat5-import command plugin for the Hammer CLI
+Name:    rubygem-%{gem_name}
+Version: 0.10.21
+Release: 1%{?dist}
+Group:   Development/Languages
+License: GPLv3
+URL:     https://github.com/Katello/hammer-cli-import
+Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
-Group:      Development/Languages
-License:    GPLv3
-URL:        https://github.com/Katello/hammer-cli-import
-Source0:    http://rubygems.org/gems/%{gem_name}-%{version}.gem
-
-%if 0%{?rhel} > 6
-Requires: ruby(release)
-%else
-Requires: ruby(abi)
-%endif
-Requires: ruby(rubygems)
-Requires: rubygem(hammer_cli)
-Requires: rubygem(hammer_cli_foreman)
-BuildRequires: ruby(rubygems)
-BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildArch: noarch
-Provides: rubygem(%{gem_name}) = %{version}
+Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%if 0%{?scl:1}
+Obsoletes: rubygem-%{gem_name} < 0.10.21-2
+%endif
+
+%if 0%{?fedora} > 18
+Requires:  %{?scl_prefix}ruby(release)
+%else
+Requires:  %{?scl_prefix}ruby(abi)
+%endif
+Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix}rubygem(hammer_cli) >= 0.1.3
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman)
+
+BuildRequires: %{?scl_prefix}ruby(rubygems)
+BuildRequires: %{?scl_prefix}rubygems-devel
 
 %description
 Sat5-import plugin for the Hammer CLI
 
 %package doc
-Summary: Documentation for %{name}
-Group: Documentation
-Requires: %{name} = %{version}-%{release}
+Summary:   Documentation for %{pkg_name}
+Group:     Documentation
+Requires:  %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 BuildArch: noarch
 
 %description doc
-Documentation for %{name}
+Documentation for %{pkg_name}
 
 %prep
-%setup -q -c -T
+%setup -q -c -T -n %{pkg_name}-%{version}
 mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} - << \EOF}
 gem install --local --install-dir .%{gem_dir} \
             --force %{SOURCE0}
+%{?scl:EOF}
 
 %install
-mkdir -p %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/import
-install -m 755 .%{gem_instdir}/config/import.yml %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/import.yml
-install -m 644 .%{gem_instdir}/config/import/role_map.yml %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/import/role_map.yml
-install -m 644 .%{gem_instdir}/config/import/config_macros.yml %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/import/config_macros.yml
-install -m 644 .%{gem_instdir}/config/import/interview_answers.yml %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/import/interview_answers.yml
+mkdir -p %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/import
+install -m 755 .%{gem_instdir}/config/import.yml %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/import.yml
+install -m 644 .%{gem_instdir}/config/import/role_map.yml %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/import/role_map.yml
+install -m 644 .%{gem_instdir}/config/import/config_macros.yml %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/import/config_macros.yml
+install -m 644 .%{gem_instdir}/config/import/interview_answers.yml %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/import/interview_answers.yml
 mkdir -p %{buildroot}%{gem_dir}
 cp -pa .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 %files
 %dir %{gem_instdir}
-%{gem_instdir}/
-%config(noreplace) %{_sysconfdir}/%{confdir}/cli.modules.d/import.yml
-%config(noreplace) %{_sysconfdir}/%{confdir}/cli.modules.d/import/role_map.yml
-%config(noreplace) %{_sysconfdir}/%{confdir}/cli.modules.d/import/config_macros.yml
-%config(noreplace) %{_sysconfdir}/%{confdir}/cli.modules.d/import/interview_answers.yml
-%exclude %{gem_dir}/cache/%{gem_name}-%{version}.gem
-%{gem_dir}/specifications/%{gem_name}-%{version}.gemspec
+%{gem_instdir}/lib
+%{gem_instdir}/channel_data_pretty.json
+%doc %{gem_instdir}/LICENSE
+%config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/import.yml
+%config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/import/role_map.yml
+%config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/import/config_macros.yml
+%config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/import/interview_answers.yml
+%exclude %{gem_cache}
+%{gem_spec}
 
 %files doc
-%doc %{gem_dir}/doc/%{gem_name}-%{version}
+%doc %{gem_docdir}
 %doc %{gem_instdir}/config
+%doc %{gem_instdir}/README.md
 
 %changelog
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-1
