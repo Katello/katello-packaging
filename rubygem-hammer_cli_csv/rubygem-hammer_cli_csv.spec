@@ -4,7 +4,7 @@
 Summary: CSV input/output command plugin for the Hammer CLI
 Name: rubygem-%{gem_name}
 Version: 1.0.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Group: Development/Languages
 License: GPLv3
 URL: https://github.com/Katello/hammer-cli-csv
@@ -61,6 +61,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-6
+- new package built with tito
+
 * Thu Mar 05 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.0-5
 - Remove the Fedora check that evaluates to true on EL7 (ericdhelms@gmail.com)
 
