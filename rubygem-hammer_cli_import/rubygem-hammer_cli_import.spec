@@ -68,6 +68,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-1
+- new package built with tito
+
 * Wed Jul 08 2015 Tomas Lestach <tlestach@redhat.com> 0.10.20-1
 - 1231956 - do not set basearch/releasever if not present in substitutions for
   repository enablement (tlestach@redhat.com)
