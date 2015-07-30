@@ -1,42 +1,31 @@
-%global gem_name foreman_gutterball
-
-# rubygems-devel defines a lot of nice macros, including:
-#   %{gem_dir}
-#   %{gem_instdir}
-#   %{gem_libdir}
-#   %{gem_cache}
-#   %{gem_spec}
-# that we'll be using below
-
 %{?scl:%scl_package rubygem-%{gem_name}}
 %{!?scl:%global pkg_name %{name}}
 
+%global gem_name foreman_gutterball
+
 Summary: Gutterball plugin for Foreman and Katello
-Name: %{?scl_prefix}rubygem-%{gem_name}
+Name: 	 %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.1
 Release: 2%{?dist}
-Group: Development/Languages
+Group:   Development/Languages
 License: GPLv3
-URL: http://katello.org
+URL:     http://katello.org
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
-BuildArch: noarch
 
+BuildArch: noarch
+Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+
+%if 0%{?fedora} > 18
+Requires: %{?scl_prefix}ruby(release)
+%else
+Requires: %{?scl_prefix}ruby(abi) = 1.9.1
+%endif
 Requires: gutterball
 Requires: %{?scl_prefix}rubygem-katello
 Requires: %{?scl_prefix}ruby(rubygems)
 BuildRequires: %{?scl_prefix}ruby(rubygems)
 BuildRequires: %{?scl_prefix}rubygems-devel
 BuildRequires: foreman-plugin >= 1.8
-
-%if 0%{?fedora} > 18
-Requires: %{?scl_prefix}ruby(release)
-BuildRequires: %{?scl_prefix}ruby(release)
-%else
-Requires: %{?scl_prefix}ruby(abi) >= %{rubyabi}
-BuildRequires: %{?scl_prefix}ruby(abi) >= %{rubyabi}
-%endif
-
-Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 
 %description
 Gutterball plugin for Foreman and Katello.
