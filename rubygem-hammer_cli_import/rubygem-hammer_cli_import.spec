@@ -9,7 +9,7 @@
 Summary: Sat5-import command plugin for the Hammer CLI
 Name:    rubygem-%{gem_name}
 Version: 0.10.21
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     https://github.com/Katello/hammer-cli-import
@@ -81,6 +81,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-2
+- Fixes #11259: Move hammer packages to SCL (ericdhelms@gmail.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-1
 - new package built with tito
 
