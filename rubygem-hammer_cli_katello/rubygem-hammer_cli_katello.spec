@@ -1,8 +1,13 @@
+%{?scl:%scl_package rubygem-%{gem_name}}
+%{!?scl:%global pkg_name %{name}}
+
+%{!?_root_sysconfdir:%global _root_sysconfdir %{_sysconfdir}}
+
 %global gem_name hammer_cli_katello
 %global confdir hammer
 
-Name:    rubygem-%{gem_name}
 Summary: Katello command plugin for the Hammer CLI
+Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.16
 Release: 1%{?dist}
 Group:   Development/Languages
@@ -11,43 +16,48 @@ URL:     http://github.com/theforeman/hammer-cli-katello
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
 BuildArch: noarch
-Provides: rubygem(%{gem_name}) = %{version}
+Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%if 0%{?scl:1}
+Obsoletes: rubygem-%{gem_name} < 0.0.16-2
+%endif
 
 %if 0%{?fedora} > 18
 Requires:  %{?scl_prefix}ruby(release)
 %else
-Requires:  %{?scl_prefix}ruby(abi) = %{rubyabi}
+Requires:  %{?scl_prefix}ruby(abi)
 %endif
-Requires: ruby(rubygems)
-Requires: rubygem(hammer_cli) >= 0.1.3
-Requires: rubygem(hammer_cli_foreman_tasks) >= 0.0.3
-Requires: rubygem(hammer_cli_foreman_bootdisk)
-Requires: rubygem(hammer_cli_foreman_docker)
+Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix}rubygem(hammer_cli) >= 0.1.3
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_tasks) >= 0.0.3
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_bootdisk)
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_docker)
 
-BuildRequires: ruby(rubygems)
-BuildRequires: rubygems-devel
+BuildRequires: %{?scl_prefix}ruby(rubygems)
+BuildRequires: %{?scl_prefix}rubygems-devel
 
 %description
 Katello command plugin for the Hammer CLI.
 
 %package doc
-Summary:   Documentation for %{name}
+Summary:   Documentation for %{pkg_name}
 Group:     Documentation
-Requires:  %{name} = %{version}-%{release}
+Requires:  %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 BuildArch: noarch
 
 %description doc
-Documentation for %{name}
+Documentation for %{pkg_name}
 
 %prep
-%setup -q -c -T
+%setup -q -c -T -n %{pkg_name}-%{version}
 mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} - << \EOF}
 gem install --local --install-dir .%{gem_dir} \
             --force %{SOURCE0}
+%{?scl:EOF}
 
 %install
-mkdir -p %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d
-install -m 755 .%{gem_instdir}/config/katello.yml %{buildroot}%{_sysconfdir}/%{confdir}/cli.modules.d/katello.yml
+mkdir -p %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d
+install -m 755 .%{gem_instdir}/config/katello.yml %{buildroot}%{_root_sysconfdir}/%{confdir}/cli.modules.d/katello.yml
 mkdir -p %{buildroot}%{gem_dir}
 cp -pa .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
@@ -56,8 +66,8 @@ cp -pa .%{gem_dir}/* \
 %dir %{gem_instdir}
 %{gem_instdir}/lib
 %{gem_instdir}/locale
-%config(noreplace) %{_sysconfdir}/%{confdir}/cli.modules.d/katello.yml
-%exclude %{gem_dir}/cache/%{gem_name}-%{version}.gem
+%config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/katello.yml
+%exclude %{gem_cache}
 %{gem_spec}
 
 %files doc
