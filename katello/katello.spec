@@ -25,6 +25,8 @@ Source2:    katello-remove
 Source3:    katello-remove-orphans
 Source4:    katello-service
 Source5:    service-wait
+Source6:    katello-restore
+Source7:    katello-backup
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -60,12 +62,12 @@ install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
+install -Dp -m0755 %{SOURCE7} %{buildroot}%{_bindir}/katello-backup
+install -Dp -m0755 %{SOURCE6} %{buildroot}%{_bindir}/katello-restore
 install -Dp -m0755 %{SOURCE4} %{buildroot}%{_bindir}/katello-service
 install -Dp -m0755 %{SOURCE5} %{buildroot}%{_sbindir}/service-wait
 install -Dp -m0755 %{SOURCE2} %{buildroot}%{_bindir}/katello-remove
 install -Dp -m0755 %{SOURCE1} %{buildroot}/usr/share/foreman/script/foreman-debug.d/katello-debug.sh
-install -Dp -m0755 script/katello-backup %{buildroot}%{_bindir}/katello-backup
-install -Dp -m0755 script/katello-restore %{buildroot}%{_bindir}/katello-restore
 
 # install man page
 install -m 644 %{SOURCE0} %{buildroot}/%{_mandir}/man8
