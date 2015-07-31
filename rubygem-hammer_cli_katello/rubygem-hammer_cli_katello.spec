@@ -9,7 +9,7 @@
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.16
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/theforeman/hammer-cli-katello
@@ -75,6 +75,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.16-2
+- Fixes #11259: Move hammer packages to SCL (ericdhelms@gmail.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.16-1
 - new package built with tito
 
