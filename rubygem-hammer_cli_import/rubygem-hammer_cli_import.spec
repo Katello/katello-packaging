@@ -7,7 +7,7 @@
 %global confdir hammer
 
 Summary: Sat5-import command plugin for the Hammer CLI
-Name:    rubygem-%{gem_name}
+Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.10.21
 Release: 2%{?dist}
 Group:   Development/Languages
@@ -18,7 +18,7 @@ Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %if 0%{?scl:1}
-Obsoletes: rubygem-%{gem_name} < 0.10.21-2
+Obsoletes: rubygem-%{gem_name} < 0.10.21-3
 %endif
 
 %if 0%{?fedora} > 18
