@@ -80,11 +80,11 @@ BuildArch:  noarch
 Summary:    Common runtime components of %{name}
 
 Requires:       %{?scl_prefix}rubygem-katello
-Requires:       rubygem-hammer_cli
-Requires:       rubygem-hammer_cli_foreman
-Requires:       rubygem-hammer_cli_katello
-Requires:       rubygem-hammer_cli_import
-Requires:       rubygem-hammer_cli_gutterball
+Requires:       %{?scl_prefix}rubygem-hammer_cli
+Requires:       %{?scl_prefix}rubygem-hammer_cli_foreman
+Requires:       %{?scl_prefix}rubygem-hammer_cli_katello
+Requires:       %{?scl_prefix}rubygem-hammer_cli_import
+Requires:       %{?scl_prefix}rubygem-hammer_cli_gutterball
 Requires:       %{?scl_prefix}rubygem-foreman_gutterball
 Requires:       %{name}-debug
 Requires:       %{name}-service
