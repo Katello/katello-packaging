@@ -136,7 +136,7 @@ Group:  Applications/System
 # can't be installed on the same system as katello
 Requires:       %{name}-common = %{version}-%{release}
 Conflicts:      %{name}
-Requires:       rubygem-hammer_cli_sam
+Requires:       %{?scl_prefix}rubygem-hammer_cli_sam
 Requires:       %{?scl_prefix}rubygem-foreman_sam
 Requires:       sam-installer
 
