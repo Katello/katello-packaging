@@ -9,7 +9,7 @@
 Summary: SAM commands for Hammer
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 1.0.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/Katello/hammer-cli-sam
@@ -70,6 +70,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Mon Aug 03 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-2
+- new package built with tito
+
 * Mon Aug 03 2015 Adam Price <komidore64@gmail.com> 1.0.1-1
 - Move config file into config directory and deploy via gem.
   (ericdhelms@gmail.com)
