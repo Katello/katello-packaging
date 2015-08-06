@@ -8,8 +8,8 @@
 
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.0.16
-Release: 2%{?dist}
+Version: 0.0.17
+Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/theforeman/hammer-cli-katello
@@ -27,7 +27,8 @@ Requires:  %{?scl_prefix}ruby(release)
 Requires:  %{?scl_prefix}ruby(abi)
 %endif
 Requires: %{?scl_prefix}ruby(rubygems)
-Requires: %{?scl_prefix}rubygem(hammer_cli) >= 0.1.3
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) >= 0.1.3
+Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) < 0.4.0
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_tasks) >= 0.0.3
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_bootdisk)
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_docker)
