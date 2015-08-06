@@ -76,6 +76,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Thu Aug 06 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.17-1
+- Update rubygem-hammer_cli_katello to 0.0.17 (ericdhelms@gmail.com)
+
 * Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.16-2
 - Fixes #11259: Move hammer packages to SCL (ericdhelms@gmail.com)
 
