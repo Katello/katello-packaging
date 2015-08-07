@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        2.4.0
-Release:        1.nightly%{?dist}
+Release:        2.nightly%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -12,6 +12,8 @@ Source2:        RPM-GPG-KEY-katello-2015
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
+
+Requires:	yum-plugin-priorities
 
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
