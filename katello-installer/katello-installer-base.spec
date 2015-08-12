@@ -9,7 +9,7 @@ Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
 URL:     http://katello.org
-Source0: https://codeload.github.com/Katello/katello-installer/tar.gz/master
+Source0: https://github.com/Katello/katello-installer/archive/%{version}.tar.gz
 
 BuildArch: noarch
 Obsoletes: katello-installer < 2.1.0
@@ -115,7 +115,7 @@ A set of tools for installation of Katello and Katello Capsule,
 including Foreman and Foreman Proxy.
 
 %prep
-%setup -q -n katello-installer-master
+%setup -q -n katello-installer-%{version}
 
 %build
 #replace shebangs
