@@ -9,7 +9,7 @@ tagger = tito.tagger.ReleaseTagger
 lib_dir = rel-eng/custom/
 
 [builder]
-fetch_strategy = custom.JenkinsSourceStrategy
+fetch_strategy = custom.ForemanSourceStrategy
 
 [katello-nightly-rhel5]
 disttag = .el5
