@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.4.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -78,6 +78,10 @@ service goferd restart
 %doc LICENSE
 
 %changelog
+* Thu Aug 13 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-3
+- Fixes #11083: Prevent katello-agent from being installed with pulp-consumer-
+  client (ericdhelms@gmail.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-2
 - new package built with tito
 
