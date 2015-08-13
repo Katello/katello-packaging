@@ -6,8 +6,12 @@ Group:   Development/Languages
 License: LGPLv2
 URL:     https://github.com/Katello/katello-agent
 Source0: https://codeload.github.com/Katello/katello-agent/tar.gz/%{version}
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
+
+Conflicts: pulp-consumer-client
+
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
 BuildRequires: rpm-python
