@@ -26,7 +26,7 @@ Release: 1.nightly%{dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
-Source0: https://codeload.github.com/Katello/katello/tar.gz/master
+Source0: https://rubygems.org/downloads/${gem_name}-%{version}.gem
 
 %if 0%{?fedora} > 18
 Requires: %{?scl_prefix}ruby(release)
@@ -162,14 +162,12 @@ Summary:    Documentation for rubygem-%{gem_name}
 This package contains documentation for rubygem-%{gem_name}.
 
 %prep
-%setup -q -n %{gem_name}-master
+%setup -q -c -T -n %{pkg_name}-%{version}
 mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} "}
-gem build katello.gemspec
-%{?scl:"}
-%{?scl:scl enable %{scl} "}
-gem install --local --install-dir .%{gem_dir} --force %{gem_name}-%{version}.gem
-%{?scl:"}
+%{?scl:scl enable %{scl} - << \EOF}
+gem install --local --install-dir .%{gem_dir} \
+            --force %{SOURCE0}
+%{?scl:EOF}
 
 %build
 
