@@ -9,7 +9,7 @@
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.17
-Release: 1%{?dist}
+Release: 3%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/theforeman/hammer-cli-katello
@@ -18,23 +18,24 @@ Source0: https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %if 0%{?scl:1}
-Obsoletes: rubygem-%{gem_name} < 0.0.16-2
+Obsoletes: rubygem-%{gem_name} < 0.0.17-3
 %endif
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %if 0%{?fedora} > 18
-Requires:  %{?scl_prefix}ruby(release)
+Requires:  %{?scl_prefix_ruby}ruby(release)
 %else
-Requires:  %{?scl_prefix}ruby(abi)
+Requires:  %{?scl_prefix_ruby}ruby(abi)
 %endif
-Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) >= 0.1.3
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) < 0.4.0
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_tasks) >= 0.0.3
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_bootdisk)
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman_docker)
 
-BuildRequires: %{?scl_prefix}ruby(rubygems)
-BuildRequires: %{?scl_prefix}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 
 %description
 Katello command plugin for the Hammer CLI.
@@ -44,6 +45,7 @@ Summary:   Documentation for %{pkg_name}
 Group:     Documentation
 Requires:  %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 BuildArch: noarch
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 Documentation for %{pkg_name}

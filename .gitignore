@@ -1,3 +1,4 @@
 rel-eng/build
 *.swp
 *.pyc
+mock/result

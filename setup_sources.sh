@@ -5,14 +5,27 @@ dir='*'
 
 for spec in $dir/*.spec; do
   d=$(dirname $spec)
-  source0=$(spectool --list-files $spec | awk '{print $2}' | head -n1)
-  sourcebase=$(basename "$source0")
-  [ -h $d/$sourcebase ] || continue
-  git annex whereis "$d/$sourcebase" 2>/dev/null | grep -q " web" && continue
-  
-  if [[ $2 == '--relaxed' ]]; then
-    git annex addurl --relaxed --file "$d/$sourcebase" "$source0"
+
+  if [[ $d == 'rubygem-katello' && ! -f rubygem-katello/katello*.gem ]]; then
+    mkdir tmp/
+    cd tmp/
+    git clone https://github.com/katello/katello.git
+    cd katello
+    gem build katello.gemspec
+    cp katello-*.gem ../../rubygem-katello/
+    cd ../../
+    rm -rf tmp/
   else
-    git annex addurl --file "$d/$sourcebase" "$source0"
+    source0=$(spectool --list-files $spec | awk '{print $2}' | head -n1)
+    sourcebase=$(basename "$source0")
+
+    [ -h $d/$sourcebase ] || continue
+    git annex whereis "$d/$sourcebase" 2>/dev/null | grep -q " web" && continue
+  
+    if [[ $2 == '--relaxed' ]]; then
+      git annex addurl --relaxed --file "$d/$sourcebase" "$source0"
+    else
+      git annex addurl --file "$d/$sourcebase" "$source0"
+    fi
   fi
 done

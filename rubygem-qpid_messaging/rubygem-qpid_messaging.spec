@@ -14,25 +14,26 @@ URL:           http://qpid.apache.org
 Source0:       http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 %if 0%{?fedora} > 18
-Requires:       %{?scl_prefix}ruby(release)
+Requires:       %{?scl_prefix_ruby}ruby(release)
 %else
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
 
-Requires:      %{?scl_prefix}ruby(rubygems)
+Requires:      %{?scl_prefix_ruby}ruby(rubygems)
 
 %if 0%{?fedora} > 18
-BuildRequires:       %{?scl_prefix}ruby(release)
+BuildRequires:       %{?scl_prefix_ruby}ruby(release)
 %else
-BuildRequires: %{?scl_prefix}ruby(abi) = 1.9.1
+BuildRequires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
-BuildRequires: %{?scl_prefix}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems
 
-BuildRequires: %{?scl_prefix}ruby-devel
-BuildRequires: %{?scl_prefix}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}ruby-devel
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: qpid-cpp-client-devel = %{qpid_version}
 
 Provides:      %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Qpid is an enterprise messaging framework. This package provides Ruby
@@ -42,6 +43,7 @@ language bindings based on that framework.
 Summary:   Documentation for %{?scl_prefix}%{name}
 Requires:  %{?scl_prefix}%{name} = %{version}-%{release}
 BuildArch: noarch
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 %{Summary}.

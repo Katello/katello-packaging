@@ -1,12 +1,7 @@
-%if "%{?scl}" == "ruby193"
-    %global scl_prefix %{scl}-
-    %global scl_ruby /usr/bin/ruby193-ruby
-%else
-    %global scl_ruby /usr/bin/ruby
-%endif
-
-%define rubyabi 1.9.1
-
+# explicitly define, as we build on top of an scl, not inside with scl_package
+%{?scl:%global scl_prefix %{scl}-}
+%global scl_ruby_bin /usr/bin/%{?scl:%{scl_prefix}}ruby
+%global scl_rake /usr/bin/%{?scl:%{scl_prefix}}rake
 
 Name:           katello-utils
 Version:        2.4.0
@@ -23,14 +18,14 @@ BuildArch: noarch
 Requires:       coreutils
 Requires:       unzip
 %if 0%{?fedora} > 18
-Requires: %{?scl_prefix}ruby(release)
+Requires: %{?scl_prefix_ruby}ruby(release)
 %else
-Requires: %{?scl_prefix}ruby(abi) = %{rubyabi}
+Requires: %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
 %endif
-Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(katello)
 Requires: %{?scl_prefix}rubygem(json)
-Requires: %{?scl_prefix}rubygem(activesupport)
+Requires: %{?scl_prefix_ruby}rubygem(activesupport)
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(runcible)
@@ -40,11 +35,9 @@ BuildRequires:  /usr/bin/pod2man
 BuildRequires:  findutils
 BuildRequires:  make
 BuildRequires:  gettext translate-toolkit
-BuildRequires:  %{?scl_prefix}rubygems-devel
-BuildRequires:  %{?scl_prefix}rubygems
-%if "%{?scl}" == "ruby193"
-BuildRequires: %{?scl_prefix}ruby-wrapper
-%endif
+BuildRequires:  %{?scl_prefix_ruby}rubygems-devel
+BuildRequires:  %{?scl_prefix_ruby}rubygems
+BuildRequires:  tfm
 
 %description
 Provides katello-disconnected script along with few other tools for Katello
@@ -56,12 +49,12 @@ cloud lifecycle management application.
 %build
 # replace shebangs for SCL
 %if "%{scl}"
-    sed -i '1s|/usr/bin/ruby|%{scl_ruby}|' bin/*
+    sed -i '1s|/usr/bin/ruby|%{scl_ruby_bin}|' bin/*
 %endif
 
 %if "%{scl}"
 # check syntax of main configure script and libs
-    %{scl_ruby} -c bin/katello-disconnected
+    %{scl_ruby_bin} -c bin/katello-disconnected
 %endif
 
 # pack gettext i18n PO files into MO files

@@ -12,22 +12,23 @@ License: GPLv2+ or Ruby
 URL: http://github.com/karmi/tire
 Source0: http://rubygems.org/downloads/%{gem_name}-%{version}.gem
 %if 0%{?fedora} > 18
-Requires: %{?scl_prefix}ruby(release)
+Requires: %{?scl_prefix_ruby}ruby(release)
 %else 
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
-Requires: %{?scl_prefix}rubygems
-Requires: %{?scl_prefix}rubygem-multi_json
+Requires: %{?scl_prefix_ruby}rubygems
+Requires: %{?scl_prefix_ruby}rubygem-multi_json
 Requires: %{?scl_prefix}rubygem(hashr) => 0.0.19
-Requires: %{?scl_prefix}rubygem(activemodel) => 3.0
-Requires: %{?scl_prefix}rubygem(activesupport)
+Requires: %{?scl_prefix_ruby}rubygem(activemodel) => 3.0
+Requires: %{?scl_prefix_ruby}rubygem(activesupport)
 Requires: %{?scl_prefix}rubygem(ansi)
-Requires: %{?scl_prefix}rubygem(rake)
+Requires: %{?scl_prefix_ruby}rubygem(rake)
 Requires: %{?scl_prefix}rubygem(rest-client) => 1.6
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygems
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Ruby client for the ElasticSearch search engine/database

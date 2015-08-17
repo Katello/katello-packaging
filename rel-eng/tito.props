@@ -17,11 +17,11 @@ whitelist = katello-repos katello-agent
 
 [katello-nightly-rhel6]
 disttag = .el6
-scl = ruby193
+scl = tfm
 
 [katello-nightly-rhel7]
 disttag = .el7
-scl = ruby193
+scl = tfm
 
 [katello-nightly-fedora20]
 disttag = .fc20
