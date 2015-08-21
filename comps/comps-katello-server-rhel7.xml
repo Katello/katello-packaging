@@ -45,11 +45,8 @@
        <packagereq type="default">ruby193-rubygem-ansi</packagereq>
        <packagereq type="default">ruby193-rubygem-chunky_png</packagereq>
        <packagereq type="default">ruby193-rubygem-fssm</packagereq>
-       <packagereq type="default">ruby193-rubygem-haml-rails</packagereq>
-       <packagereq type="default">ruby193-rubygem-haml</packagereq>
        <packagereq type="default">ruby193-rubygem-hashr</packagereq>
        <packagereq type="default">ruby193-rubygem-hooks</packagereq>
-       <packagereq type="default">ruby193-rubygem-hpricot</packagereq>
        <packagereq type="default">ruby193-rubygem-justified</packagereq>
        <packagereq type="default">ruby193-rubygem-i18n_data</packagereq>
        <packagereq type="default">ruby193-rubygem-robotex</packagereq>
@@ -75,9 +72,7 @@
     <description>Katello Server Documentation Packages</description>
     <uservisible>true</uservisible>
     <packagelist>
-       <packagereq type="optional">ruby193-rubygem-haml-doc</packagereq>
        <packagereq type="optional">ruby193-rubygem-hashr-doc</packagereq>
-       <packagereq type="optional">ruby193-rubygem-hpricot-doc</packagereq>
        <packagereq type="optional">ruby193-rubygem-runcible-doc</packagereq>
        <packagereq type="optional">ruby193-rubygem-sexp_processor-doc</packagereq>
     </packagelist>

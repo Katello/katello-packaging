@@ -108,7 +108,6 @@ Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 Requires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 Requires: %{?scl_prefix}rubygem(anemone)
 Requires: %{?scl_prefix}rubygem(less-rails)
-Requires: %{?scl_prefix}rubygem(haml-rails)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
 Requires: %{?scl_prefix}rubygem(deface) < 1.0.0
 Requires: %{?scl_prefix}rubygem-strong_parameters
@@ -132,7 +131,6 @@ BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 BuildRequires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 BuildRequires: %{?scl_prefix}rubygem(anemone)
 BuildRequires: %{?scl_prefix}rubygem(less-rails)
-BuildRequires: %{?scl_prefix}rubygem(haml-rails)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
 BuildRequires: %{?scl_prefix}rubygem(deface) < 1.0.0
 BuildRequires: %{?scl_prefix}rubygem(uglifier) >= 1.0.3
