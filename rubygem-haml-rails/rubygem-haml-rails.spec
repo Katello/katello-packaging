@@ -12,17 +12,18 @@ License: GPLv2+ or Ruby
 URL: http://github.com/indirect/haml-rails
 Source0: http://rubygems.org/downloads/%{gem_name}-%{version}.gem
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
-Requires: %{?scl_prefix}rubygems
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
+Requires: %{?scl_prefix_ruby}rubygems
 Requires: %{?scl_prefix}rubygem(haml) >= 3.0
-Requires: %{?scl_prefix}rubygem(activesupport) >= 3.0
-Requires: %{?scl_prefix}rubygem(actionpack) >= 3.0
-Requires: %{?scl_prefix}rubygem(railties) >= 3.0
-Requires: %{?scl_prefix}rubygem(rails) >= 3.0
-Requires: %{?scl_prefix}rubygem(bundler) >= 1.0.0
-BuildRequires: %{?scl_prefix}rubygems-devel
+Requires: %{?scl_prefix_ruby}rubygem(activesupport) >= 3.0
+Requires: %{?scl_prefix_ruby}rubygem(actionpack) >= 3.0
+Requires: %{?scl_prefix_ruby}rubygem(railties) >= 3.0
+Requires: %{?scl_prefix_ruby}rubygem(rails) >= 3.0
+Requires: %{?scl_prefix_ruby}rubygem(bundler) >= 1.0.0
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Haml-rails provides Haml generators for Rails 3. It also enables Haml as the

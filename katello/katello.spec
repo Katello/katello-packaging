@@ -1,11 +1,5 @@
-%if "%{?scl}" == "ruby193"
-    %global scl_prefix %{scl}-
-    %global scl_ruby /usr/bin/ruby193-ruby
-    %global scl_rake /usr/bin/ruby193-rake
-%else
-    %global scl_ruby /usr/bin/ruby
-    %global scl_rake /usr/bin/rake
-%endif
+# explicitly define, as we build on top of an scl, not inside with scl_package
+%{?scl:%global scl_prefix %{scl}-}
 
 %global homedir %{_datarootdir}/%{name}
 %global confdir common
@@ -97,7 +91,7 @@ Requires:       %{name}-service
 Common runtime components of %{name}
 
 %files common
-%{_bindir}/katello-*
+%{_bindir}/katello-remove
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 
 # ------ Debug ----------------

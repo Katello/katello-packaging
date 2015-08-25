@@ -16,22 +16,23 @@ Source0:       http://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
 BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %if 0%{?fedora} > 18
-Requires:  %{?scl_prefix}ruby(release)
+Requires:  %{?scl_prefix_ruby}ruby(release)
 %else
-Requires:  %{?scl_prefix}ruby(abi) = %{rubyabi}
+Requires:  %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
 %endif
-Requires:  %{?scl_prefix}ruby(rubygems) 
-Requires:  %{?scl_prefix}rubygem(json) 
+Requires:  %{?scl_prefix_ruby}ruby(rubygems) 
+Requires:  %{?scl_prefix_ruby}rubygem(json) 
 Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
 Requires:  %{?scl_prefix}rubygem(rest-client) < 1.8.0
 Requires:  %{?scl_prefix}rubygem(oauth) 
-Requires:  %{?scl_prefix}rubygem(activesupport) >= 3.0.10
-Requires:  %{?scl_prefix}rubygem(i18n) >= 0.5.0
+Requires:  %{?scl_prefix_ruby}rubygem(activesupport) >= 3.0.10
+Requires:  %{?scl_prefix_ruby}rubygem(i18n) >= 0.5.0
 
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygems
 
 %description
 A gem to expose Pulp's juiciest parts.
@@ -40,6 +41,7 @@ A gem to expose Pulp's juiciest parts.
 BuildArch:  noarch
 Requires:   %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 Summary:    Documentation for rubygem-%{gem_name}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 This package contains documentation for rubygem-%{gem_name}

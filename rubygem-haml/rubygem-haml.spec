@@ -7,22 +7,24 @@
 Summary: An elegant, structured XHTML/XML templating engine
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 4.0.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Development/Languages
 License: MIT and WTFPL
 URL: http://haml-lang.com/
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
-Requires: %{?scl_prefix}ruby(rubygems)
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}rubygem(minitest)
-BuildRequires: %{?scl_prefix}rubygem(rails)
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygem(minitest)
+BuildRequires: %{?scl_prefix_ruby}rubygem(rails)
 BuildRequires: %{?scl_prefix}rubygem(nokogiri)
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
+Obsoletes: ruby193-rubygem-hpricot < 0.8.7
 
 %description
 Haml (HTML Abstraction Markup Language) is a layer on top of XHTML or XML
@@ -37,6 +39,7 @@ Summary: Documentation for %{pkg_name}
 Group: Documentation
 Requires: %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 BuildArch: noarch
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 Documentation for %{pkg_name}
