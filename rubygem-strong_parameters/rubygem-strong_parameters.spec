@@ -13,34 +13,26 @@ License: Distributable
 URL: https://github.com/rails/strong_parameters
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-Requires: %{?scl_prefix}rubygem(actionpack) => 3.0
-Requires: %{?scl_prefix}rubygem(actionpack) < 4
-Requires: %{?scl_prefix}rubygem(activemodel) => 3.0
-Requires: %{?scl_prefix}rubygem(activemodel) < 4
-Requires: %{?scl_prefix}rubygem(railties) => 3.0
-Requires: %{?scl_prefix}rubygem(railties) < 4
+Requires: %{?scl_prefix_ruby}rubygem(actionpack) => 3.0
+Requires: %{?scl_prefix_ruby}rubygem(actionpack) < 4
+Requires: %{?scl_prefix_ruby}rubygem(activemodel) => 3.0
+Requires: %{?scl_prefix_ruby}rubygem(activemodel) < 4
+Requires: %{?scl_prefix_ruby}rubygem(railties) => 3.0
+Requires: %{?scl_prefix_ruby}rubygem(railties) < 4
 
+Requires: %{?scl_prefix_ruby}rubygems
 %if 0%{?fedora} > 18
-Requires: ruby(release) = 2.0.0
-Requires: rubygems
-BuildRequires: ruby(release) = 2.0.0
-BuildRequires: rubygems-devel
+Requires: ruby(release)
 %else
-%if "%{?scl}" == "ruby193" || 0%{?rhel} > 6 || 0%{?fedora} > 16
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
-Requires: %{?scl_prefix}rubygems
-BuildRequires: %{?scl_prefix}ruby(abi) = 1.9.1
-BuildRequires:  %{?scl_prefix}rubygems-devel
-%else
-Requires: ruby(abi) = 1.8
-Requires: rubygems
-BuildRequires: ruby(abi) = 1.8
-BuildRequires: rubygems
+Requires: %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
 %endif
-%endif
+
+BuildRequires: %{?scl_prefix_ruby}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 
 BuildArch: noarch
-Provides: rubygem(strong_parameters) = %{version}
+Provides: %{?scl_prefix}rubygem(strong_parameters) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Permitted and required parameters for Action Pack
@@ -49,6 +41,7 @@ Permitted and required parameters for Action Pack
 Summary: Documentation for %{pkg_name}
 Group: Documentation
 Requires:%{?scl_prefix}%{pkg_name} = %{epoch}:%{version}-%{release}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 Documentation for %{pkg_name}
