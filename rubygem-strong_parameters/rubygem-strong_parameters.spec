@@ -7,7 +7,7 @@ Summary: Permitted and required parameters for Action Pack
 Name: %{?scl_prefix}rubygem-%{gem_name}
 
 Version: 0.2.1
-Release: 11%{dist}
+Release: 12%{dist}
 Group: Development/Ruby
 License: Distributable
 URL: https://github.com/rails/strong_parameters
@@ -81,6 +81,9 @@ cp -va ./%{gem_dir}/* %{buildroot}%{gem_dir}
 %{gem_instdir}/test/
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 0.2.1-12
+- new package built with tito
+
 * Tue Jan 28 2014 Jason Montleon <jmontleo@redhat.com> 0.2.1-11
 - 
 
