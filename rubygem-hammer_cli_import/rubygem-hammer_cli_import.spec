@@ -9,7 +9,7 @@
 Summary: Sat5-import command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.10.21
-Release: 3%{?dist}
+Release: 4%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     https://github.com/Katello/hammer-cli-import
@@ -83,6 +83,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-4
+- Update rubygem-hammer_cli_import to tfm SCL (ericdhelms@gmail.com)
+
 * Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 0.10.21-3
 - Add missing scl_prefix to package name. (ericdhelms@gmail.com)
 
