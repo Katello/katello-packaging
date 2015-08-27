@@ -6,7 +6,7 @@
 %define rubyabi 1.9.1
 
 %if 0%{?fedora}
-BuildRequires: %{?scl_prefix}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 %endif
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
@@ -17,23 +17,20 @@ Version:        0.2.2
 Release:        6%{?dist}
 URL:            http://nicksda.apotomo.de/tag/hooks
 Source0: 	http://rubygems.org/gems/%{gem_name}-%{version}.gem
-BuildRoot:      %{_tmppath}/%{gem_name}-%{version}-%{release}-root-%(%{__id_u} -n)
-%if 0%{?fedora} > 18
-Requires:       %{?scl_prefix}ruby(release)
-%else
-Requires:       %{?scl_prefix}ruby(abi) = %{rubyabi}
-%endif
-Requires:       %{?scl_prefix}ruby(rubygems) 
 
 %if 0%{?fedora} > 18
-BuildRequires:       %{?scl_prefix}ruby(release)
+Requires:       %{?scl_prefix_ruby}ruby(release)
 %else
-BuildRequires:       %{?scl_prefix}ruby(abi) = %{rubyabi}
+Requires:       %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
 %endif
+Requires:       %{?scl_prefix_ruby}ruby(rubygems) 
 
-BuildRequires:  %{?scl_prefix}rubygems-devel 
+BuildRequires:  %{?scl_prefix_ruby}rubygems
+BuildRequires:  %{?scl_prefix_ruby}rubygems-devel 
+
 BuildArch:      noarch
 Provides:       %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Declaratively define hooks, add callbacks and run them with the options you like.
