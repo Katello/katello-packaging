@@ -7,7 +7,7 @@
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
 Version:        1.3.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A gem exposing Pulp's juiciest parts
 Group:          Applications/System
 License:        MIT
@@ -77,6 +77,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 1.3.5-3
+- Update rubygem-runcible to tfm SCL (ericdhelms@gmail.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.3.5-2
 - new package built with tito
 
