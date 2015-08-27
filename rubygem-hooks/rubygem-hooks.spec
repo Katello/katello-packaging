@@ -75,4 +75,4 @@ This package contains documentation for rubygem-%{gem_name}
 %files doc
 %doc %{gem_docdir}
 
-
+%changelog
