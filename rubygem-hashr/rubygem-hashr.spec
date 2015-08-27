@@ -6,7 +6,7 @@
 Summary: Simple Hash extension to make working with nested hashes
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.22
-Release: 5%{?dist}
+Release: 6%{?dist}
 Group: Development/Languages
 License: MIT
 URL: http://github.com/svenfuchs/hashr
@@ -97,6 +97,9 @@ testrb -Ilib test/*_test.rb
 %endif
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.22-6
+- new package built with tito
+
 * Thu Sep 12 2013 Jason Montleon <jmontleo@redhat.com> 0.0.22-5
 - new package built with tito
 
