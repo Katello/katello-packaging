@@ -20,18 +20,19 @@ Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %if 0%{?scl:1}
 Obsoletes: rubygem-%{gem_name} < 0.10.21-3
 %endif
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %if 0%{?fedora} > 18
-Requires:  %{?scl_prefix}ruby(release)
+Requires:  %{?scl_prefix_ruby}ruby(release)
 %else
-Requires:  %{?scl_prefix}ruby(abi)
+Requires:  %{?scl_prefix_ruby}ruby(abi)
 %endif
-Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(hammer_cli) >= 0.1.3
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman)
 
-BuildRequires: %{?scl_prefix}ruby(rubygems)
-BuildRequires: %{?scl_prefix}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 
 %description
 Sat5-import plugin for the Hammer CLI
@@ -41,6 +42,7 @@ Summary:   Documentation for %{pkg_name}
 Group:     Documentation
 Requires:  %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 BuildArch: noarch
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description doc
 Documentation for %{pkg_name}
