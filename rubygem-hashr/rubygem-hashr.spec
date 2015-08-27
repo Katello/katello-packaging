@@ -11,19 +11,20 @@ Group: Development/Languages
 License: MIT
 URL: http://github.com/svenfuchs/hashr
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
-Requires: %{?scl_prefix}rubygems
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}rubygems
+Requires: %{?scl_prefix_ruby}rubygems
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygems
 
 %if 0%{?fedora} > 16
-BuildRequires: %{?scl_prefix}rubygem(minitest)
+BuildRequires: %{?scl_prefix_ruby}rubygem(minitest)
 # test_declarative is only in F17+
-BuildRequires: %{?scl_prefix}rubygem(test_declarative)
+BuildRequires: %{?scl_prefix_ruby}rubygem(test_declarative)
 %endif
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Simple Hash extension to make working with nested hashes (e.g. for
@@ -31,8 +32,9 @@ configuration) easier and less error-prone.
 
 %package doc
 BuildArch:  noarch
-Requires:   %{?scl_prefix}%{pkg_name} = %{version}-%{release}
+Requires:   %{?scl_prefix_ruby}%{pkg_name} = %{version}-%{release}
 Summary:    Documentation for rubygem-%{gem_name}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 This package contains documentation for rubygem-%{gem_name}.
