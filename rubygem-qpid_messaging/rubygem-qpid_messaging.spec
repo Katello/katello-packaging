@@ -7,7 +7,7 @@
 Summary:       Ruby bindings for the Qpid messaging framework
 Name:          %{?scl_prefix}rubygem-%{gem_name}
 Version:       %{qpid_version}.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       ASL 2.0
 
 URL:           http://qpid.apache.org
@@ -73,6 +73,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-2
+- new package built with tito
+
 * Wed Jan 21 2015 Jason Montleon <jmontleo@redhat.com> 0.30.0-1
 - update rubygem-qpid_messaging to MRG 3.1 (jmontleo@redhat.com)
 
