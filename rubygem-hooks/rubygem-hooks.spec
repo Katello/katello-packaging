@@ -14,7 +14,7 @@ Summary:        Generic hooks with callbacks for Ruby.
 Group:          Applications/System
 License:        MIT
 Version:        0.2.2
-Release:        6%{?dist}
+Release:        7%{?dist}
 URL:            http://nicksda.apotomo.de/tag/hooks
 Source0: 	http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
@@ -76,3 +76,6 @@ This package contains documentation for rubygem-%{gem_name}
 %doc %{gem_docdir}
 
 %changelog
+* Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 0.2.2-7
+- new package built with tito
+
