@@ -13,17 +13,17 @@ License:    MIT
 Group:      Development/Languages
 URL:        http://www.github.com/chriskite/robotex
 Source0:    https://rubygems.org/downloads/%{gem_name}-%{version}.gem
-Requires:   %{?scl_prefix}rubygems
+Requires:   %{?scl_prefix_ruby}rubygems
 %if 0%{?fedora} > 18
 Requires:   ruby(release)
 %else
-Requires:   %{?scl_prefix}ruby(abi) = %{rubyabi}
+Requires:   %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
 %endif
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
-BuildRequires:  %{?scl_prefix}rubygem(fakeweb)
-BuildRequires:  %{?scl_prefix}rubygems
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}rubygem(rspec)
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
+BuildRequires:  %{?scl_prefix_ruby}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}rubygem(rspec)
 BuildArch:  noarch
 
 %description
@@ -35,6 +35,7 @@ to visit a given link.
 BuildArch:  noarch
 Requires:   %{name} = %{version}-%{release}
 Summary:    Documentation for rubygem-%{gem_name}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 This package contains documentation for rubygem-%{gem_name}.
