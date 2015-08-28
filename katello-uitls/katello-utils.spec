@@ -5,7 +5,7 @@
 
 Name:           katello-utils
 Version:        2.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Additional tools for Katello
 
 Group:          Applications/Internet
@@ -97,6 +97,9 @@ install -m 0644 man/katello-disconnected.man1 %{buildroot}%{_mandir}/man1/katell
 
 
 %changelog
+* Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-2
+- Update katello-utils to the tfm SCL (ericdhelms@gmail.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1
 - new package built with tito
 
