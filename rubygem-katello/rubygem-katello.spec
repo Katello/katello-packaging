@@ -6,17 +6,8 @@
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
 
-%define rubyabi 1.9.1
-
-%if "%{?scl}" == "ruby193"
-    %global scl_ruby /usr/bin/ruby193-ruby
-    %global scl_rake /usr/bin/ruby193-rake
-    ### TODO temp disabled for SCL
-    %global nodoc 1
-%else
-    %global scl_ruby /usr/bin/ruby
-    %global scl_rake /usr/bin/rake
-%endif
+%global scl_ruby_bin /usr/bin/%{?scl:%{scl_prefix}}ruby
+%global scl_rake /usr/bin/%{?scl:%{scl_prefix}}rake
 
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
@@ -29,11 +20,11 @@ URL:     http://www.katello.org
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
 %if 0%{?fedora} > 18
-Requires: %{?scl_prefix}ruby(release)
+Requires: %{?scl_prefix_ruby}ruby(release)
 %else
-Requires: %{?scl_prefix}ruby(abi) >= %{rubyabi}
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
-Requires: %{?scl_prefix}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
 # service-wait dependency
 Requires: wget
@@ -91,8 +82,8 @@ Requires: v8
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 Requires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
 Requires: %{?scl_prefix}rubygem(bastion) < 3.0.0
-Requires: %{?scl_prefix}rubygem(rails)
-Requires: %{?scl_prefix}rubygem(json)
+Requires: %{?scl_prefix_ruby}rubygem(rails)
+Requires: %{?scl_prefix_ruby}rubygem(json)
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
@@ -107,10 +98,10 @@ Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 Requires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 Requires: %{?scl_prefix}rubygem(anemone)
 Requires: %{?scl_prefix}rubygem(less-rails)
-Requires: %{?scl_prefix}rubygem(haml-rails)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
-Requires: %{?scl_prefix}rubygem(deface) < 1.0.0
-Requires: %{?scl_prefix}rubygem-strong_parameters
+Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
+Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
+Requires: %{?scl_prefix}rubygem(strong_parameters)
 Requires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 Requires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
 BuildRequires: foreman >= 1.9.0
@@ -118,10 +109,11 @@ BuildRequires: foreman-assets >= 1.9.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 BuildRequires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
 BuildRequires: %{?scl_prefix}rubygem(bastion) < 3.0.0
-BuildRequires: %{?scl_prefix}rubygem(sqlite3)
+BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
 BuildRequires: %{?scl_prefix}rubygem(tire) => 0.6.2
 BuildRequires: %{?scl_prefix}rubygem(tire) < 0.7
 BuildRequires: %{?scl_prefix}rubygem(hooks)
+BuildRequires: %{?scl_prefix_ruby}rubygem(json)
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
@@ -130,23 +122,19 @@ BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 BuildRequires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 BuildRequires: %{?scl_prefix}rubygem(anemone)
 BuildRequires: %{?scl_prefix}rubygem(less-rails)
-BuildRequires: %{?scl_prefix}rubygem(haml-rails)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
-BuildRequires: %{?scl_prefix}rubygem(deface) < 1.0.0
-BuildRequires: %{?scl_prefix}rubygem(uglifier) >= 1.0.3
-BuildRequires: %{?scl_prefix}rubygem-strong_parameters
+BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
+BuildRequires: %{?scl_prefix}rubygem(deface) < 2.0.0
+BuildRequires: %{?scl_prefix_ruby}rubygem(uglifier) >= 1.0.3
+BuildRequires: %{?scl_prefix}rubygem(strong_parameters)
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
-BuildRequires: %{?scl_prefix}rubygems-devel
-BuildRequires: %{?scl_prefix}ruby(rubygems)
-%if 0%{?fedora} > 18
-BuildRequires: %{?scl_prefix}ruby(release)
-%else
-BuildRequires: %{?scl_prefix}ruby(abi) >= %{rubyabi}
-%endif
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(katello) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
 %description
 Katello
@@ -155,6 +143,7 @@ Katello
 BuildArch:  noarch
 Requires:   %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 Summary:    Documentation for rubygem-%{gem_name}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
 %description doc
 This package contains documentation for rubygem-%{gem_name}.
@@ -210,7 +199,7 @@ DBPROD
 pushd ./usr/share/foreman
 sed -i 's/:locations_enabled: false/:locations_enabled: true/' config/settings.yaml
 sed -i 's/:organizations_enabled: false/:organizations_enabled: true/' config/settings.yaml
-export GEM_PATH=%{gem_dir}:%{buildroot}%{gem_dir}
+export GEM_PATH=%{buildroot}%{gem_dir}:${GEM_PATH:+${GEM_PATH}}${GEM_PATH:-`scl enable %{scl_ruby} -- ruby -e "print Gem.path.join(':')"`}
 
 cat <<GEMFILE > ./bundler.d/%{gem_name}.rb
 group :katello do
