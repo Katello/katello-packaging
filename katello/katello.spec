@@ -1,11 +1,5 @@
-%if "%{?scl}" == "ruby193"
-    %global scl_prefix %{scl}-
-    %global scl_ruby /usr/bin/ruby193-ruby
-    %global scl_rake /usr/bin/ruby193-rake
-%else
-    %global scl_ruby /usr/bin/ruby
-    %global scl_rake /usr/bin/rake
-%endif
+# explicitly define, as we build on top of an scl, not inside with scl_package
+%{?scl:%global scl_prefix %{scl}-}
 
 %global homedir %{_datarootdir}/%{name}
 %global confdir common
@@ -25,8 +19,6 @@ Source2:    katello-remove
 Source3:    katello-remove-orphans
 Source4:    katello-service
 Source5:    service-wait
-Source6:    katello-restore
-Source7:    katello-backup
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -62,8 +54,6 @@ install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
-install -Dp -m0755 %{SOURCE7} %{buildroot}%{_bindir}/katello-backup
-install -Dp -m0755 %{SOURCE6} %{buildroot}%{_bindir}/katello-restore
 install -Dp -m0755 %{SOURCE4} %{buildroot}%{_bindir}/katello-service
 install -Dp -m0755 %{SOURCE5} %{buildroot}%{_sbindir}/service-wait
 install -Dp -m0755 %{SOURCE2} %{buildroot}%{_bindir}/katello-remove
@@ -97,7 +87,7 @@ Requires:       %{name}-service
 Common runtime components of %{name}
 
 %files common
-%{_bindir}/katello-*
+%{_bindir}/katello-remove
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 
 # ------ Debug ----------------
