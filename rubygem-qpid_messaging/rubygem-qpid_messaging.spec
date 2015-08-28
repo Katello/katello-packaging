@@ -20,7 +20,7 @@ Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
-BuildRequires: %{?scl_prefix}ruby-devel
+BuildRequires: %{?scl_prefix_ruby}ruby-devel
 BuildRequires: %{?scl_prefix_ruby}rubygems
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: qpid-cpp-client-devel = %{qpid_version}
