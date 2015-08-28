@@ -13,7 +13,7 @@
     <packagelist>
        <!-- elasticsearch packages -->
        <packagereq type="default">elasticsearch</packagereq>
-       <packagereq type="default">ruby193-rubygem-tire</packagereq>
+       <packagereq type="default">tfm-rubygem-tire</packagereq>
        <packagereq type="default">lucene4</packagereq>
        <packagereq type="default">lucene4-contrib</packagereq>
        <packagereq type="default">sigar-java</packagereq>
@@ -22,7 +22,7 @@
 
        <!-- katello core packages -->
        <packagereq type="default">katello</packagereq>
-       <packagereq type="default">ruby193-rubygem-katello</packagereq>
+       <packagereq type="default">tfm-rubygem-katello</packagereq>
        <packagereq type="default">katello-certs-tools</packagereq>
        <packagereq type="default">katello-common</packagereq>
        <packagereq type="default">katello-debug</packagereq>
@@ -37,36 +37,34 @@
        <packagereq type="default">katello-installer</packagereq>
        <packagereq type="default">katello-devel-installer</packagereq>
        <packagereq type="default">capsule-installer</packagereq>
-       <packagereq type="default">ruby193-rubygem-hammer_cli_katello</packagereq>
-       <packagereq type="default">ruby193-rubygem-hammer_cli_import</packagereq>
+       <packagereq type="default">tfm-rubygem-hammer_cli_katello</packagereq>
+       <packagereq type="default">tfm-rubygem-hammer_cli_import</packagereq>
 
        <!-- katello thirdparty rubygem packages -->
-       <packagereq type="default">ruby193-rubygem-anemone</packagereq>
-       <packagereq type="default">ruby193-rubygem-ansi</packagereq>
-       <packagereq type="default">ruby193-rubygem-chunky_png</packagereq>
-       <packagereq type="default">ruby193-rubygem-fssm</packagereq>
-       <packagereq type="default">ruby193-rubygem-haml-rails</packagereq>
-       <packagereq type="default">ruby193-rubygem-haml</packagereq>
-       <packagereq type="default">ruby193-rubygem-hashr</packagereq>
-       <packagereq type="default">ruby193-rubygem-hooks</packagereq>
-       <packagereq type="default">ruby193-rubygem-hpricot</packagereq>
-       <packagereq type="default">ruby193-rubygem-i18n_data</packagereq>
-       <packagereq type="default">ruby193-rubygem-justified</packagereq>
-       <packagereq type="default">ruby193-rubygem-robotex</packagereq>
-       <packagereq type="default">ruby193-rubygem-runcible</packagereq>
-       <packagereq type="default">ruby193-rubygem-sexp_processor</packagereq>
-       <packagereq type="default">ruby193-rubygem-strong_parameters</packagereq>
-       <packagereq type="default">ruby193-rubygem-qpid_messaging</packagereq>
-       <packagereq type="default">ruby193-rubygem-hammer_cli_csv</packagereq>
+       <packagereq type="default">tfm-rubygem-anemone</packagereq>
+       <packagereq type="default">tfm-rubygem-ansi</packagereq>
+       <packagereq type="default">tfm-rubygem-chunky_png</packagereq>
+       <packagereq type="default">tfm-rubygem-fssm</packagereq>
+       <packagereq type="default">tfm-rubygem-hashr</packagereq>
+       <packagereq type="default">tfm-rubygem-hooks</packagereq>
+       <packagereq type="default">tfm-rubygem-hpricot</packagereq>
+       <packagereq type="default">tfm-rubygem-i18n_data</packagereq>
+       <packagereq type="default">tfm-rubygem-justified</packagereq>
+       <packagereq type="default">tfm-rubygem-robotex</packagereq>
+       <packagereq type="default">tfm-rubygem-runcible</packagereq>
+       <packagereq type="default">tfm-rubygem-sexp_processor</packagereq>
+       <packagereq type="default">tfm-rubygem-strong_parameters</packagereq>
+       <packagereq type="default">tfm-rubygem-qpid_messaging</packagereq>
+       <packagereq type="default">tfm-rubygem-hammer_cli_csv</packagereq>
        
        <!-- sam packages -->
        <packagereq type="default">sam-installer</packagereq>
-       <packagereq type="default">ruby193-rubygem-foreman_sam</packagereq>
-       <packagereq type="default">ruby193-rubygem-hammer_cli_sam</packagereq>
+       <packagereq type="default">tfm-rubygem-foreman_sam</packagereq>
+       <packagereq type="default">tfm-rubygem-hammer_cli_sam</packagereq>
 
        <!-- gutterball packages -->
-       <packagereq type="default">ruby193-rubygem-foreman_gutterball</packagereq>
-       <packagereq type="default">ruby193-rubygem-hammer_cli_gutterball</packagereq>
+       <packagereq type="default">tfm-rubygem-foreman_gutterball</packagereq>
+       <packagereq type="default">tfm-rubygem-hammer_cli_gutterball</packagereq>
     </packagelist>
   </group>
   <group>
@@ -75,11 +73,10 @@
     <description>Katello Server Documentation Packages</description>
     <uservisible>true</uservisible>
     <packagelist>
-       <packagereq type="optional">ruby193-rubygem-haml-doc</packagereq>
-       <packagereq type="optional">ruby193-rubygem-hashr-doc</packagereq>
-       <packagereq type="optional">ruby193-rubygem-hpricot-doc</packagereq>
-       <packagereq type="optional">ruby193-rubygem-runcible-doc</packagereq>
-       <packagereq type="optional">ruby193-rubygem-sexp_processor-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-hashr-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-hpricot-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-runcible-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-sexp_processor-doc</packagereq>
     </packagelist>
   </group>
 </comps>
