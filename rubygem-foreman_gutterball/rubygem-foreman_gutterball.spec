@@ -7,25 +7,29 @@ Summary: Gutterball plugin for Foreman and Katello
 Name: 	 %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.1
 Release: 2%{?dist}
-Group:   Development/Languages
-License: GPLv3
-URL:     http://katello.org
-Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
+Group: 	 Development/Languages
+License:   GPLv3
+URL:       http://katello.org
+Source0:   http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+%{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-%if 0%{?fedora} > 18
-Requires: %{?scl_prefix}ruby(release)
-%else
-Requires: %{?scl_prefix}ruby(abi) = 1.9.1
-%endif
 Requires: gutterball
 Requires: %{?scl_prefix}rubygem-katello
-Requires: %{?scl_prefix}ruby(rubygems)
-BuildRequires: %{?scl_prefix}ruby(rubygems)
-BuildRequires: %{?scl_prefix}rubygems-devel
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
+BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: foreman-plugin >= 1.8
+
+%if 0%{?fedora} > 18
+Requires: %{?scl_prefix_ruby}ruby(release)
+BuildRequires: %{?scl_prefix_ruby}ruby(release)
+%else
+Requires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
+BuildRequires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
+%endif
 
 %description
 Gutterball plugin for Foreman and Katello.
