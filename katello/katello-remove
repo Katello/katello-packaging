@@ -88,6 +88,7 @@ RPMS=(
     `rpm -qa | grep ^mod_`
     `rpm -qa | grep ^rubygem`
     `rpm -qa | grep ^ruby193`
+    `rpm -qa | grep ^tfm`
     `rpm -qa | grep ^foreman`
     `rpm -qa | grep ^qpid`
     `rpm -qa | grep ^lucene`
