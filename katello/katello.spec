@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.4.0
-Release:    3.nightly%{?dist}
+Release:    4.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -140,6 +140,13 @@ Package that installs only the Subscription and basic Content Management parts o
 %files sam
 
 %changelog
+* Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-4.nightly
+- Update katello for TFM (ericdhelms@gmail.com)
+- fixes #11353 - make wait_for_url more reliable (stbenjam@redhat.com)
+- fixes #11249 - return `katello list` command (stbenjam@redhat.com)
+- fixes #10960 - Adds backup and restore scripts, BZ1233443
+  (cfouant@redhat.com)
+
 * Mon Aug 03 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-3.nightly
 - Update katello dependency on hammer_cli_sam to SCL version
   (ericdhelms@gmail.com)
