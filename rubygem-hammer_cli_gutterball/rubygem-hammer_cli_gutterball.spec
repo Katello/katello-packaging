@@ -9,7 +9,7 @@
 Summary: Gutterball commands for Hammer
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 1.0.1
-Release: 3%{?dist}
+Release: 4%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/Katello/hammer-cli-gutterball
@@ -76,6 +76,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-4
+- Update rubygem-hammer_cli_gutterball to tfm SCL (ericdhelms@gmail.com)
+
 * Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-3
 - Fixes #11259: Move hammer packages to SCL (ericdhelms@gmail.com)
 
