@@ -20,11 +20,11 @@ Requires: %{?scl_prefix_ruby}rubygem(activemodel) < 4
 Requires: %{?scl_prefix_ruby}rubygem(railties) => 3.0
 Requires: %{?scl_prefix_ruby}rubygem(railties) < 4
 
-Requires: %{?scl_prefix_ruby}rubygems
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 %if 0%{?fedora} > 18
-Requires: ruby(release)
+Requires: %{?scl_prefix_ruby}ruby(release)
 %else
-Requires: %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
 
 BuildRequires: %{?scl_prefix_ruby}rubygems
