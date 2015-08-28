@@ -6,7 +6,7 @@
 Summary: Ruby client for the ElasticSearch search engine/database
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.6.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Development/Languages
 License: GPLv2+ or Ruby
 URL: http://github.com/karmi/tire
@@ -73,6 +73,9 @@ cp -a ./%{gem_dir}/* %{buildroot}%{gem_dir}/
 %{gem_dir}/specifications/%{gem_name}-%{version}.gemspec
 
 %changelog
+* Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 0.6.2-2
+- new package built with tito
+
 * Wed Feb 12 2014 Justin Sherrill <jsherril@redhat.com> 0.6.2-1
 - bumping tire version (jsherril@redhat.com)
 
