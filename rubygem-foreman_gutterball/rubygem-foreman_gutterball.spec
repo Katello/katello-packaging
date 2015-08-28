@@ -6,7 +6,7 @@
 Summary: Gutterball plugin for Foreman and Katello
 Name: 	 %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group: 	 Development/Languages
 License:   GPLv3
 URL:       http://katello.org
@@ -74,6 +74,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{foreman_bundlerd_plugin}
 
 %changelog
+* Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-3
+- new package built with tito
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-2
 - new package built with tito
 
