@@ -120,25 +120,6 @@ Useful utilities for managing Katello services
 %{_bindir}/katello-service
 %{_mandir}/man8/katello-service.8*
 
-# ------ SAM ------------------
-
-%package sam
-Summary: Package that installs only the Subscription and basic Content Management parts of Katello
-Group:  Applications/System
-
-# Require the common package and ensure the katello-sam package
-# can't be installed on the same system as katello
-Requires:       %{name}-common = %{version}-%{release}
-Conflicts:      %{name}
-Requires:       %{?scl_prefix}rubygem-hammer_cli_sam
-Requires:       %{?scl_prefix}rubygem-foreman_sam
-Requires:       sam-installer
-
-%description sam
-Package that installs only the Subscription and basic Content Management parts of Katello
-
-%files sam
-
 %changelog
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-4.nightly
 - Update katello for TFM (ericdhelms@gmail.com)
