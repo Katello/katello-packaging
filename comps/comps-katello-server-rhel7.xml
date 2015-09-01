@@ -29,7 +29,6 @@
        <packagereq type="default">katello-service</packagereq>
        <packagereq type="default">katello-repos</packagereq>
        <packagereq type="default">katello-repos-testing</packagereq>
-       <packagereq type="default">katello-sam</packagereq>
        <packagereq type="default">katello-selinux</packagereq>
        <packagereq type="default">katello-utils</packagereq>
        <packagereq type="default">pulp-katello</packagereq>
@@ -57,11 +56,6 @@
        <packagereq type="default">tfm-rubygem-qpid_messaging</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_csv</packagereq>
        
-       <!-- sam packages -->
-       <packagereq type="default">sam-installer</packagereq>
-       <packagereq type="default">tfm-rubygem-foreman_sam</packagereq>
-       <packagereq type="default">tfm-rubygem-hammer_cli_sam</packagereq>
-
        <!-- gutterball packages -->
        <packagereq type="default">tfm-rubygem-foreman_gutterball</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_gutterball</packagereq>
