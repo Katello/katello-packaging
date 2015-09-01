@@ -20,11 +20,11 @@ Requires:       unzip
 %if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
 %else
-Requires: %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
+Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(katello)
-Requires: %{?scl_prefix}rubygem(json)
+Requires: %{?scl_prefix_ruby}rubygem(json)
 Requires: %{?scl_prefix_ruby}rubygem(activesupport)
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
