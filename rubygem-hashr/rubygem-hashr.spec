@@ -32,7 +32,7 @@ configuration) easier and less error-prone.
 
 %package doc
 BuildArch:  noarch
-Requires:   %{?scl_prefix_ruby}%{pkg_name} = %{version}-%{release}
+Requires:   %{?scl_prefix}%{pkg_name} = %{version}-%{release}
 Summary:    Documentation for rubygem-%{gem_name}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}-doc}
 
