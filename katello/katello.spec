@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.4.0
-Release:    4.nightly%{?dist}
+Release:    5.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -121,6 +121,9 @@ Useful utilities for managing Katello services
 %{_mandir}/man8/katello-service.8*
 
 %changelog
+* Tue Sep 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-5.nightly
+- Stop building katello-sam RPM (ericdhelms@gmail.com)
+
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-4.nightly
 - Update katello for TFM (ericdhelms@gmail.com)
 - fixes #11353 - make wait_for_url more reliable (stbenjam@redhat.com)
