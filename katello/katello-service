@@ -6,6 +6,7 @@ ACTIONS = ['restart', 'stop', 'start', 'status', 'list']
 COMMAND = '/usr/sbin/service-wait'
 SERVICES = {
   'mongod'                => 5,
+  'postgresql'            => 5,
   'qpidd'                 => 10,
   'qdrouterd'             => 10,
   'tomcat'                => 20,
@@ -28,6 +29,10 @@ OptionParser.new do |opts|
     @options[:excluded] = exclude
   end
 
+  opts.on("--only [SERVICES]", Array, "A comma-separated list of services to include") do |only|
+    @options[:only] = only
+  end
+
   opts.parse!
 
   if ARGV.length == 0 || ARGV.length != 1
@@ -47,7 +52,11 @@ def service_exists?(service)
 end
 
 def services_by_priority
-  SERVICES.sort_by { |_, value| value }.map { |service| service[0] } - @options[:excluded]
+  if @options.include?(:only)
+    SERVICES.sort_by { |_, value| value }.map { |service| service[0] } & @options[:only]
+  else
+    SERVICES.sort_by { |_, value| value }.map { |service| service[0] } - @options[:excluded]
+  end
 end
 
 def list_services
