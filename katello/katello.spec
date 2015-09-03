@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.4.0
-Release:    5.nightly%{?dist}
+Release:    6.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -121,6 +121,11 @@ Useful utilities for managing Katello services
 %{_mandir}/man8/katello-service.8*
 
 %changelog
+* Thu Sep 03 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-6.nightly
+- fixes #11648 - katello-service : add --only option (bbuckingham@redhat.com)
+- fixes #11648 - katello-service: update to start/stop postgresql
+  (bbuckingham@redhat.com)
+
 * Tue Sep 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-5.nightly
 - Stop building katello-sam RPM (ericdhelms@gmail.com)
 
