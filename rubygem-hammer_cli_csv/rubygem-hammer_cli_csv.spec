@@ -9,7 +9,7 @@
 Summary: CSV input/output command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 1.0.1
-Release: 7%{?dist}
+Release: 8%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     https://github.com/Katello/hammer-cli-csv
@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Fri Sep 04 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-8
+- Update rubygem-hammer_cli_csv to tfm SCL (ericdhelms@gmail.com)
+
 * Fri Jul 31 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-7
 - Fixes #11259: Move hammer packages to SCL (ericdhelms@gmail.com)
 
