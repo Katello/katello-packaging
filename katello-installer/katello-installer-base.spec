@@ -12,6 +12,7 @@ URL:     http://katello.org
 Source0: https://github.com/Katello/katello-installer/archive/%{version}.tar.gz
 
 BuildArch: noarch
+Conflicts: foreman-installer
 Obsoletes: katello-installer < 2.1.0
 
 Requires: %{?scl_prefix}puppet >= 3.4.0
