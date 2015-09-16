@@ -8,8 +8,8 @@
 
 Summary: Sat5-import command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.10.21
-Release: 4%{?dist}
+Version: 0.10.22
+Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     https://github.com/Katello/hammer-cli-import
