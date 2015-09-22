@@ -33,21 +33,21 @@ priority=1
 
 [katello-source]
 name=Katello Nightly Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/nightly/katello/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/katello/@SUBDIR@/$releasever/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-pulp-source]
 name=Katello Pulp source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/nightly/pulp/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/pulp/@SUBDIR@/$releasever/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-candlepin-source]
 name=Katello Candlepin source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/nightly/candlepin/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/candlepin/@SUBDIR@/$releasever/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
