@@ -78,6 +78,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Sep 23 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.18-1
+- Update rubygem-hammer_cli_katello to 0.0.18 (ericdhelms@gmail.com)
+
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.17-4
 - Update rubygem-hammer_cli_katello to tfm SCl (ericdhelms@gmail.com)
 
