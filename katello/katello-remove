@@ -4,7 +4,6 @@ echo ""
 echo "WARNING: This script will erase many packages and config files."
 echo "Important packages such as the following will be removed:"
 echo ""
-echo "  * elasticsearch"
 echo "  * httpd (apache)"
 echo "  * mongodb"
 echo "  * tomcat6"
@@ -48,8 +47,6 @@ CONFIG_FILES=(
     /var/lib/pulp/
     /etc/httpd/
     /etc/tomcat6/
-    /etc/elasticsearch
-    /var/lib/elasticsearch
     /usr/share/pulp
     /var/lib/candlepin
     /etc/foreman
@@ -91,7 +88,6 @@ RPMS=(
     `rpm -qa | grep ^tfm`
     `rpm -qa | grep ^foreman`
     `rpm -qa | grep ^qpid`
-    `rpm -qa | grep ^lucene`
     `rpm -qa | grep ^python-crane`
     `rpm -qa | grep ^python-celery`
     `rpm -qa | grep ^python-gofer`
@@ -108,10 +104,8 @@ RPMS=(
     `rpm -qa | grep gutterball`
     `rpm -qa | grep $HOSTNAME`
     saslwrapper
-    snappy-java
     ruby
     rubygems
-    elasticsearch
     httpd
     puppet
     tomcat

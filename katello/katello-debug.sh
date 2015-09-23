@@ -36,10 +36,6 @@ add_files /etc/candlepin/candlepin.conf
 add_files /etc/tomcat6/server.xml
 add_files /etc/tomcat/server.xml
 
-# Elastic Search
-add_files /var/log/elasticsearch/*
-add_files /etc/elasticsearch/*
-
 # Pulp
 add_files /etc/pulp/*.conf
 add_files /etc/httpd/conf.d/pulp.conf
