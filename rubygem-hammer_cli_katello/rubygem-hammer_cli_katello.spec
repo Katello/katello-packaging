@@ -9,7 +9,7 @@
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.18
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     http://github.com/theforeman/hammer-cli-katello
@@ -78,6 +78,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Fri Sep 25 2015 Justin Sherrill <jsherril@redhat.com> 0.0.18-3
+- updating hammer_cli_katello to match gem deps (jsherril@redhat.com)
+
 * Wed Sep 23 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.18-1
 - Update rubygem-hammer_cli_katello to 0.0.18 (ericdhelms@gmail.com)
 
