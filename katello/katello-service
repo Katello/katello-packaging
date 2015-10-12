@@ -52,11 +52,12 @@ def service_exists?(service)
 end
 
 def services_by_priority
-  if @options.include?(:only)
-    SERVICES.sort_by { |_, value| value }.map { |service| service[0] } & @options[:only]
-  else
-    SERVICES.sort_by { |_, value| value }.map { |service| service[0] } - @options[:excluded]
-  end
+  services = if @options.include?(:only)
+               SERVICES.sort_by { |_, value| value }.map { |service| service[0] } & @options[:only]
+             else
+               SERVICES.sort_by { |_, value| value }.map { |service| service[0] } - @options[:excluded]
+             end
+  @options[:action] == 'stop' ? services.reverse : services
 end
 
 def list_services
