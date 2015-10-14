@@ -208,7 +208,6 @@ end
 GEMFILE
 
 unlink tmp
-cp %{buildroot}%{gem_instdir}/config/katello_defaults.yml %{buildroot}%{gem_instdir}/config/katello.yml
 
 export BUNDLER_EXT_NOSTRICT=1
 export BUNDLER_EXT_GROUPS="default assets katello"
