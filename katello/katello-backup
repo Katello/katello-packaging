@@ -1,94 +1,83 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-usage(){
-  echo "Usage: katello-backup <backup directory>"
-  echo " eg: $ katello-backup /tmp/katello-backup/"
-}
+require 'optparse'
+require 'fileutils'
 
-if [ "$#" -ne 1 ]; then
-  echo "ERROR: Please specify an export directory"
-  usage
-  exit 1
-fi
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
+end
 
-# Backup dir
-umask 0027
-BDIR=$1
-mkdir -p $BDIR
-chgrp postgres $BDIR
-chmod 770 $BDIR
-cd $BDIR
-echo "Creating backup folder $BDIR"
-echo ""
+optparse.parse!
 
-# Stop services
-katello-service stop
-service postgresql stop
+DIR = ARGV.pop
+if DIR.nil?
+  puts "**** ERROR: Please specify an export directory ****"
+  puts optparse
+  exit(-1)
+else
+  FileUtils.mkdir_p(DIR)
+  puts "Creating backup folder #{DIR}"
+  FileUtils.chown(nil, 'postgres', DIR)
+  FileUtils.chmod 0770, DIR
+  FileUtils.cd DIR
 
-CONFIGS=(
-    /etc/candlepin
-    /etc/elasticsearch
-    /etc/foreman
-    /etc/foreman-proxy
-    /etc/gutterball
-    /etc/hammer
-    /etc/httpd
-    /etc/katello
-    /etc/katello-installer
-    /etc/pki/content
-    /etc/pki/katello
-    /etc/pki/katello-certs-tools
-    /etc/pki/pulp
-    /etc/pki/tls/certs/katello-node.crt
-    /etc/pki/tls/certs/pulp_consumers_ca.crt
-    /etc/pki/tls/certs/pulp_ssl_cert.crt
-    /etc/pki/tls/private/katello-node.key
-    /etc/pulp
-    /etc/puppet
-    /etc/qpid
-    /etc/qpid-dispatch
-    /etc/sysconfig/elasticsearch
-    /etc/sysconfig/tomcat*
-    /etc/tomcat*
-    /root/ssl-build
-    /var/lib/foreman
-    /var/lib/katello
-    /var/lib/candlepin
-    /var/www/html/pub
-)
+  `katello-service stop`
+  `service postgresql stop`
 
-# Conf files
-echo "Backing up config files... "
-tar --selinux -czvf config_files.tar.gz ${CONFIGS[*]}
-echo "Done."
-echo ""
+  CONFIGS=[
+    '/etc/candlepin',
+    '/etc/elasticsearch',
+    '/etc/foreman',
+    '/etc/foreman-proxy',
+    '/etc/gutterball',
+    '/etc/hammer',
+    '/etc/httpd',
+    '/etc/katello',
+    '/etc/katello-installer',
+    '/etc/pki/content',
+    '/etc/pki/katello',
+    '/etc/pki/katello-certs-tools',
+    '/etc/pki/pulp',
+    '/etc/pki/tls/certs/katello-node.crt',
+    '/etc/pki/tls/certs/pulp_consumers_ca.crt',
+    '/etc/pki/tls/certs/pulp_ssl_cert.crt',
+    '/etc/pki/tls/private/katello-node.key',
+    '/etc/pulp',
+    '/etc/puppet',
+    '/etc/qpid',
+    '/etc/qpid-dispatch',
+    '/etc/sysconfig/elasticsearch',
+    '/etc/sysconfig/tomcat*',
+    '/etc/tomcat*',
+    '/root/ssl-build',
+    '/var/lib/foreman',
+    '/var/lib/katello',
+    '/var/lib/candlepin',
+    '/var/www/html/pub'
+  ]
 
-echo "Backing up Elastic Search data... "
-tar --selinux -czvf elastic_data.tar.gz /var/lib/elasticsearch
-echo "Done."
-echo ""
+  puts "Backing up config files... "
+  `tar --selinux -czvf config_files.tar.gz #{CONFIGS.join(' ')}`
+  puts "Done."
 
-echo "Backing up Pulp data... "
-tar --selinux -czvf pulp_data.tar.gz /var/lib/pulp/ /var/www/pub/
-echo "Done."
-echo ""
+  puts "Backing up Elastic Search data... "
+  `tar --selinux -czvf elastic_data.tar.gz /var/lib/elasticsearch`
+  puts "Done."
 
-echo "Backing up postgres db... "
-tar --selinux -czvf pgsql_data.tar.gz /var/lib/pgsql/data/
-echo "Done."
-echo ""
+  puts "Backing up Pulp data... "
+  `tar --selinux -czvf pulp_data.tar.gz /var/lib/pulp/ /var/www/pub/`
+  puts "Done."
 
-echo "Backing up mongo db... "
-tar --selinux -czvf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/
-echo "Done."
-echo ""
+  puts "Backing up postgres db... "
+  `tar --selinux -czvf pgsql_data.tar.gz /var/lib/pgsql/data/`
+  puts "Done."
 
-# Start services
-service postgresql restart
-katello-service restart
+  puts "Backing up mongo db... "
+  `tar --selinux -czvf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
+  puts "Done."
 
-echo ""
-echo ""
-echo "** BACKUP Complete, contents can be found in: $BDIR"
-echo ""
-echo ""
+  `service postgresql start`
+  `katello-service start`
+
+  puts "**** BACKUP Complete, contents can be found in: #{DIR} ****"
+end
