@@ -11,23 +11,23 @@ lib_dir = rel-eng/custom/
 [builder]
 fetch_strategy = custom.ForemanSourceStrategy
 
-[katello-nightly-rhel5]
+[katello-2.4-rhel5]
 disttag = .el5
 whitelist = katello-repos katello-agent
 
-[katello-nightly-rhel6]
+[katello-2.4-rhel6]
 disttag = .el6
 scl = tfm
 
-[katello-nightly-rhel7]
+[katello-2.4-rhel7]
 disttag = .el7
 scl = tfm
 
-[katello-nightly-fedora20]
+[katello-2.4-fedora20]
 disttag = .fc20
 whitelist = katello-repos katello-agent
 
-[katello-nightly-fedora21]
+[katello-2.4-fedora21]
 disttag = .fc21
 whitelist = katello-repos katello-agent
 
