@@ -13,7 +13,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: 2.4.0
-Release: 1.nightly%{dist}
+Release: 1.rc1%{dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
