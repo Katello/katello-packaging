@@ -2,6 +2,8 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
+%global prever .rc1
+%global release 1
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
@@ -13,11 +15,11 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: 2.4.0
-Release: 1.rc1%{dist}
+Release: %{?prever:0.}%{release}%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
-Source0: https://rubygems.org/downloads/%{gem_name}-%{version}.gem
+Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 %if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
