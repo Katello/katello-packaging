@@ -2,6 +2,9 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
+#global prever .rc1
+%global mainver 2.5.0
+%global release 1.nightly
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
@@ -9,15 +12,20 @@
 %global scl_ruby_bin /usr/bin/%{?scl:%{scl_prefix}}ruby
 %global scl_rake /usr/bin/%{?scl:%{scl_prefix}}rake
 
+%global gem_instdir %{gem_dir}/gems/%{gem_name}-%{mainver}%{?prever}
+%global gem_docdir %{gem_dir}/doc/%{gem_name}-%{mainver}%{?prever}
+%global gem_cache %{gem_dir}/cache/%{gem_name}-%{mainver}%{?prever}.gem
+%global gem_spec %{gem_dir}/specifications/%{gem_name}-%{mainver}%{?prever}.gemspec
+
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
-Version: 2.5.0
-Release: 1.nightly%{dist}
+Version: %{mainver}
+Release: %{?prever:0.}%{release}%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
-Source0: https://rubygems.org/downloads/%{gem_name}-%{version}.gem
+Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 %if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
@@ -253,7 +261,7 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{foreman_dir}/public/apipie-cache/plugin/katello
 
 %files doc
-%{gem_dir}/doc/%{gem_name}-%{version}
+%{gem_dir}/doc/%{gem_name}-%{version}%{?perver}
 
 %changelog
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
