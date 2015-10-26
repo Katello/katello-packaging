@@ -3,7 +3,7 @@
 
 %global gem_name katello
 %global prever .rc1
-%global release 1
+%global release 2
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
