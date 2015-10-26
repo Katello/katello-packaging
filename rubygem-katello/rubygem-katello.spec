@@ -258,6 +258,13 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}
 
 %changelog
+* Mon Oct 26 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.1.rc1
+- Refs #10621: Don't deploy katello.yml during RPM build (ericdhelms@gmail.com)
+- Update rubygem-katello to tfm SCL. (ericdhelms@gmail.com)
+- Remove rubygem-justified from rubygem-katello (ericdhelms@gmail.com)
+- Remove i18n_data dependency on rubygem-katello (ericdhelms@gmail.com)
+- fixes #11285 - require qpid-cpp-server-linearstore (stbenjam@redhat.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
