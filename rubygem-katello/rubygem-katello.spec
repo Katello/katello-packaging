@@ -2,6 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
+%global mainver 2.4.0
 %global prever .rc1
 %global release 2
 
@@ -11,10 +12,15 @@
 %global scl_ruby_bin /usr/bin/%{?scl:%{scl_prefix}}ruby
 %global scl_rake /usr/bin/%{?scl:%{scl_prefix}}rake
 
+%global gem_instdir %{gem_dir}/gems/%{gem_name}-%{mainver}%{?prever}
+%global gem_docdir %{gem_dir}/doc/%{gem_name}-%{mainver}%{?prever}
+%global gem_cache %{gem_dir}/cache/%{gem_name}-%{mainver}%{?prever}.gem
+%global gem_spec %{gem_dir}/specifications/%{gem_name}-%{mainver}%{?prever}.gemspec
+
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
-Version: 2.4.0
+Version: %{mainver}
 Release: %{?prever:0.}%{release}%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
@@ -254,7 +260,7 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{foreman_dir}/public/apipie-cache/plugin/katello
 
 %files doc
-%{gem_dir}/doc/%{gem_name}-%{version}
+%{gem_dir}/doc/%{gem_name}-%{version}%{?prever}
 
 %changelog
 * Mon Oct 26 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.2.rc1
