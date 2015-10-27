@@ -263,6 +263,9 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}%{?prever}
 
 %changelog
+* Tue Oct 27 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.3.rc1
+- use prever to override gem paths in katello gem (jsherril@redhat.com)
+
 * Mon Oct 26 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.2.rc1
 - Refs #10621 - katello.yml no longer exists in gem (jsherril@redhat.com)
 
