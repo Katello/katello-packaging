@@ -4,7 +4,7 @@
 %global gem_name katello
 %global mainver 2.4.0
 %global prever .rc1
-%global release 2
+%global release 3
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
