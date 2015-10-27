@@ -175,6 +175,9 @@ ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}
 %doc README.*
 
 %changelog
+* Tue Oct 27 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-1.rc1.2
+- updating installer to rc1.2 for 2.4 (jsherril@redhat.com)
+
 * Tue Oct 27 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-1.rc1.1
 - updating installer for 2.4 rc1 (jsherril@redhat.com)
 
