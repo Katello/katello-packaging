@@ -1,8 +1,8 @@
 # Place this file in your /etc/yum.repos.d/ directory
 
 [katello-client]
-name=Katello Client Nightly
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/client/@SUBDIR@/$releasever/$basearch/
+name=Katello Client 2.4
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/2.4/client/@SUBDIR@/$releasever/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -11,8 +11,8 @@ priority=1
 # source repositories
 
 [katello-client-source]
-name=Katello Client Nightly Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/client/@SUBDIR@/$releasever/
+name=Katello Client 2.4 Source
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/2.4/client/@SUBDIR@/$releasever/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
