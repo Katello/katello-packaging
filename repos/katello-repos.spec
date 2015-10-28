@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        2.4.0
-Release:        3.rc1%{?dist}
+Release:        4.rc1%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
