@@ -21,6 +21,7 @@ Source4:    katello-service
 Source5:    service-wait
 Source6:    katello-restore
 Source7:    katello-backup
+Source8:    completions/katello-service.sh
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -62,6 +63,10 @@ install -Dp -m0755 %{SOURCE4} %{buildroot}%{_bindir}/katello-service
 install -Dp -m0755 %{SOURCE5} %{buildroot}%{_sbindir}/service-wait
 install -Dp -m0755 %{SOURCE2} %{buildroot}%{_bindir}/katello-remove
 install -Dp -m0755 %{SOURCE1} %{buildroot}/usr/share/foreman/script/foreman-debug.d/katello-debug.sh
+
+# install tab completion scripts
+install -d ${buildroot}/etc/bash_completion.d
+install -m 644 %{SOURCE8} ${buildroot}/etc/bash_completion.d/katello-service
 
 # install man page
 install -m 644 %{SOURCE0} %{buildroot}/%{_mandir}/man8
@@ -125,6 +130,7 @@ Useful utilities for managing Katello services
 %{_sbindir}/service-wait
 %{_bindir}/katello-service
 %{_mandir}/man8/katello-service.8*
+%{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
 * Thu Sep 03 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-6.nightly
