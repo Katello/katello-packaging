@@ -62,6 +62,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Oct 28 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-4.rc1
+- updating katello repos for 2.4 (jsherril@redhat.com)
+- Fixes #11746: Correct source URL for repositories RPM (ericdhelms@gmail.com)
+
 * Fri Aug 07 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-2.nightly
 - Add priority back to repos. (ericdhelms@gmail.com)
 
