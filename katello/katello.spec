@@ -65,8 +65,8 @@ install -Dp -m0755 %{SOURCE2} %{buildroot}%{_bindir}/katello-remove
 install -Dp -m0755 %{SOURCE1} %{buildroot}/usr/share/foreman/script/foreman-debug.d/katello-debug.sh
 
 # install tab completion scripts
-install -d ${buildroot}/etc/bash_completion.d
-install -m 644 %{SOURCE8} ${buildroot}/etc/bash_completion.d/katello-service
+install -d %{buildroot}/etc/bash_completion.d
+install -m 644 %{SOURCE8} %{buildroot}/etc/bash_completion.d/katello-service
 
 # install man page
 install -m 644 %{SOURCE0} %{buildroot}/%{_mandir}/man8
