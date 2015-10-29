@@ -21,7 +21,7 @@ Source4:    katello-service
 Source5:    service-wait
 Source6:    katello-restore
 Source7:    katello-backup
-Source8:    completions/katello-service.sh
+Source8:    katello-service.sh
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
