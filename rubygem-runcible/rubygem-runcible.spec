@@ -77,6 +77,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Thu Oct 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.4.0-1
+- Update runcible to 1.4.0 (paji@redhat.com)
+
 * Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 1.3.5-3
 - Update rubygem-runcible to tfm SCL (ericdhelms@gmail.com)
 
