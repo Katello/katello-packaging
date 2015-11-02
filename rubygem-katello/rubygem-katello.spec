@@ -140,6 +140,11 @@ BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
 
+#old dependencies that are no longer needed, remove in katello 2.6
+Obsoletes: ruby193-rubygem-haml
+Obsoletes: ruby193-rubygem-haml-rails
+Obsoletes: ruby193-rubygem-hpricot
+
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(katello) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
