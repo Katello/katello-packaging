@@ -268,6 +268,10 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}%{?prever}
 
 %changelog
+* Tue Nov 10 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.3.rc2
+- rebuild of katello and installer for 2.4.0.rc2 (jsherril@redhat.com)
+- Fixes #12354 - obsolete uneeded gems (jsherril@redhat.com)
+
 * Tue Oct 27 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-0.3.rc1
 - use prever to override gem paths in katello gem (jsherril@redhat.com)
 
