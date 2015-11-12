@@ -38,6 +38,7 @@
        <packagereq type="default">tfm-rubygem-hashr</packagereq>
        <packagereq type="default">tfm-rubygem-hpricot</packagereq>
        <packagereq type="default">tfm-rubygem-i18n_data</packagereq>
+       <packagereq type="default">tfm-rubygem-jenkins_api_client</packagereq>
        <packagereq type="default">tfm-rubygem-justified</packagereq>
        <packagereq type="default">tfm-rubygem-mixlib-shellout</packagereq>
        <packagereq type="default">tfm-rubygem-robotex</packagereq>
@@ -61,6 +62,7 @@
     <packagelist>
        <packagereq type="optional">tfm-rubygem-hashr-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-hpricot-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-jenkins_api_client-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-mixlib-shellout-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-runcible-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-sexp_processor-doc</packagereq>
