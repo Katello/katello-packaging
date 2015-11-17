@@ -16,20 +16,15 @@ BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
+Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: gutterball
 Requires: %{?scl_prefix}rubygem-katello
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
+
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: foreman-plugin >= 1.8
-
-%if 0%{?fedora} > 18
-Requires: %{?scl_prefix_ruby}ruby(release)
 BuildRequires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
-BuildRequires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
-%endif
 
 %description
 Gutterball plugin for Foreman and Katello.

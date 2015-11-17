@@ -27,11 +27,7 @@ License: Distributable
 URL:     http://www.katello.org
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
-%if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
-%endif
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
 Requires: katello-selinux
@@ -53,7 +49,6 @@ Requires: %{?scl_prefix}rubygem(less-rails)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
 Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
-Requires: %{?scl_prefix}rubygem(strong_parameters)
 Requires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 Requires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
 Requires: %{?scl_prefix_ruby}rubygem(rails)
@@ -75,7 +70,6 @@ BuildRequires: %{?scl_prefix}rubygem(less-rails)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
 BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 BuildRequires: %{?scl_prefix}rubygem(deface) < 2.0.0
-BuildRequires: %{?scl_prefix}rubygem(strong_parameters)
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
 BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
@@ -170,7 +164,7 @@ export BUNDLER_EXT_NOSTRICT=1
 export BUNDLER_EXT_GROUPS="default assets katello"
 
 %{scl_rake} security:generate_encryption_key
-%{scl_rake} assets:precompile:katello RAILS_ENV=production --trace
+%{scl_rake} plugin:assets:precompile[katello] RAILS_ENV=production --trace
 %{scl_rake} db:migrate RAILS_ENV=development --trace
 %{scl_rake} plugin:apipie:cache['katello'] RAILS_ENV=development cache_part=resources OUT=%{buildroot}%{gem_instdir}/public/apipie-cache/plugin/katello --trace
 

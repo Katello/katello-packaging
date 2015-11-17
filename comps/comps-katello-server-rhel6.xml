@@ -36,8 +36,6 @@
        <packagereq type="default">tfm-rubygem-ansi</packagereq>
        <packagereq type="default">tfm-rubygem-chunky_png</packagereq>
        <packagereq type="default">tfm-rubygem-fssm</packagereq>
-       <packagereq type="default">tfm-rubygem-hashr</packagereq>
-       <packagereq type="default">tfm-rubygem-hpricot</packagereq>
        <packagereq type="default">tfm-rubygem-i18n_data</packagereq>
        <packagereq type="default">tfm-rubygem-jenkins_api_client</packagereq>
        <packagereq type="default">tfm-rubygem-justified</packagereq>
@@ -45,7 +43,6 @@
        <packagereq type="default">tfm-rubygem-robotex</packagereq>
        <packagereq type="default">tfm-rubygem-runcible</packagereq>
        <packagereq type="default">tfm-rubygem-sexp_processor</packagereq>
-       <packagereq type="default">tfm-rubygem-strong_parameters</packagereq>
        <packagereq type="default">tfm-rubygem-terminal-table</packagereq>
        <packagereq type="default">tfm-rubygem-qpid_messaging</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_csv</packagereq>
@@ -62,8 +59,6 @@
     <uservisible>true</uservisible>
     <packagelist>
        <packagereq type="optional">tfm-rubygem-foreman_pipeline-doc</packagereq>
-       <packagereq type="optional">tfm-rubygem-hashr-doc</packagereq>
-       <packagereq type="optional">tfm-rubygem-hpricot-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-jenkins_api_client-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-mixlib-shellout-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-runcible-doc</packagereq>

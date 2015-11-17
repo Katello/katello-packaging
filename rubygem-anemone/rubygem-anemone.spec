@@ -12,14 +12,9 @@ Group:      Development/Languages
 URL:        http://anemone.rubyforge.org/
 Source:     https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
-Requires: %{?scl_prefix_ruby}ruby(rubygems)
-%if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
-%endif
-Requires:   %{?scl_prefix}rubygem(robotex) >= 1.0.0
-Requires:   %{?scl_prefix}rubygem(nokogiri) >= 1.3.0 
+Requires: %{?scl_prefix}rubygem(robotex) >= 1.0.0
+Requires: %{?scl_prefix}rubygem(nokogiri) >= 1.3.0 
 
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)

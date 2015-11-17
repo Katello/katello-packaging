@@ -13,11 +13,7 @@ License:       ASL 2.0
 URL:           http://qpid.apache.org
 Source0:       http://rubygems.org/gems/%{gem_name}-%{version}.gem
 
-%if 0%{?fedora} > 18
 Requires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
-%endif
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildRequires: %{?scl_prefix_ruby}ruby-devel
