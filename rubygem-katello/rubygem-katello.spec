@@ -97,7 +97,6 @@ Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
 Requires: %{?scl_prefix}rubygem(tire) => 0.6.2
 Requires: %{?scl_prefix}rubygem(tire) < 0.7
-Requires: %{?scl_prefix}rubygem(hooks)
 Requires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 Requires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
 Requires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
@@ -120,7 +119,6 @@ BuildRequires: %{?scl_prefix}rubygem(bastion) < 3.0.0
 BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
 BuildRequires: %{?scl_prefix}rubygem(tire) => 0.6.2
 BuildRequires: %{?scl_prefix}rubygem(tire) < 0.7
-BuildRequires: %{?scl_prefix}rubygem(hooks)
 BuildRequires: %{?scl_prefix_ruby}rubygem(json)
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
