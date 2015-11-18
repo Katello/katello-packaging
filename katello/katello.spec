@@ -127,6 +127,11 @@ Useful utilities for managing Katello services
 %{_mandir}/man8/katello-service.8*
 
 %changelog
+* Wed Nov 18 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-6.rc1
+- Fixes #12181 - Restart katello services in right order (aruzicka@redhat.com)
+- Fixes #12137 - Stops katello services in right order (aruzicka@redhat.com)
+- fixes #11568 - adds help scripts to recovery methods (cfouant@redhat.com)
+
 * Thu Sep 03 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-6.nightly
 - fixes #11648 - katello-service : add --only option (bbuckingham@redhat.com)
 - fixes #11648 - katello-service: update to start/stop postgresql
