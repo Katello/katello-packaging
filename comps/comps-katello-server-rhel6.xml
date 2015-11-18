@@ -45,7 +45,6 @@
        <packagereq type="default">tfm-rubygem-chunky_png</packagereq>
        <packagereq type="default">tfm-rubygem-fssm</packagereq>
        <packagereq type="default">tfm-rubygem-hashr</packagereq>
-       <packagereq type="default">tfm-rubygem-hooks</packagereq>
        <packagereq type="default">tfm-rubygem-hpricot</packagereq>
        <packagereq type="default">tfm-rubygem-i18n_data</packagereq>
        <packagereq type="default">tfm-rubygem-justified</packagereq>
