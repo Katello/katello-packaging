@@ -28,8 +28,6 @@ RETRY_INTERVAL=${RETRY_INTERVAL:-1}
 TOMCAT_PORT=${TOMCAT_PORT:-8443}
 TOMCAT_SERV_PORT=${TOMCAT_SERV_PORT:-8005}
 TOMCAT_TEST_URL=${TOMCAT_TEST_URL:-https://localhost:$TOMCAT_PORT/candlepin/status}
-ELASTICSEARCH_PORT=${ELASTICSEARCH_PORT:-9200}
-ELASTICSEARCH_TEST_URL=${ELASTICSEARCH_TEST_URL:-http://localhost:$ELASTICSEARCH_PORT}
 MONGO_PORT=${MONGO_PORT:-27017}
 POSTGRES_PORT=${POSTGRES_PORT:-5432}
 POSTGRES_DATA=${POSTGRES_DATA:-/var/lib/pgsql/data}
@@ -62,9 +60,6 @@ after_start() {
     tomcat6|tomcat7)
       # RHBZ 789288 - wait until data port is avaiable
       wait_for_url $TOMCAT_TEST_URL
-      ;;
-    elasticsearch)
-      wait_for_url $ELASTICSEARCH_TEST_URL
       ;;
     foreman)
       wait_for_url $FOREMAN_TEST_URL

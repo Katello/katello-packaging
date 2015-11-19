@@ -36,7 +36,6 @@ def restore
   puts "Done.\n"
 
   puts "Restoring backend data"
-  `tar --selinux --overwrite -xzvf elastic_data.tar.gz -C /`
   `tar --selinux --overwrite -xzvf pulp_data.tar.gz -C /`
   `tar --selinux --overwrite -xzvf mongo_data.tar.gz -C /`
   `tar --selinux --overwrite -xzvf pgsql_data.tar.gz -C /`

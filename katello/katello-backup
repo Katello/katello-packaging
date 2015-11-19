@@ -26,7 +26,6 @@ else
 
   CONFIGS=[
     '/etc/candlepin',
-    '/etc/elasticsearch',
     '/etc/foreman',
     '/etc/foreman-proxy',
     '/etc/gutterball',
@@ -46,7 +45,6 @@ else
     '/etc/puppet',
     '/etc/qpid',
     '/etc/qpid-dispatch',
-    '/etc/sysconfig/elasticsearch',
     '/etc/sysconfig/tomcat*',
     '/etc/tomcat*',
     '/root/ssl-build',
@@ -58,10 +56,6 @@ else
 
   puts "Backing up config files... "
   `tar --selinux -czvf config_files.tar.gz #{CONFIGS.join(' ')}`
-  puts "Done."
-
-  puts "Backing up Elastic Search data... "
-  `tar --selinux -czvf elastic_data.tar.gz /var/lib/elasticsearch`
   puts "Done."
 
   puts "Backing up Pulp data... "
