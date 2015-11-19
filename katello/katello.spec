@@ -133,6 +133,16 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Nov 19 2015 Eric D. Helms <ericdhelms@gmail.com> 2.5.0-1.nightly
+- Fixes #10291 - removes elasticsearch (cfouant@redhat.com)
+- Added bash completion support for katello-service
+  (stack@localhost.localdomain)
+- updating nightly to 2.5 (jsherril@redhat.com)
+- fixes #11826 - update katello-service man page (stbenjam@redhat.com)
+- Fixes #12181 - Restart katello services in right order (aruzicka@redhat.com)
+- Fixes #12137 - Stops katello services in right order (aruzicka@redhat.com)
+- fixes #11568 - adds help scripts to recovery methods (cfouant@redhat.com)
+
 * Thu Sep 03 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-6.nightly
 - fixes #11648 - katello-service : add --only option (bbuckingham@redhat.com)
 - fixes #11648 - katello-service: update to start/stop postgresql
