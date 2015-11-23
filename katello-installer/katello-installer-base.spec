@@ -2,7 +2,7 @@
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
-%global prever .rc2
+%global prever .rc3
 
 Name:    katello-installer-base
 Version: 2.4.0
