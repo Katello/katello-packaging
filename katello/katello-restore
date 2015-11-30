@@ -26,7 +26,7 @@ def restore
   puts "Done.\n"
 
   puts "Resetting Katello"
-  `tar --selinux --overwrite -xzvf config_files.tar.gz -C /`
+  `tar --selinux --overwrite -xzf config_files.tar.gz -C /`
   `katello-installer --reset`
   puts "Done.\n"
 
@@ -36,9 +36,9 @@ def restore
   puts "Done.\n"
 
   puts "Restoring backend data"
-  `tar --selinux --overwrite -xzvf pulp_data.tar.gz -C /`
-  `tar --selinux --overwrite -xzvf mongo_data.tar.gz -C /`
-  `tar --selinux --overwrite -xzvf pgsql_data.tar.gz -C /`
+  `tar --selinux --overwrite -xf pulp_data.tar -C /`
+  `tar --selinux --overwrite -xzf mongo_data.tar.gz -C /`
+  `tar --selinux --overwrite -xzf pgsql_data.tar.gz -C /`
   puts "Done.\n"
 
   puts "Restarting all Katello processes"

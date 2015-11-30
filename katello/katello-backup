@@ -55,19 +55,19 @@ else
   ]
 
   puts "Backing up config files... "
-  `tar --selinux -czvf config_files.tar.gz #{CONFIGS.join(' ')}`
+  `tar --selinux -czf config_files.tar.gz #{CONFIGS.join(' ')}`
   puts "Done."
 
   puts "Backing up Pulp data... "
-  `tar --selinux -czvf pulp_data.tar.gz /var/lib/pulp/ /var/www/pub/`
+  `tar --selinux -cf pulp_data.tar /var/lib/pulp/ /var/www/pub/`
   puts "Done."
 
   puts "Backing up postgres db... "
-  `tar --selinux -czvf pgsql_data.tar.gz /var/lib/pgsql/data/`
+  `tar --selinux -czf pgsql_data.tar.gz /var/lib/pgsql/data/`
   puts "Done."
 
   puts "Backing up mongo db... "
-  `tar --selinux -czvf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
+  `tar --selinux -czf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
   puts "Done."
 
   `service postgresql start`
