@@ -18,10 +18,26 @@ whitelist = katello-repos katello-agent
 [katello-nightly-rhel6]
 disttag = .el6
 scl = tfm
+blacklist = tfm-rubygem-mixlib-shellout
+  tfm-rubygem-terminal-table
 
 [katello-nightly-rhel7]
 disttag = .el7
 scl = tfm
+blacklist = tfm-rubygem-mixlib-shellout
+  tfm-rubygem-terminal-table
+
+[katello-thirdparty-rhel6]
+disttag = .el6
+scl = tfm
+whitelist = tfm-rubygem-mixlib-shellout
+  tfm-rubygem-terminal-table
+
+[katello-thirdparty-rhel7]
+disttag = .el7
+scl = tfm
+whitelist = tfm-rubygem-mixlib-shellout
+  tfm-rubygem-terminal-table
 
 [katello-nightly-fedora20]
 disttag = .fc20
