@@ -69,5 +69,8 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Tue Dec 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.1-1
+- new package built with tito
+
 * Mon Nov 02 2015 Ondrej Prazak <oprazak@redhat.com> 2.2.1-1
 - initial build
