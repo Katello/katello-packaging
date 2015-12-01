@@ -73,5 +73,8 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/History.rdoc
 
 %changelog
+* Tue Dec 01 2015 Eric D. Helms <ericdhelms@gmail.com> 1.5.2-1
+- new package built with tito
+
 * Mon Nov 2 2015 Ondrej Prazak <oprazak@redhat.com> 1.5.2-1
 - initial build
