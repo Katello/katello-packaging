@@ -103,5 +103,8 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 %doc %{gem_instdir}/CONTRIBUTORS.md
 
 %changelog
+* Wed Dec 02 2015 Eric D. Helms <ericdhelms@gmail.com> 1.4.1-1
+- new package built with tito
+
 * Thu Nov 05 2015 Ondrej Prazak <oprazak@redhat.com> 1.4.1-1
 - initial build
