@@ -52,6 +52,8 @@ if [ $NOGENERIC -eq 0 ]; then
   add_files /etc/qpid/*
   add_files /etc/qpidd.conf
 fi
+add_cmd "qpid-stat --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b amqps://localhost:5671 -q" "qpid_stat_queues"
+add_cmd "qpid-stat --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b amqps://localhost:5671 -u" "qpid_stat_subscriptions" 
 
 # Gofer
 add_files /etc/gofer
