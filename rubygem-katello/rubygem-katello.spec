@@ -34,63 +34,11 @@ Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
 %endif
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
-# service-wait dependency
-Requires: wget
-Requires: curl
-
-%if 0%{?rhel} == 6
-Requires: redhat-logos >= 60.0.14
-%endif
-
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-Requires(post): candlepin-tomcat
-%else
-Requires(post): candlepin-tomcat6
-%endif
-
-Requires(post): chkconfig
-Requires(postun): initscripts coreutils sed
-Requires(pre): shadow-utils
-Requires(preun): chkconfig
-Requires(preun): initscripts
-
-#Pulp Requirements
-Requires: pulp-katello
-Requires: pulp-nodes-parent
-Requires: pulp-docker-plugins
-Requires: pulp-puppet-plugins
-Requires: pulp-rpm-plugins
-Requires: pulp-puppet-tools
-Requires: pulp-selinux
-Requires: pulp-server
-Requires: mongodb >= 2.4
-Requires: mongodb-server >= 2.4
-Requires: cyrus-sasl-plain
-Requires: python-crane
-Requires: python-gofer-qpid
-Requires: qpid-cpp-server-linearstore
-Requires: qpid-cpp-client-devel
-Requires: qpid-dispatch-router
-
 Requires: katello-selinux
-Requires: candlepin-selinux
-Requires: createrepo >= 0.9.9-18%{?dist}
 Requires: foreman >= 1.9.0
-Requires: java-openjdk >= 1:1.7.0
-Requires: java-openjdk < 1:1.8.0.45
-# Still Requires katello-common which clashes with
-# new build - will re-enable after fixing
-#Requires: katello-selinux
-Requires: libvirt-devel
-Requires: lsof
-Requires: postgresql
-Requires: postgresql-server
-Requires: v8
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 Requires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
 Requires: %{?scl_prefix}rubygem(bastion) < 3.0.0
-Requires: %{?scl_prefix_ruby}rubygem(rails)
-Requires: %{?scl_prefix_ruby}rubygem(json)
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
@@ -108,14 +56,15 @@ Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
 Requires: %{?scl_prefix}rubygem(strong_parameters)
 Requires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 Requires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
+Requires: %{?scl_prefix_ruby}rubygem(rails)
+Requires: %{?scl_prefix_ruby}rubygem(json)
+
 BuildRequires: foreman >= 1.9.0
 BuildRequires: foreman-assets >= 1.9.0
+BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 BuildRequires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
 BuildRequires: %{?scl_prefix}rubygem(bastion) < 3.0.0
-BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
-BuildRequires: %{?scl_prefix_ruby}rubygem(json)
-BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
 BuildRequires: %{?scl_prefix}rubygem(gettext_i18n_rails)
@@ -126,10 +75,12 @@ BuildRequires: %{?scl_prefix}rubygem(less-rails)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
 BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 BuildRequires: %{?scl_prefix}rubygem(deface) < 2.0.0
-BuildRequires: %{?scl_prefix_ruby}rubygem(uglifier) >= 1.0.3
 BuildRequires: %{?scl_prefix}rubygem(strong_parameters)
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
+BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
+BuildRequires: %{?scl_prefix_ruby}rubygem(json)
+BuildRequires: %{?scl_prefix_ruby}rubygem(uglifier) >= 1.0.3
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
 
