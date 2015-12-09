@@ -28,15 +28,51 @@ BuildRequires: util-linux
 
 Requires: %{name}-common = %{version}-%{release}
 
+%if 0%{?rhel} == 6
+Requires: redhat-logos >= 60.0.14
+%endif
+
+#Pulp Requirements
+Requires: pulp-katello
+Requires: pulp-nodes-parent
+Requires: pulp-docker-plugins
+Requires: pulp-puppet-plugins
+Requires: pulp-rpm-plugins
+Requires: pulp-puppet-tools
+Requires: pulp-selinux
+Requires: pulp-server
+Requires: mongodb >= 2.4
+Requires: mongodb-server >= 2.4
+Requires: cyrus-sasl-plain
+Requires: python-crane
+Requires: python-gofer-qpid
+Requires: qpid-cpp-server-linearstore
+Requires: qpid-cpp-client-devel
+Requires: qpid-dispatch-router
+Requires: createrepo >= 0.9.9-18%{?dist}
+
+# Candlepin Requirements
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+Requires(post): candlepin-tomcat
+%else
+Requires(post): candlepin-tomcat6
+%endif
+Requires: candlepin-selinux
+Requires: java-openjdk >= 1:1.7.0
+Requires: java-openjdk < 1:1.8.0.45
+Requires: lsof
+Requires: postgresql
+Requires: postgresql-server
+
 #foreman plugins and optional packages
-Requires:       %{?scl_prefix}rubygem-foreman_bootdisk
-#Requires:       %{?scl_prefix}rubygem-foreman_discovery #http://projects.theforeman.org/issues/9200
-Requires:       %{?scl_prefix}rubygem-foreman_hooks
-Requires:       %{name}-installer
-Requires:       foreman-libvirt
-Requires:       foreman-ovirt
-Requires:       foreman-vmware
-Requires:       foreman-gce
+Requires: %{?scl_prefix}rubygem-foreman_bootdisk
+Requires: %{?scl_prefix}rubygem-foreman_discovery
+Requires: %{?scl_prefix}rubygem-foreman_hooks
+Requires: %{name}-installer
+Requires: foreman-libvirt
+Requires: foreman-ovirt
+Requires: foreman-vmware
+Requires: foreman-gce
 
 %description
 Provides a package for managing application life-cycle for Linux systems.
