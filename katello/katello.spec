@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.5.0
-Release:    1.nightly%{?dist}
+Release:    2.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -169,6 +169,12 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Dec 09 2015 Eric D. Helms <ericdhelms@gmail.com> 2.5.0-2.nightly
+- Fixes #12741: Move pulp/candlepin requires to metapackage
+  (ericdhelms@gmail.com)
+- Fixes #12678 - Add qpid-stat -q/-u to foreman-debug (pmoravec@redhat.com)
+- do not compress pulp data -- RPMs are already compressed (egolov@redhat.com)
+
 * Thu Nov 19 2015 Eric D. Helms <ericdhelms@gmail.com> 2.5.0-1.nightly
 - Fixes #10291 - removes elasticsearch (cfouant@redhat.com)
 - Added bash completion support for katello-service
