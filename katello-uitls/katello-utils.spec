@@ -5,7 +5,7 @@
 
 Name:           katello-utils
 Version:        2.4.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Additional tools for Katello
 
 Group:          Applications/Internet
@@ -97,6 +97,10 @@ install -m 0644 man/katello-disconnected.man1 %{buildroot}%{_mandir}/man1/katell
 
 
 %changelog
+* Wed Nov 25 2015 Sean O'Keeffe <seanokeeffe797@gmail.com> 2.4.0-4
+- Fixes #12606: Validates repo ids on enable/disable -r commands within 
+  katello-utils (seanokeeffe797@gmail.com)
+
 * Tue Sep 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-3
 - Fixing erroneous requires within katello-utils (ericdhelms@gmail.com)
 
