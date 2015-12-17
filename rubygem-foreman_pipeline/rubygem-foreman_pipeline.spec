@@ -194,5 +194,8 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 exit 0
 
 %changelog
+* Thu Dec 17 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.8-1
+- new package built with tito
+
 * Thu Nov 12 2015 Ondrej Prazak <oprazak@redhat.com> 0.0.8-1
 - initial build
