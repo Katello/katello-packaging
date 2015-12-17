@@ -18,7 +18,7 @@
 Summary:    A Foreman plugin that cooperates with Jenkins
 Name:       %{?scl_prefix}rubygem-%{gem_name}
 Version:    0.0.8
-Release:    1%{?foremandist}%{?dist}
+Release:    2%{?foremandist}%{?dist}
 Group:      Applications/System
 License:    GPLv3
 URL:        http://github.com/theforeman/foreman_pipeline
@@ -194,6 +194,9 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 exit 0
 
 %changelog
+* Thu Dec 17 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.8-2
+- 
+
 * Thu Dec 17 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.8-1
 - new package built with tito
 
