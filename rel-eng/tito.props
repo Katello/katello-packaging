@@ -44,12 +44,12 @@ whitelist = rubygem-jenkins_api_client
   rubygem-mixlib-shellout
   rubygem-terminal-table
 
-[katello-nightly-fedora20]
-disttag = .fc20
+[katello-nightly-fedora22]
+disttag = .fc22
 whitelist = katello-repos katello-agent
 
-[katello-nightly-fedora21]
-disttag = .fc21
+[katello-nightly-fedora23]
+disttag = .fc23
 whitelist = katello-repos katello-agent
 
 [requirements]
