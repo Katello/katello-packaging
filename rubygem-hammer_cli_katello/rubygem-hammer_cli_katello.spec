@@ -22,11 +22,7 @@ Obsoletes: rubygem-%{gem_name} < 0.0.17-3
 %endif
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-%if 0%{?fedora} > 18
-Requires:  %{?scl_prefix_ruby}ruby(release)
-%else
-Requires:  %{?scl_prefix_ruby}ruby(abi)
-%endif
+Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) >= 0.5.0
 Requires: %{?scl_prefix}rubygem(hammer_cli_foreman) < 1.0.0

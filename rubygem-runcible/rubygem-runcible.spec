@@ -3,8 +3,6 @@
 
 %global gem_name runcible
 
-%define rubyabi 1.9.1
-
 Name:           %{?scl_prefix}rubygem-%{gem_name}
 Version:        1.4.0
 Release:        1%{?dist}
@@ -18,11 +16,7 @@ BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-%if 0%{?fedora} > 18
 Requires:  %{?scl_prefix_ruby}ruby(release)
-%else
-Requires:  %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
-%endif
 Requires:  %{?scl_prefix_ruby}ruby(rubygems)
 Requires:  %{?scl_prefix_ruby}rubygem(json)
 Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
