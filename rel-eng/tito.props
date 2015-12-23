@@ -23,12 +23,12 @@ scl = tfm
 disttag = .el7
 scl = tfm
 
-[katello-2.4-fedora20]
-disttag = .fc20
+[katello-2.4-fedora22]
+disttag = .fc22
 whitelist = katello-repos katello-agent
 
-[katello-2.4-fedora21]
-disttag = .fc21
+[katello-2.4-fedora23]
+disttag = .fc23
 whitelist = katello-repos katello-agent
 
 [requirements]
