@@ -4,29 +4,23 @@
 %global gem_name mixlib-shellout
 
 Summary: Run external commands on Unix or Windows
-Name: %{?scl_prefix}rubygem-%{gem_name}
+Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 2.2.1
-Release: 1%{?dist}
-Group: Development/Languages
+Release: 2%{?dist}
+Group:   Development/Languages
 License: GPLv3
-URL: https://github.com/chef/mixlib-shellout
+URL:     https://github.com/chef/mixlib-shellout
 Source0: http://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
-Requires: %{?scl_prefix_ruby}ruby(rubygems)
-Requires: %{?scl_prefix_ruby}ruby
-
-%if "%{?scl_ruby}" == "ruby193" || (0%{?el6} && 0%{!?scl:1})
-Requires: %{?scl_prefix_ruby}ruby(abi)
-BuildRequires: %{?scl_prefix_ruby}ruby(abi)
-%else
-Requires: %{?scl_prefix_ruby}ruby(release)
-BuildRequires: %{?scl_prefix_ruby}ruby(release)
-%endif
-
-BuildRequires: %{?scl_prefix_ruby}rubygems-devel
-BuildRequires: %{?scl_prefix_ruby}ruby
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(release)
+
+BuildRequires: %{?scl_prefix_ruby}ruby(release)
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
+BuildRequires: %{?scl_prefix_ruby}ruby
 
 %description
 Provides a simplified interface to shelling out
