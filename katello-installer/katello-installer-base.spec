@@ -175,6 +175,9 @@ ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}
 %doc README.*
 
 %changelog
+* Wed Dec 23 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-1
+- katello 2.4.0 release installer and base package (jsherril@redhat.com)
+
 * Mon Nov 23 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-1.rc3
 - updating 2.4.0 rc3 builds (jsherril@redhat.com)
 
