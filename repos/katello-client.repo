@@ -5,7 +5,7 @@ name=Katello Client 2.4
 baseurl=https://fedorapeople.org/groups/katello/releases/yum/2.4/client/@SUBDIR@/$releasever/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
-gpgcheck=0
+gpgcheck=1
 priority=1
 
 # source repositories
