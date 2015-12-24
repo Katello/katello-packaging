@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Dec 23 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-5
+- enabling gpg check for 2.4.0 (jsherril@redhat.com)
+
 * Wed Oct 28 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-4.rc1
 - updating katello repos for 2.4 (jsherril@redhat.com)
 - Fixes #11746: Correct source URL for repositories RPM (ericdhelms@gmail.com)
