@@ -8,23 +8,21 @@
 Summary:    Ruby library to obey robots.txt 
 Name:       %{?scl_prefix}rubygem-%{gem_name}
 Version:    1.0.0
-Release:    17%{?dist}
+Release:    18%{?dist}
 License:    MIT 
 Group:      Development/Languages
 URL:        http://www.github.com/chriskite/robotex
 Source0:    https://rubygems.org/downloads/%{gem_name}-%{version}.gem
-Requires:   %{?scl_prefix_ruby}rubygems
-%if 0%{?fedora} > 18
-Requires:   ruby(release)
-%else
-Requires:   %{?scl_prefix_ruby}ruby(abi) = %{rubyabi}
-%endif
-Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
+
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
-BuildRequires:  %{?scl_prefix_ruby}rubygems
-BuildRequires: %{?scl_prefix_ruby}rubygems-devel
-BuildRequires: %{?scl_prefix_ruby}rubygem(rspec)
+Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 BuildArch:  noarch
+
+Requires: %{?scl_prefix_ruby}rubygems
+Requires: %{?scl_prefix_ruby}ruby(release)
+
+BuildRequires: %{?scl_prefix_ruby}rubygems
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 
 %description
 With one line of code, Robotex (pronounced like “robotics”) will download
