@@ -52,7 +52,8 @@ else
     '/var/lib/katello',
     '/var/lib/candlepin',
     '/var/www/html/pub',
-    '/var/lib/puppet/foreman_cache_data'
+    '/var/lib/puppet/foreman_cache_data',
+    '/var/lib/puppet/ssl'
   ]
 
   puts "Backing up config files... "
