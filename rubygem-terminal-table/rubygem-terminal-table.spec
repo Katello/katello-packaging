@@ -66,6 +66,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/History.rdoc
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.5.2-2
+- Build rubygem-terminal_table for rh22 SCL (ericdhelms@gmail.com)
+
 * Tue Dec 01 2015 Eric D. Helms <ericdhelms@gmail.com> 1.5.2-1
 - new package built with tito
 
