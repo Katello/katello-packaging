@@ -95,6 +95,9 @@ popd
 %{gem_instdir}/spec/
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.0.0-18
+- Build rubygem-robotex for rh22 SCL (ericdhelms@gmail.com)
+
 * Thu Aug 27 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.0-17
 - new package built with tito
 
