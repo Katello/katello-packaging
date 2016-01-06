@@ -72,6 +72,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-5
+- Build rubygem-hammer_cli_gutterball for RH22 SCL (ericdhelms@gmail.com)
+
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-4
 - Update rubygem-hammer_cli_gutterball to tfm SCL (ericdhelms@gmail.com)
 
