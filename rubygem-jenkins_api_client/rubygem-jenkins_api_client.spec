@@ -93,6 +93,9 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 %doc %{gem_instdir}/CONTRIBUTORS.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.4.1-2
+- Build rubygem-jenkins_api_client for RH22 SCL (ericdhelms@gmail.com)
+
 * Wed Dec 02 2015 Eric D. Helms <ericdhelms@gmail.com> 1.4.1-1
 - new package built with tito
 
