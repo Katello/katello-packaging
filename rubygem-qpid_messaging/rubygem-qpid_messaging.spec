@@ -7,7 +7,7 @@
 Summary: Ruby bindings for the Qpid messaging framework
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: %{qpid_version}.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: ASL 2.0
 URL:     http://qpid.apache.org
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
@@ -70,6 +70,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-7
+- Include native extensions for qpid_messaging properly (ericdhelms@gmail.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-6
 - Updating rubygem-qpid_messaging spec (ericdhelms@gmail.com)
 
