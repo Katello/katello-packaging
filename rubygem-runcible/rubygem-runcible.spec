@@ -5,7 +5,7 @@
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
 Version:        1.4.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A gem exposing Pulp's juiciest parts
 Group:          Applications/System
 License:        MIT
@@ -16,14 +16,14 @@ BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-Requires:  %{?scl_prefix_ruby}ruby(release)
-Requires:  %{?scl_prefix_ruby}ruby(rubygems)
-Requires:  %{?scl_prefix_ruby}rubygem(json)
 Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
 Requires:  %{?scl_prefix}rubygem(rest-client) < 1.8.0
 Requires:  %{?scl_prefix}rubygem(oauth)
-Requires:  %{?scl_prefix_ruby}rubygem(activesupport) >= 3.0.10
-Requires:  %{?scl_prefix_ruby}rubygem(i18n) >= 0.5.0
+Requires:  %{?scl_prefix}rubygem(i18n) >= 0.5.0
+Requires:  %{?scl_prefix_ror}rubygem(activesupport) >= 3.0.10
+Requires:  %{?scl_prefix_ruby}rubygem(json)
+Requires:  %{?scl_prefix_ruby}ruby(release)
+Requires:  %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}rubygems
