@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.4.0-3
+- rubygem-runcible requires referenced wrong SCL (ericdhelms@gmail.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.4.0-2
 - Build rubygem-runcible for rh22 SCL (ericdhelms@gmail.com)
 
