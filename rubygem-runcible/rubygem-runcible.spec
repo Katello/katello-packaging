@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.4.0-2
+- Build rubygem-runcible for rh22 SCL (ericdhelms@gmail.com)
+
 * Thu Oct 29 2015 Eric D. Helms <ericdhelms@gmail.com> 1.4.0-1
 - Update runcible to 1.4.0 (paji@redhat.com)
 
