@@ -69,6 +69,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-4
+- Build rubygem-qpid_messaging for rh22 SCL (ericdhelms@gmail.com)
+
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-3
 - Fixing scl_prefix reference in rubygem-qpid_messaging (ericdhelms@gmail.com)
 
