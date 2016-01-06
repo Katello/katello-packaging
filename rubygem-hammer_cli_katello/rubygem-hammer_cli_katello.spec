@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.0.19-2
+- Build rubygem-hammer_cli_katello for RH22 SCL (ericdhelms@gmail.com)
+
 * Wed Dec 16 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.19-1
 - Refs #12846: bump hammer_cli_katello to 0.0.19 (ericdhelms@gmail.com)
 
