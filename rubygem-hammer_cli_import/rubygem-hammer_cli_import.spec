@@ -79,6 +79,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.10.22-2
+- Build rubygem-hammer_cli_import for RH22 SCL (ericdhelms@gmail.com)
+
 * Thu Sep 17 2015 Justin Sherrill <jsherril@redhat.com> 0.10.22-1
 - Updating rubygem-hammer_cli_import to 0.10.22 (jsherril@redhat.com)
 
