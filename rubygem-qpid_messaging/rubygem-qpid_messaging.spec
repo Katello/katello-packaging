@@ -68,6 +68,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-6
+- Updating rubygem-qpid_messaging spec (ericdhelms@gmail.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com>
 - Updating rubygem-qpid_messaging spec (ericdhelms@gmail.com)
 
