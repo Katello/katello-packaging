@@ -63,6 +63,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 2.2.1-2
+- Build rubygem-mixlib-shellout for rh22 SCL (ericdhelms@gmail.com)
+
 * Tue Dec 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.1-1
 - new package built with tito
 
