@@ -13,6 +13,15 @@ optparse = OptionParser.new do |opts|
     @options[:skip_pulp] = skip_pulp
   end
 
+  opts.on("--incremental [PREVIOUS_BACKUP_DIR]", String, "Backup changes since previous backup") do |dir_path|
+    if Dir.exist?(dir_path)
+      dir_path.chop! if dir_path.end_with? "/"
+      @options[:incremental] = dir_path
+    else
+      opts.abort("Previous backup directory does not exist: #{dir_path}")
+    end
+  end
+
   opts.parse!
 
   if ARGV.length == 0
@@ -57,22 +66,24 @@ CONFIGS=[
   '/var/lib/puppet/ssl'
 ]
 
+`cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
+
 puts "Backing up config files... "
-`tar --selinux --create --gzip --file=config_files.tar.gz #{CONFIGS.join(' ')}`
+`tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=config.snar #{CONFIGS.join(' ')}`
 puts "Done."
 
 unless @options[:skip_pulp]
   puts "Backing up Pulp data... "
-  `tar --selinux --create --file=pulp_data.tar /var/lib/pulp/ /var/www/pub/`
+  `tar --selinux --create --file=pulp_data.tar --listed-incremental=pulp.snar /var/lib/pulp/ /var/www/pub/`
   puts "Done."
 end
 
 puts "Backing up postgres db... "
-`tar --selinux --create --gzip --file=pgsql_data.tar.gz /var/lib/pgsql/data/`
+`tar --selinux --create --gzip --file=pgsql_data.tar.gz --listed-incremental=postgres.snar /var/lib/pgsql/data/`
 puts "Done."
 
 puts "Backing up mongo db... "
-`tar --selinux --create --gzip --file=mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
+`tar --selinux --create --gzip --file=mongo_data.tar.gz --listed-incremental=mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
 puts "Done."
 
 `katello-service start`

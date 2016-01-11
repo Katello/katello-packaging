@@ -3,13 +3,13 @@
 require 'optparse'
 require 'fileutils'
 
-confirmed = 0
+confirmed = false
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-restore /path/to/dir [options]\n eg: $ katello-restore /tmp/katello-backup"
 
   opts.on("-y", "--assumeyes", "Answer yes for all questions") do
-    confirmed = 1
+    confirmed = true
   end
 end
 
@@ -26,7 +26,7 @@ def restore
   puts "Done.\n"
 
   puts "Resetting Katello"
-  `tar --selinux --overwrite -xzf config_files.tar.gz -C /`
+  `tar --selinux --overwrite --listed-incremental=/dev/null -xzf config_files.tar.gz -C /`
   `foreman-installer --scenario katello --reset`
   puts "Done.\n"
 
@@ -36,9 +36,9 @@ def restore
   puts "Done.\n"
 
   puts "Restoring backend data"
-  `tar --selinux --overwrite -xf pulp_data.tar -C /`
-  `tar --selinux --overwrite -xzf mongo_data.tar.gz -C /`
-  `tar --selinux --overwrite -xzf pgsql_data.tar.gz -C /`
+  `tar --selinux --overwrite --listed-incremental=/dev/null -xf pulp_data.tar -C /`
+  `tar --selinux --overwrite --listed-incremental=/dev/null -xzf mongo_data.tar.gz -C /`
+  `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
   puts "Done.\n"
 
   puts "Restarting all Katello processes"
@@ -61,7 +61,14 @@ def confirm
 end
 
 if !DIR.nil? && File.directory?(DIR)
-  confirmed ? restore : confirm
+  if Dir.entries(DIR).include?(pulp_data.tar)
+    confirmed ? restore : confirm
+  else
+    puts "**** Given directory does not include pulp content ****"
+    puts "**** Please choose a backup that contains pulp content ****"
+    puts optparse
+    exit(-1)
+  end
 else
   puts "**** Given directory is not valid ****"
   puts optparse
