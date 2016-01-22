@@ -27,18 +27,11 @@ License: Distributable
 URL:     http://www.katello.org
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
-%if 0%{?fedora} > 18
-Requires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) = 1.9.1
-%endif
-Requires: %{?scl_prefix_ruby}ruby(rubygems)
-
 Requires: katello-selinux
-Requires: foreman >= 1.9.0
+Requires: foreman >= 1.11.0
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
-Requires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
-Requires: %{?scl_prefix}rubygem(bastion) < 3.0.0
+Requires: %{?scl_prefix}rubygem(bastion) >= 3.0.0
+Requires: %{?scl_prefix}rubygem(bastion) < 4.0.0
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
@@ -49,40 +42,37 @@ Requires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 Requires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 Requires: %{?scl_prefix}rubygem(anemone)
-Requires: %{?scl_prefix}rubygem(less-rails)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
 Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
-Requires: %{?scl_prefix}rubygem(strong_parameters)
 Requires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 Requires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
-Requires: %{?scl_prefix_ruby}rubygem(rails)
 Requires: %{?scl_prefix_ruby}rubygem(json)
+Requires: %{?scl_prefix_ruby}ruby(release)
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
-BuildRequires: foreman >= 1.9.0
-BuildRequires: foreman-assets >= 1.9.0
+BuildRequires: foreman-assets
+BuildRequires: foreman-plugin >= 1.11.0
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
-BuildRequires: %{?scl_prefix}rubygem(bastion) >= 2.0.0
-BuildRequires: %{?scl_prefix}rubygem(bastion) < 3.0.0
+BuildRequires: %{?scl_prefix}rubygem(bastion) >= 3.0.0
+BuildRequires: %{?scl_prefix}rubygem(bastion) < 4.0.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
 BuildRequires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 BuildRequires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 BuildRequires: %{?scl_prefix}rubygem(anemone)
-BuildRequires: %{?scl_prefix}rubygem(less-rails)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
 BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 BuildRequires: %{?scl_prefix}rubygem(deface) < 2.0.0
-BuildRequires: %{?scl_prefix}rubygem(strong_parameters)
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
-BuildRequires: %{?scl_prefix_ruby}rubygem(sqlite3)
+BuildRequires: %{?scl_prefix_ror}rubygem(rails)
 BuildRequires: %{?scl_prefix_ruby}rubygem(json)
-BuildRequires: %{?scl_prefix_ruby}rubygem(uglifier) >= 1.0.3
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
+BuildRequires: %{?scl_prefix_ruby}ruby(release)
 
 #old dependencies that are no longer needed, remove in katello 2.6
 Obsoletes: ruby193-rubygem-haml
@@ -108,10 +98,10 @@ This package contains documentation for rubygem-%{gem_name}.
 %prep
 %setup -q -c -T -n %{pkg_name}-%{version}
 mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} - << \EOF}
+%{?scl:scl enable %{scl} "}
 gem install --local --install-dir .%{gem_dir} \
-            --force %{SOURCE0}
-%{?scl:EOF}
+            --force %{SOURCE0} --no-rdoc --no-ri
+%{?scl:"}
 
 %build
 
@@ -120,96 +110,32 @@ mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
-mkdir -p ./usr/share
-cp -r %{foreman_dir} ./usr/share || echo 0
-
-mkdir -p ./%{_localstatedir}/lib/foreman
-cp -r /var/lib/foreman/db ./%{_localstatedir}/lib/foreman || echo 0
-unlink ./usr/share/foreman/db
-ln -sv `pwd`/%{_localstatedir}/lib/foreman/db ./usr/share/foreman/db
-
-cp -r /var/lib/foreman/public ./%{_localstatedir}/lib/foreman || echo 0
-unlink ./usr/share/foreman/public
-ln -sv `pwd`/%{_localstatedir}/lib/foreman/public ./usr/share/foreman/public
-
-unlink ./usr/share/foreman/config/database.yml
-unlink ./usr/share/foreman/config/settings.yaml
-unlink ./usr/share/foreman/config/initializers/encryption_key.rb
-
-cp /etc/foreman/settings.yaml ./usr/share/foreman/config
-
-cat <<DBPROD >> ./usr/share/foreman/config/database.yml
-production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
-
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
-DBPROD
-
-
-pushd ./usr/share/foreman
-sed -i 's/:locations_enabled: false/:locations_enabled: true/' config/settings.yaml
-sed -i 's/:organizations_enabled: false/:organizations_enabled: true/' config/settings.yaml
-export GEM_PATH=%{buildroot}%{gem_dir}:${GEM_PATH:+${GEM_PATH}}${GEM_PATH:-`scl enable %{scl_ruby} -- ruby -e "print Gem.path.join(':')"`}
-
-cat <<GEMFILE > ./bundler.d/%{gem_name}.rb
-group :katello do
-  gem '%{gem_name}'
-end
-GEMFILE
-
-unlink tmp
-
-export BUNDLER_EXT_NOSTRICT=1
-export BUNDLER_EXT_GROUPS="default assets katello"
-
-%{scl_rake} security:generate_encryption_key
-%{scl_rake} assets:precompile:katello RAILS_ENV=production --trace
-%{scl_rake} db:migrate RAILS_ENV=development --trace
-%{scl_rake} plugin:apipie:cache['katello'] RAILS_ENV=development cache_part=resources OUT=%{buildroot}%{gem_instdir}/public/apipie-cache/plugin/katello --trace
-
-popd
-rm -rf ./usr
-
-mkdir -p %{buildroot}%{foreman_bundlerd_dir}
-cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
-group :katello do
-  gem '%{gem_name}'
-end
-GEMFILE
-
-
-mkdir -p %{buildroot}%{foreman_dir}/public/assets
-mkdir -p %{buildroot}%{foreman_dir}/public/apipie-cache/plugin
-ln -s %{gem_instdir}/public/assets/katello %{buildroot}%{foreman_dir}/public/assets/katello
-ln -s %{gem_instdir}/public/assets/bastion_katello %{buildroot}%{foreman_dir}/public/assets/bastion_katello
-ln -s %{gem_instdir}/public/apipie-cache/plugin/katello %{buildroot}%{foreman_dir}/public/apipie-cache/plugin/katello
-
-%post
-cp -r %{foreman_dir}/public/apipie-cache/plugin/katello/* %{foreman_dir}/public/apipie-cache/
-chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
-
-%clean
-%{__rm} -rf %{buildroot}
+%foreman_bundlerd_file
+%foreman_precompile_plugin -s -a
 
 %files
-%defattr(-, root, root)
-%{gem_instdir}/
-%exclude %{gem_cache}
+%dir %{gem_instdir}/
+%{gem_libdir}
+%{gem_instdir}/app
+%{gem_instdir}/config
+%{gem_instdir}/db
+%{gem_instdir}/locale
+%{gem_instdir}/engines
+%{gem_instdir}/ca
+%{gem_instdir}/vendor
 %{gem_spec}
-%{foreman_bundlerd_dir}/%{gem_name}.rb
-%{foreman_dir}/public/assets/katello
-%{foreman_dir}/public/assets/bastion_katello
-%{foreman_dir}/public/apipie-cache/plugin/katello
+%{foreman_bundlerd_plugin}
+%{foreman_apipie_cache_foreman}
+%{foreman_apipie_cache_plugin}
+%{foreman_assets_plugin}
+%{gem_instdir}/public/assets/bastion_katello
+
+%exclude %{gem_cache}
+
+%doc %{gem_instdir}/LICENSE.txt
 
 %files doc
-%{gem_dir}/doc/%{gem_name}-%{version}%{?perver}
+%doc %{gem_instdir}/README.md
 
 %changelog
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
