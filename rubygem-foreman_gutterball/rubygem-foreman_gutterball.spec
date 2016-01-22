@@ -3,11 +3,11 @@
 
 %global gem_name foreman_gutterball
 
-Summary: Gutterball plugin for Foreman and Katello
-Name: 	 %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.0.1
-Release: 3%{?dist}
-Group: 	 Development/Languages
+Summary:   Gutterball plugin for Foreman and Katello
+Name: 	   %{?scl_prefix}rubygem-%{gem_name}
+Version:   0.0.1
+Release:   4%{?dist}
+Group: 	   Development/Languages
 License:   GPLv3
 URL:       http://katello.org
 Source0:   http://rubygems.org/gems/%{gem_name}-%{version}.gem
@@ -19,17 +19,11 @@ Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 Requires: gutterball
 Requires: %{?scl_prefix}rubygem-katello
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
+Requires: %{?scl_prefix_ruby}ruby(release)
+
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
-BuildRequires: foreman-plugin >= 1.8
-
-%if 0%{?fedora} > 18
-Requires: %{?scl_prefix_ruby}ruby(release)
-BuildRequires: %{?scl_prefix_ruby}ruby(release)
-%else
-Requires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
-BuildRequires: %{?scl_prefix_ruby}ruby(abi) >= %{rubyabi}
-%endif
+BuildRequires: foreman-plugin >= 1.11
 
 %description
 Gutterball plugin for Foreman and Katello.
