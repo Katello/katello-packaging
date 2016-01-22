@@ -68,6 +68,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{foreman_bundlerd_plugin}
 
 %changelog
+* Fri Jan 22 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.1-4
+- Update rubygem-foreman_gutterball to RHSCL ruby22 (ericdhelms@gmail.com)
+
 * Fri Aug 28 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-3
 - new package built with tito
 
