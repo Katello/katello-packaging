@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.5.0
-Release:    2.nightly%{?dist}
+Release:    3.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -167,6 +167,14 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Jan 21 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-3.nightly
+- Remove bootdisk and discovery since they aren't Rails 4 compatible
+  (ericdhelms@gmail.com)
+- Fixes #12792 Katello backup missing puppet certs (seanokeeffe797@gmail.com)
+- Refs #10291 - Remove elasticsearch from completion script
+  (seanokeeffe797@gmail.com)
+- Fixes #12782 Updating katello-backup (chrobert@redhat.com)
+
 * Wed Dec 09 2015 Eric D. Helms <ericdhelms@gmail.com> 2.5.0-2.nightly
 - Fixes #12741: Move pulp/candlepin requires to metapackage
   (ericdhelms@gmail.com)
