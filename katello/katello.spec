@@ -22,6 +22,7 @@ Source5:    service-wait
 Source6:    katello-restore
 Source7:    katello-backup
 Source8:    katello-service-bash_completion.sh
+Source9:    qpid-core-dump
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -81,6 +82,7 @@ install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
+install -Dp -m0755 %{SOURCE9} %{buildroot}%{_bindir}/qpid-core-dump
 install -Dp -m0755 %{SOURCE7} %{buildroot}%{_bindir}/katello-backup
 install -Dp -m0755 %{SOURCE6} %{buildroot}%{_bindir}/katello-restore
 install -Dp -m0755 %{SOURCE4} %{buildroot}%{_bindir}/katello-service
@@ -123,6 +125,7 @@ Common runtime components of %{name}
 %{_bindir}/katello-remove
 %{_bindir}/katello-backup
 %{_bindir}/katello-restore
+%{_bindir}/qpid-core-dump
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 
 # ------ Debug ----------------
