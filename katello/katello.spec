@@ -31,7 +31,7 @@ Requires: %{name}-common = %{version}-%{release}
 %if 0%{?rhel} == 6
 Requires: redhat-logos >= 60.0.14
 %endif
-Requires: %{name}-installer
+Requires: foreman-installer-%{name}
 
 #Pulp Requirements
 Requires: pulp-katello
@@ -298,4 +298,3 @@ Useful utilities for managing Katello services
 
 * Fri Jan 10 2014 Mike McCune <mmccune@redhat.com> 1.5.0-10
 - initial revision of resurrected katello package
-
