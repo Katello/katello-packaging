@@ -15,8 +15,8 @@
 
 
 Name: pulp-katello
-Version: 0.4
-Release: 3%{?dist}
+Version: 1.0
+Release: 1%{?dist}
 Summary: Plugins useful for katello interactions with pulp
 Group: Development/Languages
 License: GPLv2
@@ -32,7 +32,7 @@ BuildRequires:  python-lxml
 
 Requires: python-pulp-rpm-common
 Requires: python-lxml
-Requires: pulp-server
+Requires: pulp-server >= 2.8
 
 Obsoletes: pulp-katello-plugins
 
