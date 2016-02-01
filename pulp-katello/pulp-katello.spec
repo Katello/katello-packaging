@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Feb 01 2016 Justin Sherrill <jsherril@redhat.com> 1.0-1
+-  updating pulp-katello to 1.0 (jsherril@redhat.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 0.4-3
 - new package built with tito
 
