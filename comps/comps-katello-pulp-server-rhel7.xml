@@ -43,6 +43,7 @@
        <packagereq type="default">python-anyjson</packagereq>
        <packagereq type="default">python-amqp</packagereq>       
        <packagereq type="default">python-billiard</packagereq>
+       <packagereq type="default">python-bson</packagereq>
        <packagereq type="default">python-celery</packagereq>
        <packagereq type="default">python-cherrypy</packagereq>
        <packagereq type="default">python-crane</packagereq>
@@ -67,9 +68,6 @@
        <packagereq type="default">python-qpid</packagereq>
        <packagereq type="default">python-qpid-common</packagereq>
        <packagereq type="default">python-qpid-qmf</packagereq>
-       <packagereq type="default">python-requests</packagereq>
-       <packagereq type="default">python-rhsm</packagereq>
-       <packagereq type="default">python-semantic-version</packagereq>
        <packagereq type="default">python-saslwrapper</packagereq>
        <packagereq type="default">python-webpy</packagereq>
        <packagereq type="default">qpid-cpp-client</packagereq>

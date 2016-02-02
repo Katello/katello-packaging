@@ -42,11 +42,13 @@
        <packagereq type="default">python-anyjson</packagereq>
        <packagereq type="default">python-amqp</packagereq>       
        <packagereq type="default">python-billiard</packagereq>
+       <packagereq type="default">python-bson</packagereq>
        <packagereq type="default">python-celery</packagereq>
        <packagereq type="default">python-crane</packagereq>
        <packagereq type="default">python-gofer</packagereq>
        <packagereq type="default">python-isodate</packagereq>
        <packagereq type="default">python-kombu</packagereq>
+       <packagereq type="default">python-mongoengine</packagereq>
        <packagereq type="default">python-nectar</packagereq>
        <packagereq type="default">python-oauth2</packagereq>
        <packagereq type="default">python-okaara</packagereq>
@@ -64,7 +66,6 @@
        <packagereq type="default">python-qpid</packagereq>
        <packagereq type="default">python-qpid-common</packagereq>
        <packagereq type="default">python-qpid-qmf</packagereq>
-       <packagereq type="default">python-requests</packagereq>
        <packagereq type="default">python-rhsm</packagereq>
        <packagereq type="default">python-semantic-version</packagereq>
        <packagereq type="default">python-saslwrapper</packagereq>
