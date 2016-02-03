@@ -41,6 +41,7 @@ Requires: pulp-rpm-plugins
 Requires: pulp-puppet-tools
 Requires: pulp-selinux
 Requires: pulp-server
+Requires: python-pulp-streamer
 Requires: mongodb >= 2.4
 Requires: mongodb-server >= 2.4
 Requires: cyrus-sasl-plain
@@ -50,6 +51,7 @@ Requires: qpid-cpp-server-linearstore
 Requires: qpid-cpp-client-devel
 Requires: qpid-dispatch-router
 Requires: createrepo >= 0.9.9-18%{?dist}
+Requires: squid
 
 # Candlepin Requirements
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6

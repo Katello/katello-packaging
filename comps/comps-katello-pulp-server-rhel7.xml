@@ -43,7 +43,7 @@
        <packagereq type="default">pulp-selinux</packagereq>
        <packagereq type="default">pulp-server</packagereq>
        <packagereq type="default">python-anyjson</packagereq>
-       <packagereq type="default">python-amqp</packagereq>       
+       <packagereq type="default">python-amqp</packagereq>
        <packagereq type="default">python-billiard</packagereq>
        <packagereq type="default">python-bson</packagereq>
        <packagereq type="default">python-celery</packagereq>
@@ -66,6 +66,7 @@
        <packagereq type="default">python-pulp-repoauth</packagereq>
        <packagereq type="default">python-pulp-rpm-common</packagereq>
        <packagereq type="default">python-pulp-rpm-extension</packagereq>
+       <packagereq type="default">python-pulp-streamer</packagereq>
        <packagereq type="default">python-pymongo</packagereq>
        <packagereq type="default">python-pymongo-gridfs</packagereq>
        <packagereq type="default">python-gofer-qpid</packagereq>
