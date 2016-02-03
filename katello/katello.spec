@@ -51,12 +51,7 @@ Requires: qpid-cpp-client-devel
 Requires: qpid-dispatch-router
 Requires: createrepo >= 0.9.9-18%{?dist}
 
-# Candlepin Requirements
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-Requires(post): candlepin-tomcat
-%else
-Requires(post): candlepin-tomcat6
-%endif
+Requires(post): candlepin
 Requires: candlepin-selinux
 Requires: java-openjdk >= 1:1.7.0
 Requires: java-openjdk < 1:1.8.0.45
