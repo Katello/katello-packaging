@@ -55,7 +55,6 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{__rm} --recursive --force %{buildroot} .%{gem_dir}
 
 %files
-%defattr(644, root, foreman, -)
 %{gem_instdir}/Rakefile
 %{gem_instdir}/LICENSE
 %{gem_instdir}/README.md
