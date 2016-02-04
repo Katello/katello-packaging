@@ -162,6 +162,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Feb 04 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-4.nightly
+- drop requirement of candlepin-tomcat (jsherril@redhat.com)
+
 * Thu Jan 21 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-3.nightly
 - Remove bootdisk and discovery since they aren't Rails 4 compatible
   (ericdhelms@gmail.com)
