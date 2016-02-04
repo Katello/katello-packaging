@@ -6,7 +6,7 @@
 Summary:   Gutterball plugin for Foreman and Katello
 Name: 	   %{?scl_prefix}rubygem-%{gem_name}
 Version:   0.0.1
-Release:   4%{?dist}
+Release:   5%{?dist}
 Group: 	   Development/Languages
 License:   GPLv3
 URL:       http://katello.org
@@ -67,6 +67,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{foreman_bundlerd_plugin}
 
 %changelog
+* Wed Feb 03 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.1-5
+- Don't set user/group permissions in files list (ericdhelms@gmail.com)
+
 * Fri Jan 22 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.1-4
 - Update rubygem-foreman_gutterball to RHSCL ruby22 (ericdhelms@gmail.com)
 
