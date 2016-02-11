@@ -31,6 +31,7 @@ Requires: %{name}-common = %{version}-%{release}
 %if 0%{?rhel} == 6
 Requires: redhat-logos >= 60.0.14
 %endif
+Requires: %{name}-installer
 
 #Pulp Requirements
 Requires: pulp-katello
@@ -52,6 +53,7 @@ Requires: qpid-cpp-client-devel
 Requires: qpid-dispatch-router
 Requires: createrepo >= 0.9.9-18%{?dist}
 Requires: squid
+Requires: mod_xsendfile
 
 Requires(post): candlepin
 Requires: candlepin-selinux
@@ -60,14 +62,6 @@ Requires: java-openjdk < 1:1.8.0.45
 Requires: lsof
 Requires: postgresql
 Requires: postgresql-server
-
-#foreman plugins and optional packages
-Requires: %{?scl_prefix}rubygem-foreman_hooks
-Requires: %{name}-installer
-Requires: foreman-libvirt
-Requires: foreman-ovirt
-Requires: foreman-vmware
-Requires: foreman-gce
 
 %description
 Provides a package for managing application life-cycle for Linux systems.

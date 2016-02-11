@@ -29,6 +29,7 @@ Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 Requires: katello-selinux
 Requires: foreman >= 1.11.0
+Requires: foreman-postgresql
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 Requires: %{?scl_prefix}rubygem(bastion) >= 3.0.0
 Requires: %{?scl_prefix}rubygem(bastion) < 4.0.0
