@@ -1,3 +1,5 @@
 rel-eng/build
 *.swp
 *.pyc
+.ruby-version
+.ruby-gemset
