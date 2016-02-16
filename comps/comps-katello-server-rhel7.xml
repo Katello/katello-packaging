@@ -14,6 +14,7 @@
        <!-- katello core packages -->
        <packagereq type="default">katello</packagereq>
        <packagereq type="default">tfm-rubygem-katello</packagereq>
+       <packagereq type="default">tfm-rubygem-katello_ostree</packagereq>
        <packagereq type="default">katello-certs-tools</packagereq>
        <packagereq type="default">katello-common</packagereq>
        <packagereq type="default">katello-debug</packagereq>
@@ -47,7 +48,7 @@
        <packagereq type="default">tfm-rubygem-terminal-table</packagereq>
        <packagereq type="default">tfm-rubygem-qpid_messaging</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_csv</packagereq>
-       
+
        <!-- gutterball packages -->
        <packagereq type="default">tfm-rubygem-foreman_gutterball</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_gutterball</packagereq>
