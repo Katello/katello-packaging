@@ -63,7 +63,7 @@ Requires: postgresql-server
 
 #foreman plugins and optional packages
 Requires: %{?scl_prefix}rubygem-foreman_hooks
-Requires: %{name}-installer
+Requires: katello-installer-%{name}
 Requires: foreman-libvirt
 Requires: foreman-ovirt
 Requires: foreman-vmware
@@ -304,4 +304,3 @@ Useful utilities for managing Katello services
 
 * Fri Jan 10 2014 Mike McCune <mmccune@redhat.com> 1.5.0-10
 - initial revision of resurrected katello package
-
