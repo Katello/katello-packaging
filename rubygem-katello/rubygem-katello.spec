@@ -17,6 +17,8 @@
 %global gem_cache %{gem_dir}/cache/%{gem_name}-%{mainver}%{?prever}.gem
 %global gem_spec %{gem_dir}/specifications/%{gem_name}-%{mainver}%{?prever}.gemspec
 
+%define katello_ostree %{?scl_prefix}rubygem-%{gem_name}_ostree
+
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
@@ -95,6 +97,13 @@ Summary:    Documentation for rubygem-%{gem_name}
 %description doc
 This package contains documentation for rubygem-%{gem_name}.
 
+%package -n %{katello_ostree}
+Requires:   %{?scl_prefix}%{pkg_name} = %{version}-%{release}
+Summary:    Katello Ostree Plugin
+
+%description -n %{katello_ostree}
+This package provides the ostree plugin for rubygem-%{gem_name}.
+
 %prep
 %setup -q -c -T -n %{pkg_name}-%{version}
 mkdir -p .%{gem_dir}
@@ -131,11 +140,15 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/public/assets/bastion_katello
 
 %exclude %{gem_cache}
+%exclude %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %doc %{gem_instdir}/LICENSE.txt
 
 %files doc
 %doc %{gem_instdir}/README.md
+
+%files -n %{katello_ostree}
+%{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
