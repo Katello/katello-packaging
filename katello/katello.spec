@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    2.5.0
-Release:    4.nightly%{?dist}
+Release:    5.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -164,6 +164,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Feb 19 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-5.nightly
+- Fixes #13450 - Adding packages for lazy sync (paji@redhat.com)
+
 * Thu Feb 04 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-4.nightly
 - drop requirement of candlepin-tomcat (jsherril@redhat.com)
 
