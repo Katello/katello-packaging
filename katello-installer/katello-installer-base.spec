@@ -21,6 +21,8 @@ Requires: %{?scl_prefix}rubygem-apipie-bindings >= 0.0.6
 Requires: foreman-selinux
 Requires: katello-selinux
 Requires: openssl
+Requires: katello-certs-tools
+Requires: foreman-proxy
 
 %package -n katello-installer
 Summary: Puppet-based installer for Katello Server
