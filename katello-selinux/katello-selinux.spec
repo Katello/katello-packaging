@@ -36,7 +36,7 @@
 #global dashalphatag -%{alphatag}
 
 Name:           katello-selinux
-Version:        2.2.2
+Version:        3.0.1
 Release:        1%{?dotalphatag}%{?dist}
 Summary:        SELinux policy module for katello
 
