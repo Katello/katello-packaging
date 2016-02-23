@@ -12,84 +12,61 @@ URL:     http://katello.org
 Source0: https://github.com/Katello/katello-installer/archive/%{version}.tar.gz
 
 BuildArch: noarch
-Conflicts: foreman-installer
 Obsoletes: katello-installer < 2.1.0
 
+Requires: foreman-installer >= 1.11.0
 Requires: %{?scl_prefix}puppet >= 3.4.0
-Requires: %{?scl_prefix}rubygem-kafo
-Requires: %{?scl_prefix}rubygem-apipie-bindings >= 0.0.6
-Requires: foreman-selinux
 Requires: katello-selinux
 Requires: openssl
 Requires: katello-certs-tools
 Requires: foreman-proxy
 
-%package -n katello-installer
-Summary: Puppet-based installer for Katello Server
+%package -n foreman-installer-katello
+Summary: Scenario for installing Katello and/or Capsule with foreman-installer
 Group:	 Applications/System
-Conflicts: capsule-installer
-Conflicts: katello-devel-installer
+Obsoletes: katello-installer
+Obsoletes: capsule-installer
 Requires: %{name} = %{version}-%{release}
-
-%description -n katello-installer
-A set of tools for installation of Katello and a the default Capsule.
-
-%files -n katello-installer
-%{_datadir}/katello-installer/bin
-%{_datadir}/katello-installer/checks
-%config %{_sysconfdir}/katello-installer/config_header.txt
-%dir %{_sysconfdir}/katello-installer
-%dir %{_localstatedir}/log/katello-installer
-%config %attr(600, root, root) %{_sysconfdir}/katello-installer/katello-installer.yaml
-%config %attr(600, root, root) %{_sysconfdir}/katello-installer/capsule-certs-generate.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/katello-installer/answers.katello-installer.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/katello-installer/answers.capsule-certs-generate.yaml
-%{_sbindir}/katello-installer
-%{_sbindir}/capsule-certs-generate
-%{_sbindir}/katello-certs-check
-
-%package -n capsule-installer
-Summary:   Puppet-based installer for a Katello Capsule
-Group:	   Applications/System
-Conflicts: katello-installer
-Conflicts: katello-devel-installer
-Requires:  %{name} = %{version}-%{release}
 Requires: katello-service
 
-%description -n capsule-installer
-A set of tools for installation of a Katello Capsule
+%description -n foreman-installer-katello
+A set of tools for installation of Katello and and Capsule.
 
-%files -n capsule-installer
-%{_datadir}/capsule-installer/bin
-%{_datadir}/capsule-installer/checks
-%config %{_sysconfdir}/capsule-installer/config_header.txt
-%dir %{_sysconfdir}/capsule-installer
-%dir %{_localstatedir}/log/capsule-installer
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/capsule-installer/answers.capsule-installer.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/capsule-installer/capsule-installer.yaml
-%{_sbindir}/capsule-installer
+%post -n foreman-installer-katello
+foreman-installer --scenario katello --migrations-only > /dev/null
+foreman-installer --scenario capsule --migrations-only > /dev/null
+
+%files -n foreman-installer-katello
+%{_datadir}/foreman-installer-katello/bin
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-answers.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/capsule-answers.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/capsule.yaml
+%dir %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
+%{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
+%dir %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
+%{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
+%{_sbindir}/capsule-certs-generate
+%{_sbindir}/katello-certs-check
 %{_sbindir}/capsule-remove
 
-%package -n katello-devel-installer
-Summary:   Puppet-based installer for a Katello development setup from git
+%package -n foreman-installer-katello-devel
+Summary:   Installer scenario for Katello development setup from git
 Group:	   Applications/System
-Conflicts: capsule-installer
-Conflicts: katello-installer
 Requires:  %{name} = %{version}-%{release}
 
-%description -n katello-devel-installer
+%description -n foreman-installer-katello-devel
 A set of tools for installation of a Katello development environment using
 Katello and Foreman from git.
 
-%files -n katello-devel-installer
-%{_datadir}/katello-devel-installer/bin
-%{_datadir}/katello-devel-installer/checks
-%config %{_sysconfdir}/katello-devel-installer/config_header.txt
-%dir %{_sysconfdir}/katello-devel-installer
-%dir %{_localstatedir}/log/katello-devel-installer
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/katello-devel-installer/answers.katello-devel-installer.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/katello-devel-installer/katello-devel-installer.yaml
-%{_sbindir}/katello-devel-installer
+%post -n foreman-installer-katello-devel
+foreman-installer --scenario katello-devel --migrations-only > /dev/null
+
+%files -n foreman-installer-katello-devel
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel-answers.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.yaml
+%dir %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
+%{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
 
 %description
 A set of tools for installation of Katello and Katello Capsule,
@@ -103,75 +80,50 @@ including Foreman and Foreman Proxy.
 sed -ri '1sX(/usr/bin/ruby|/usr/bin/env ruby)X%{scl_ruby}X' bin/*
 
 #configure the paths
-sed -ri 'sX\./configX%{_sysconfdir}/katello-installerXg' bin/katello-installer config/answers.katello-installer.yaml config/katello-installer.yaml
-sed -ri 'sX\./configX%{_sysconfdir}/katello-installerXg' bin/capsule-certs-generate config/capsule-certs-generate.yaml
-sed -ri 'sX\./configX%{_sysconfdir}/katello-devel-installerXg' bin/katello-devel-installer config/katello-devel-installer.yaml
-sed -ri 'sX\./configX%{_sysconfdir}/capsule-installerXg' bin/capsule-installer config/capsule-installer.yaml
+sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-answers.yaml config/katello.yaml
+sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-devel.yaml
+sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/capsule.yaml
 
-sed -ri 'sX\./migrateX%{_datadir}/katello-installer/migrateXg' bin/katello-installer
-
-sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installerXg' config/katello-installer.yaml
-sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installerXg' config/capsule-certs-generate.yaml
-sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-devel-installerXg' config/katello-devel-installer.yaml
-sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/capsule-installerXg' config/capsule-installer.yaml
-
-sed -ri 'sX\:modules_dir.*$X:modules_dir: %{_datadir}/katello-installer/modulesXg' config/*
-sed -ri 'sX\:hook_dirs.*$X:hook_dirs: \["%{_datadir}/katello-installer/hooks"\]Xg' config/*
+sed -ri 'sX^INSTALLER_DIR.*$XINSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/capsule-certs-generate
+sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installer-baseXg' config/*.yaml
+sed -ri 'sX\:module_dirs.*$X:module_dirs: \["%{_datadir}/katello-installer-base/modules", "%{_datadir}/foreman-installer/modules"\]Xg' config/*.yaml
+sed -ri 'sX\:hook_dirs.*$X:hook_dirs: \["%{_datadir}/katello-installer-base/hooks"\]Xg' config/*.yaml
 
 %install
-install -d -m0755 %{buildroot}%{_sysconfdir}/katello-installer
-install -d -m0755 %{buildroot}%{_sysconfdir}/katello-devel-installer
-install -d -m0755 %{buildroot}%{_sysconfdir}/capsule-installer
+install -d -m0755 %{buildroot}%{_sysconfdir}/foreman-installer/scenarios.d
 
-install -d -m0755 %{buildroot}%{_localstatedir}/log/katello-installer
-install -d -m0755 %{buildroot}%{_localstatedir}/log/katello-devel-installer
-install -d -m0755 %{buildroot}%{_localstatedir}/log/capsule-installer
-
-install -d -m0755 %{buildroot}/%{_datadir}/katello-installer/bin
-install -d -m0755 %{buildroot}/%{_datadir}/katello-devel-installer/bin
-install -d -m0755 %{buildroot}/%{_datadir}/capsule-installer/bin
+install -d -m0755 %{buildroot}/%{_datadir}/katello-installer-base
+install -d -m0755 %{buildroot}/%{_datadir}/foreman-installer-katello/bin
+install -d -m0755 %{buildroot}/%{_datadir}/foreman-installer-katello-devel
 
 install -d -m0755 %{buildroot}/%{_sbindir}
 
-cp -dpR modules hooks migrate %{buildroot}/%{_datadir}/katello-installer
+cp -dpR checks modules hooks %{buildroot}/%{_datadir}/katello-installer-base
 
-cp -dpR checks %{buildroot}/%{_datadir}/katello-installer
-cp -dpR checks %{buildroot}/%{_datadir}/katello-devel-installer
-cp -dpR checks %{buildroot}/%{_datadir}/capsule-installer
+cp -dpR bin/capsule-certs-generate %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-certs-generate
+cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-certs-check
+cp -dpR bin/capsule-remove %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-remove
 
-cp -dpR bin/katello-installer %{buildroot}/%{_datadir}/katello-installer/bin/katello-installer
-cp -dpR bin/capsule-certs-generate %{buildroot}/%{_datadir}/katello-installer/bin/capsule-certs-generate
-cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/katello-installer/bin/katello-certs-check
-cp -dpR bin/katello-devel-installer %{buildroot}/%{_datadir}/katello-devel-installer/bin/katello-devel-installer
-cp -dpR bin/capsule-installer %{buildroot}/%{_datadir}/capsule-installer/bin/capsule-installer
-cp -dpR bin/capsule-remove %{buildroot}/%{_datadir}/capsule-installer/bin/capsule-remove
+cp -dpR config/katello-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/katello-devel-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/capsule-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
-cp -dpR config/answers.katello-installer.yaml %{buildroot}/%{_sysconfdir}/katello-installer
-cp -dpR config/answers.capsule-certs-generate.yaml %{buildroot}/%{_sysconfdir}/katello-installer
-cp -dpR config/answers.katello-devel-installer.yaml %{buildroot}/%{_sysconfdir}/katello-devel-installer
-cp -dpR config/answers.capsule-installer.yaml %{buildroot}/%{_sysconfdir}/capsule-installer
+cp -dpR config/katello.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/katello.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/katello-devel.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/katello-devel.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/capsule.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/capsule.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
-cp -dpR config/katello-installer.yaml %{buildroot}/%{_sysconfdir}/katello-installer
-cp -dpR config/capsule-certs-generate.yaml %{buildroot}/%{_sysconfdir}/katello-installer
-cp -dpR config/katello-devel-installer.yaml %{buildroot}/%{_sysconfdir}/katello-devel-installer
-cp -dpR config/capsule-installer.yaml %{buildroot}/%{_sysconfdir}/capsule-installer
-
-cp -dpR config/config_header.txt %{buildroot}/%{_sysconfdir}/katello-installer
-cp -dpR config/config_header.txt %{buildroot}/%{_sysconfdir}/katello-devel-installer
-cp -dpR config/config_header.txt %{buildroot}/%{_sysconfdir}/capsule-installer
-
-ln -sf %{_datadir}/katello-installer/bin/katello-installer %{buildroot}/%{_sbindir}/katello-installer
-ln -sf %{_datadir}/katello-installer/bin/capsule-certs-generate %{buildroot}/%{_sbindir}/capsule-certs-generate
-ln -sf %{_datadir}/katello-installer/bin/katello-certs-check %{buildroot}/%{_sbindir}/katello-certs-check
-ln -sf %{_datadir}/katello-devel-installer/bin/katello-devel-installer %{buildroot}/%{_sbindir}/katello-devel-installer
-ln -sf %{_datadir}/capsule-installer/bin/capsule-installer %{buildroot}/%{_sbindir}/capsule-installer
-ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}/capsule-remove
+ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-certs-generate %{buildroot}/%{_sbindir}/capsule-certs-generate
+ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot}/%{_sbindir}/katello-certs-check
+ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_sbindir}/capsule-remove
 
 %files
 %defattr(-,root,root,-)
-%{_datadir}/katello-installer/modules
-%{_datadir}/katello-installer/hooks
-%{_datadir}/katello-installer/migrate
+%{_datadir}/katello-installer-base/modules
+%{_datadir}/katello-installer-base/hooks
+%{_datadir}/katello-installer-base/checks
 %doc README.*
 
 %changelog
@@ -187,7 +139,7 @@ ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}
 - Merge pull request #231 from iNecas/10648 (inecas@redhat.com)
 - Module update. (ericdhelms@gmail.com)
 - Merge pull request #230 from jlsherrill/10680 (jlsherrill@gmail.com)
-- fixes #10716 - migrate pulp in post as well (stbenjam@redhat.com)
+- fixes #10716 - pulp in post as well (stbenjam@redhat.com)
 - Fixes #10385: Update Pulp to fix yum errors. (ericdhelms@gmail.com)
 - Merge pull request #232 from stbenjam/9680 (stephen@bitbin.de)
 - Merge pull request #227 from chris1984/10538 (eric.d.helms@gmail.com)
@@ -673,4 +625,3 @@ ln -sf %{_datadir}/capsule-installer/bin/capsule-remove %{buildroot}/%{_sbindir}
 
 * Wed Sep 04 2013 Ivan Necas <inecas@redhat.com> 0.0.1-1
 - new package built with tito
-
