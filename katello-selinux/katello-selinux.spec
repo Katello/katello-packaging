@@ -127,6 +127,9 @@ fi
 %{_mandir}/man8/%{name}-relabel.8.gz
 
 %changelog
+* Tue Feb 23 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.1-1
+- Updating katello-selinux to 3.0.1 (cduryee@redhat.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.2-1
 - new package built with tito
 
