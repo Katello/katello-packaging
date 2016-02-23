@@ -5,8 +5,8 @@
 %global confdir common
 
 Name:       katello
-Version:    2.5.0
-Release:    4.nightly%{?dist}
+Version:    3.1.0
+Release:    1.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
