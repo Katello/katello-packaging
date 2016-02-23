@@ -158,6 +158,13 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Feb 23 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-1.nightly
+- Bump master to 3.1.0 (ericdhelms@gmail.com)
+- Fixes #10163 - Converted katello installer into scenario based installer
+  (martin.bacovsky@gmail.com)
+- Cleanup requires across katello and installer (ericdhelms@gmail.com)
+- Fixes #13450 - Adding packages for lazy sync (paji@redhat.com)
+
 * Thu Feb 04 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-4.nightly
 - drop requirement of candlepin-tomcat (jsherril@redhat.com)
 
