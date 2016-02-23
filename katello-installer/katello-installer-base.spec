@@ -3,8 +3,8 @@
 %global scl_ruby /usr/bin/ruby
 
 Name:    katello-installer-base
-Version: 2.5.0
-Release: 1.nightly%{?dist}
+Version: 3.0.0
+Release: 1.rc1%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
@@ -12,7 +12,6 @@ URL:     http://katello.org
 Source0: https://github.com/Katello/katello-installer/archive/%{version}.tar.gz
 
 BuildArch: noarch
-Obsoletes: katello-installer < 2.1.0
 
 Requires: foreman-installer >= 1.11.0
 Requires: %{?scl_prefix}puppet >= 3.4.0
