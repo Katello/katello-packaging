@@ -72,6 +72,7 @@
        <packagereq type="default">python-qpid</packagereq>
        <packagereq type="default">python-qpid-common</packagereq>
        <packagereq type="default">python-qpid-qmf</packagereq>
+       <packagereq type="default">python-requests-toolbelt</packagereq>
        <packagereq type="default">python-rhsm</packagereq>
        <packagereq type="default">python-semantic_version</packagereq>
        <packagereq type="default">python-saslwrapper</packagereq>
