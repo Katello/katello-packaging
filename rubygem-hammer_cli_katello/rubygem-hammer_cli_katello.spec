@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Thu Feb 25 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.23-1
+- Update rubygem-hammer_cli_katello to 0.0.23 (ericdhelms@gmail.com)
+
 * Thu Feb 18 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.22-1
 - Update rubygem-hammer_cli_katello to 0.0.22 (komidore64@gmail.com)
 
