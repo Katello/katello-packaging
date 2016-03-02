@@ -158,6 +158,8 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Mar 02 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1.rc1
+- Bump versions to 3.0.0 and include rc1 into release (ericdhelms@gmail.com)
 * Thu Feb 04 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-4.nightly
 - drop requirement of candlepin-tomcat (jsherril@redhat.com)
 
