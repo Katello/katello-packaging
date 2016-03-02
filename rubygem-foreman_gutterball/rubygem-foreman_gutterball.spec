@@ -49,6 +49,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 
 %{__install} --directory %{buildroot}%{foreman_bundlerd_dir}
 
+mkdir -p %{buildroot}/usr/share/foreman/script/foreman-debug.d/
+install -Dpm 0755 script/gutterball-debug.sh %{buildroot}%{_datadir}/foreman/script/foreman-debug.d/20-gutterball-debug
+
 %foreman_bundlerd_file
 
 %clean
@@ -65,6 +68,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{gem_spec}
 %{gem_cache}
 %{foreman_bundlerd_plugin}
+
+%{buildroot}/script/foreman-debug.d
+/usr/share/foreman/script/foreman-debug.d/gutterball-debug.sh
 
 %changelog
 * Wed Feb 03 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.1-5
