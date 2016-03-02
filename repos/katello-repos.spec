@@ -62,6 +62,8 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Mar 02 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1
+- Update repos for 3.0 (ericdhelms@gmail.com)
 * Fri Aug 07 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-2.nightly
 - Add priority back to repos. (ericdhelms@gmail.com)
 
