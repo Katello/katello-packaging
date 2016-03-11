@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Fri Mar 11 2016 Eric D Helms <ericdhelms@gmail.com> 2.0.0-1
+- hammer_cli_csv-2.0.0 (thomasmckay@redhat.com)
+
 * Fri Sep 04 2015 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-8
 - Update rubygem-hammer_cli_csv to tfm SCL (ericdhelms@gmail.com)
 
