@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Fri Mar 11 2016 Eric D Helms <ericdhelms@gmail.com> 1.7.0-1
+- Update runcible to 1.7.0 (paji@redhat.com)
+
 * Thu Feb 04 2016 Eric D Helms <ericdhelms@gmail.com> 1.6.0-1
 - Update runcible to 1.6.0 (paji@redhat.com)
 
