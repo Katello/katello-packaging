@@ -127,6 +127,9 @@ Useful utilities for managing Katello services
 %{_mandir}/man8/katello-service.8*
 
 %changelog
+* Sat Mar 12 2016 Justin Sherrill <jsherril@redhat.com> 2.4.1-1
+- Rebuild for katello 2.4.1 (jsherril@redhat.com)
+
 * Wed Dec 23 2015 Justin Sherrill <jsherril@redhat.com> 2.4.0-7
 - katello 2.4.0 release installer and base package (jsherril@redhat.com)
 
