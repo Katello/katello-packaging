@@ -27,7 +27,7 @@ def restore
 
   puts "Resetting Katello"
   `tar --selinux --overwrite -xzf config_files.tar.gz -C /`
-  `katello-installer --reset`
+  `foreman-installer --scenario katello --reset`
   puts "Done.\n"
 
   puts "Stopping Katello services"
