@@ -2,7 +2,7 @@
 
 [katello-client]
 name=Katello Client Nightly
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/client/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/client/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -12,7 +12,7 @@ priority=1
 
 [katello-client-source]
 name=Katello Client Nightly Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/client/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/client/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0

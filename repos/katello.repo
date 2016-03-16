@@ -2,7 +2,7 @@
 
 [katello]
 name=Katello Nightly
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/katello/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/katello/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -12,7 +12,7 @@ priority=1
 # copy of Pulp's packages in order to ensure compatibility
 [katello-pulp]
 name=Pulp Community Releases
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/pulp/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/pulp/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -23,7 +23,7 @@ priority=1
 
 [katello-candlepin]
 name=Candlepin: an open source entitlement management system.
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/candlepin/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/candlepin/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -33,21 +33,21 @@ priority=1
 
 [katello-source]
 name=Katello Nightly Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/katello/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/katello/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-pulp-source]
 name=Katello Pulp source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/pulp/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/pulp/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-candlepin-source]
 name=Katello Candlepin source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/candlepin/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/candlepin/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0

@@ -40,17 +40,13 @@ rm -rf %{buildroot}
 #prepare dir structure
 install -d -m 0755 %{buildroot}%{_sysconfdir}/yum.repos.d
 install -d -m 0755 %{buildroot}%{_sysconfdir}/pki/rpm-gpg/
-# some sane default value
-%define reposubdir      RHEL
-# redefine on fedora
-%{?fedora: %define reposubdir      Fedora}
  
 install -m 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/yum.repos.d/
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
-    sed -i 's/@SUBDIR@/%{reposubdir}/' $repofile
+    sed -i 's/@DIST@/%{dist}/' $repofile
 done
 
 %clean
