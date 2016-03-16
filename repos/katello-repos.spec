@@ -1,5 +1,5 @@
 Name:           katello-repos
-Version:        2.5.0
+Version:        3.1.0
 Release:        1.nightly%{?dist}
 Summary:        Definition of yum repositories for Katello
 
@@ -58,6 +58,11 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Mar 16 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-1.nightly
+- Fixes #14189: Move repo definitions to be dist based (ericdhelms@gmail.com)
+- updating nightly to 2.5 (jsherril@redhat.com)
+- Fixes #11746: Correct source URL for repositories RPM (ericdhelms@gmail.com)
+
 * Fri Aug 07 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-2.nightly
 - Add priority back to repos. (ericdhelms@gmail.com)
 
