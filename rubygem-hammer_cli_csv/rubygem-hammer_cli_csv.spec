@@ -70,6 +70,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Tue Mar 15 2016 Eric D Helms <ericdhelms@gmail.com> 2.0.0-2
+- Remove requires on ruby(abi) for hammer_cli_csv (ericdhelms@gmail.com)
+
 * Fri Mar 11 2016 Eric D Helms <ericdhelms@gmail.com> 2.0.0-1
 - hammer_cli_csv-2.0.0 (thomasmckay@redhat.com)
 
