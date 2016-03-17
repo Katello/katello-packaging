@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.0.0
-Release:    1.rc1%{?dist}
+Release:    2.rc1%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -158,6 +158,11 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Mar 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-2.rc1
+- fixes #13300 - allows backing up without pulp (cfouant@redhat.com)
+- Fixes #14105 - fixes backup/restore after moving to foreman-installer,
+  BZ1316567 (cfouant@redhat.com)
+
 * Wed Mar 02 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1.rc1
 - Bump versions to 3.0.0 and include rc1 into release (ericdhelms@gmail.com)
 * Thu Feb 04 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-4.nightly
