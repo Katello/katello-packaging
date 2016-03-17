@@ -2,7 +2,7 @@
 
 [katello]
 name=Katello 3.0
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/katello/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/katello/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -12,7 +12,7 @@ priority=1
 # copy of Pulp's packages in order to ensure compatibility
 [katello-pulp]
 name=Pulp Community Releases
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/pulp/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/pulp/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -23,7 +23,7 @@ priority=1
 
 [katello-candlepin]
 name=Candlepin: an open source entitlement management system.
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/candlepin/@SUBDIR@/$releasever/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/candlepin/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -33,21 +33,21 @@ priority=1
 
 [katello-source]
 name=Katello 3.0 Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/katello/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/katello/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-pulp-source]
 name=Katello Pulp source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/pulp/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/pulp/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-candlepin-source]
 name=Katello Candlepin source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/candlepin/@SUBDIR@/$releasever/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.0/candlepin/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0

@@ -3,77 +3,78 @@
 require 'optparse'
 require 'fileutils'
 
+@options = {}
+@dir = nil
+
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
+
+  opts.on("--skip-pulp-content", "Create backup without Pulp content") do |skip_pulp|
+    @options[:skip_pulp] = skip_pulp
+  end
+
+  opts.parse!
+
+  if ARGV.length == 0
+    opts.abort("**** ERROR: Please specify an export directory ****")
+  elsif ARGV.length != 1
+    puts opts
+    exit(-1)
+  end
+
+  @dir = ARGV[0]
 end
 
-optparse.parse!
+puts "Creating backup folder #{@dir}"
+FileUtils.mkdir_p(@dir)
+FileUtils.chown(nil, 'postgres', @dir)
+FileUtils.chmod 0770, @dir
+FileUtils.cd @dir
 
-DIR = ARGV.pop
-if DIR.nil?
-  puts "**** ERROR: Please specify an export directory ****"
-  puts optparse
-  exit(-1)
-else
-  FileUtils.mkdir_p(DIR)
-  puts "Creating backup folder #{DIR}"
-  FileUtils.chown(nil, 'postgres', DIR)
-  FileUtils.chmod 0770, DIR
-  FileUtils.cd DIR
+`katello-service stop`
 
-  `katello-service stop`
-  `service postgresql stop`
+CONFIGS=[
+  '/etc/candlepin',
+  '/etc/foreman',
+  '/etc/foreman-proxy',
+  '/etc/gutterball',
+  '/etc/hammer',
+  '/etc/httpd',
+  '/etc/foreman-installer',
+  '/etc/pki/katello',
+  '/etc/pki/katello-certs-tools',
+  '/etc/pki/pulp',
+  '/etc/pulp',
+  '/etc/puppet',
+  '/etc/qpid',
+  '/etc/qpid-dispatch',
+  '/etc/sysconfig/tomcat*',
+  '/etc/tomcat*',
+  '/root/ssl-build',
+  '/var/lib/candlepin',
+  '/var/www/html/pub',
+  '/var/lib/puppet/foreman_cache_data',
+  '/var/lib/puppet/ssl'
+]
 
-  CONFIGS=[
-    '/etc/candlepin',
-    '/etc/foreman',
-    '/etc/foreman-proxy',
-    '/etc/gutterball',
-    '/etc/hammer',
-    '/etc/httpd',
-    '/etc/katello',
-    '/etc/katello-installer',
-    '/etc/pki/content',
-    '/etc/pki/katello',
-    '/etc/pki/katello-certs-tools',
-    '/etc/pki/pulp',
-    '/etc/pki/tls/certs/katello-node.crt',
-    '/etc/pki/tls/certs/pulp_consumers_ca.crt',
-    '/etc/pki/tls/certs/pulp_ssl_cert.crt',
-    '/etc/pki/tls/private/katello-node.key',
-    '/etc/pulp',
-    '/etc/puppet',
-    '/etc/qpid',
-    '/etc/qpid-dispatch',
-    '/etc/sysconfig/tomcat*',
-    '/etc/tomcat*',
-    '/root/ssl-build',
-    '/var/lib/foreman',
-    '/var/lib/katello',
-    '/var/lib/candlepin',
-    '/var/www/html/pub',
-    '/var/lib/puppet/foreman_cache_data',
-    '/var/lib/puppet/ssl'
-  ]
+puts "Backing up config files... "
+`tar --selinux --create --gzip --file=config_files.tar.gz #{CONFIGS.join(' ')}`
+puts "Done."
 
-  puts "Backing up config files... "
-  `tar --selinux -czf config_files.tar.gz #{CONFIGS.join(' ')}`
-  puts "Done."
-
+unless @options[:skip_pulp]
   puts "Backing up Pulp data... "
-  `tar --selinux -cf pulp_data.tar /var/lib/pulp/ /var/www/pub/`
+  `tar --selinux --create --file=pulp_data.tar /var/lib/pulp/ /var/www/pub/`
   puts "Done."
-
-  puts "Backing up postgres db... "
-  `tar --selinux -czf pgsql_data.tar.gz /var/lib/pgsql/data/`
-  puts "Done."
-
-  puts "Backing up mongo db... "
-  `tar --selinux -czf mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
-  puts "Done."
-
-  `service postgresql start`
-  `katello-service start`
-
-  puts "**** BACKUP Complete, contents can be found in: #{DIR} ****"
 end
+
+puts "Backing up postgres db... "
+`tar --selinux --create --gzip --file=pgsql_data.tar.gz /var/lib/pgsql/data/`
+puts "Done."
+
+puts "Backing up mongo db... "
+`tar --selinux --create --gzip --file=mongo_data.tar.gz --exclude=mongod.lock /var/lib/mongodb/`
+puts "Done."
+
+`katello-service start`
+
+puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
