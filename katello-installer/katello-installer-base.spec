@@ -74,7 +74,7 @@ A set of tools for installation of Katello and Katello Capsule,
 including Foreman and Foreman Proxy.
 
 %prep
-%setup -q -n katello-installer-%{version}
+%setup -q -n katello-installer-%{version}%{prever}
 
 %build
 #replace shebangs
