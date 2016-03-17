@@ -2,14 +2,16 @@
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
+%global prever .rc1
+
 Name:    katello-installer-base
 Version: 3.0.0
-Release: 1.rc1%{?dist}
+Release: 1%{prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
 URL:     http://katello.org
-Source0: https://github.com/Katello/katello-installer/archive/%{version}.tar.gz
+Source0: https://github.com/Katello/katello-installer/archive/%{version}%{prever}.tar.gz
 
 BuildArch: noarch
 
