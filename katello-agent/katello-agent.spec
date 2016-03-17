@@ -80,6 +80,11 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Thu Mar 17 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-1
+- Refs #13589 - replace gofer plugin config file (jsherril@redhat.com)
+- fixes #14054 - ensure katello-agent service errors don't show during install
+  (stbenjam@redhat.com)
+
 * Thu Aug 13 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-3
 - Fixes #11083: Prevent katello-agent from being installed with pulp-consumer-
   client (ericdhelms@gmail.com)
