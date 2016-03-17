@@ -1,6 +1,6 @@
 Name: katello-agent
-Version: 2.4.0
-Release: 4%{?dist}
+Version: 2.5.0
+Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -71,7 +71,7 @@ exit 0
 exit 0
 
 %files
-%config(noreplace) %{_sysconfdir}/gofer/plugins/katelloplugin.conf
+%config %{_sysconfdir}/gofer/plugins/katelloplugin.conf
 %{_prefix}/lib/gofer/plugins/katelloplugin.*
 %{_sysconfdir}/yum/pluginconf.d/package_upload.conf
 %attr(750, root, root) %{_sbindir}/katello-package-upload
