@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        3.1.0
-Release:        1.nightly%{?dist}
+Release:        2.nightly%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -59,6 +59,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Fri Mar 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-2.nightly
+- Fixes #14260: Ensure the leading dot is removed from dist in repos RPM
+  (ericdhelms@gmail.com)
+
 * Wed Mar 16 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-1.nightly
 - Fixes #14189: Move repo definitions to be dist based (ericdhelms@gmail.com)
 - updating nightly to 2.5 (jsherril@redhat.com)
