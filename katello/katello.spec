@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.1.0
-Release:    1.nightly%{?dist}
+Release:    2.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -157,6 +157,14 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Mar 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-2.nightly
+- fixes #13300 - allows backing up without pulp (cfouant@redhat.com)
+- Fixes #14105 - fixes backup/restore after moving to foreman-installer,
+  BZ1316567 (cfouant@redhat.com)
+- Fixes #13199 - Remove pulp-nodes-parent as a requirement
+  (jomitsch@redhat.com)
+- fixes #13907 - adds squid logs to katello-debug (cfouant@redhat.com)
+
 * Tue Feb 23 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-1.nightly
 - Bump master to 3.1.0 (ericdhelms@gmail.com)
 - Fixes #10163 - Converted katello installer into scenario based installer
