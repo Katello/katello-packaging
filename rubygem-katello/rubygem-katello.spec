@@ -27,7 +27,7 @@ Release: 2%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
-Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.tar.gz
+Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 Requires: katello-selinux
 Requires: foreman >= 1.11.0
