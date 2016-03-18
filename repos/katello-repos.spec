@@ -46,7 +46,8 @@ install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
-    sed -i 's/@DIST@/%{dist}/' $repofile
+    trimmed_dist=`echo %{dist} | sed 's/^\.//'`
+    sed -i "s/@DIST@/${trimmed_dist}/" $repofile
 done
 
 %clean
