@@ -75,6 +75,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Mon Mar 28 2016 Justin Sherrill <jsherril@redhat.com> 0.0.24-1
+- build hammer-cli-katello 0.0.24 (jsherril@redhat.com)
+
 * Thu Feb 25 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.23-1
 - Update rubygem-hammer_cli_katello to 0.0.23 (ericdhelms@gmail.com)
 
