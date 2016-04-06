@@ -102,7 +102,7 @@ You'll also need an alias `kojikat` to point to:
   1. `git commit -m "Add NAME package"`
 1. Follow the "test a package" section above until it builds for all
    targeted platforms and required SCL + non-SCL modes.
-1. Submit a pull request against `rpm/develop`
+1. Submit a pull request against `master` branch.
 
 ## HOWTO: update a package
 
@@ -118,7 +118,7 @@ You'll also need an alias `kojikat` to point to:
   1. `git commit -m "Update NAME to VERSION"`
 1. Follow the "test a package" section above until it builds for all
    targeted platforms and required SCL + non-SCL modes.
-1. Submit a pull request against `rpm/develop`
+1. Submit a pull request against `master` branch.
 
 ## How does this repo work?
 
