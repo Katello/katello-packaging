@@ -81,6 +81,10 @@ BuildRequires: %{?scl_prefix_ruby}ruby(release)
 Obsoletes: ruby193-rubygem-haml
 Obsoletes: ruby193-rubygem-haml-rails
 Obsoletes: ruby193-rubygem-hpricot
+Obsoletes: ruby193-rubygem-strong_parameters
+Obsoletes: ruby193-rubygem-tire
+Obsoletes: ruby193-rubygem-less
+Obsoletes: ruby193-rubygem-hashr
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(katello) = %{version}
