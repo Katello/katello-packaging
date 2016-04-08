@@ -48,3 +48,6 @@ cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 %{_var}/www/html/pub/bootstrap.py
 
 %changelog
+* Fri Apr 08 2016 Eric D Helms <ericdhelms@gmail.com> 1.0.0-1
+- new package built with tito
+
