@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 1%{?prever}%{?dist}
+Release: 4%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
@@ -152,6 +152,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Mon Apr 11 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-4.rc2
+- 
+
 * Mon Apr 11 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1.rc2
 - Update rubygem-katello to RC2 (ericdhelms@gmail.com)
 
