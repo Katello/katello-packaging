@@ -157,6 +157,15 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Mon Apr 11 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-3.rc2
+- Bump katello for RC2 (ericdhelms@gmail.com)
+- fixes #13907 - adds squid logs to katello-debug (cfouant@redhat.com)
+- fixes #14161 - adds online backup for pulp database, BZ170292
+  (cfouant@redhat.com)
+- fixes #13121 - Allows for incremental backups, BZ1254413 (cfouant@redhat.com)
+- Fixes #13199 - Remove pulp-nodes-parent as a requirement
+  (jomitsch@redhat.com)
+
 * Thu Mar 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-2.rc1
 - fixes #13300 - allows backing up without pulp (cfouant@redhat.com)
 - Fixes #14105 - fixes backup/restore after moving to foreman-installer,
