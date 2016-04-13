@@ -42,6 +42,8 @@ if @dir.nil?
   puts optparse
   exit(-1)
 else
+  @time = Time.now
+  puts "Starting backup: #{@time}"
   FileUtils.mkdir_p(@dir)
   puts "Creating backup folder #{@dir}"
   FileUtils.chown(nil, 'postgres', @dir)
@@ -111,5 +113,7 @@ else
     `katello-service start`
   end
 
+  @time = Time.now
+  puts "Done with backup: #{@time}"
   puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
 end
