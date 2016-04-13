@@ -77,9 +77,11 @@ if [ $NOGENERIC -eq 0 ]; then
   add_files /etc/dirsrv/slapd-*/schema/99user.ldif
 fi
 
-# Squid
-add_files /etc/squid/squid.conf
-add_files /var/log/squid/*
+# Squid (*)
+if [ $NOGENERIC -eq 0 ]; then
+  add_files /etc/squid/squid.conf
+  add_files /var/log/squid/*
+fi
 
 # Legend:
 # * - already collected by sosreport tool (skip when -g option was provided)
