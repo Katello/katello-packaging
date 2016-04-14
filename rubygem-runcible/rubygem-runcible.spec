@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Thu Apr 14 2016 Justin Sherrill <jsherril@redhat.com> 1.7.1-1
+- Runcible 1.7.1 build (jsherril@redhat.com)
+
 * Fri Mar 11 2016 Eric D Helms <ericdhelms@gmail.com> 1.7.0-1
 - Update runcible to 1.7.0 (paji@redhat.com)
 
