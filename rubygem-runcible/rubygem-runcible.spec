@@ -4,7 +4,7 @@
 %global gem_name runcible
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
-Version:        1.7.0
+Version:        1.7.1
 Release:        1%{?dist}
 Summary:        A gem exposing Pulp's juiciest parts
 Group:          Applications/System
@@ -16,8 +16,8 @@ BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
-Requires:  %{?scl_prefix}rubygem(rest-client) < 1.8.0
+Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.7.0
+Requires:  %{?scl_prefix}rubygem(rest-client) < 2.0.0
 Requires:  %{?scl_prefix}rubygem(oauth)
 Requires:  %{?scl_prefix}rubygem(i18n) >= 0.5.0
 Requires:  %{?scl_prefix_ror}rubygem(activesupport) >= 3.0.10
