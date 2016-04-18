@@ -22,6 +22,10 @@ Requires: openssl
 Requires: katello-certs-tools
 Requires: foreman-proxy
 
+Obsoletes: pulp-nodes-parent
+Obsoletes: pulp-nodes-child
+Obsoletes: pulp-nodes-common
+
 %package -n foreman-installer-katello
 Summary: Scenario for installing Katello and/or Capsule with foreman-installer
 Group:	 Applications/System
