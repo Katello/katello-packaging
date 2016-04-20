@@ -6,7 +6,6 @@ baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/katello/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
-priority=1
 
 # Pulp RPMs as supported by Katello - This is a coordinated
 # copy of Pulp's packages in order to ensure compatibility
@@ -16,7 +15,6 @@ baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/pulp/@DIST@/$ba
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
-priority=1
 
 # Candlepin RPMs as supported by Katello - This is a coordinated
 # copy of Candlepin's packages in order to ensure compatibility
@@ -27,7 +25,6 @@ baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/candlepin/@DIST
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
-priority=1
 
 # source repositories
 

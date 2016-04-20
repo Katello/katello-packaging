@@ -9,11 +9,10 @@ URL:            http://www.katello.org
 Source0:        katello.repo
 Source1:        katello-client.repo
 Source2:        RPM-GPG-KEY-katello-2015
+Source3:        qpid-copr.repo
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
-
-Requires:	yum-plugin-priorities
 
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
@@ -46,7 +45,13 @@ install -d -m 0755 %{buildroot}%{_sysconfdir}/pki/rpm-gpg/
  
 install -m 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/yum.repos.d/
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/
+
+%if 0%{?rhel} == 6
+install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/yum.repos.d/
+%endif
+
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
+
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
     trimmed_dist=`echo %{dist} | sed 's/^\.//'`
