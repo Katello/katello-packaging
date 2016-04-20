@@ -6,7 +6,6 @@ baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/client/@DIS
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
-priority=1
 
 # source repositories
 
