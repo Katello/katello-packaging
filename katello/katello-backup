@@ -20,7 +20,8 @@ optparse = OptionParser.new do |opts|
     else
       opts.abort("Previous backup directory does not exist: #{dir_path}")
     end
-
+  end
+  
   opts.on("--online-backup", "Backup Pulp data online") do |online|
     @options[:online] = online
   end
