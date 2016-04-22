@@ -48,8 +48,7 @@ Requires: %{?scl_prefix}rubygem(anemone)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
 Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
 Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
-Requires: %{?scl_prefix}rubygem(qpid_messaging) >= 0.30.0
-Requires: %{?scl_prefix}rubygem(qpid_messaging) < 0.31.0
+Requires: %{?scl_prefix}rubygem(qpid_messaging)
 Requires: %{?scl_prefix_ruby}rubygem(json)
 Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
