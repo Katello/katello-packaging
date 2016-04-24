@@ -2,7 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-%global prever .rc3
+%global prever .rc4
 %global mainver 3.0.0
 #global release 1
 
@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 5%{?prever}%{?dist}
+Release: 6%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
