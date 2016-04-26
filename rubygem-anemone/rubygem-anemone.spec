@@ -6,7 +6,7 @@
 Summary:    Anemone web-spider framework
 Name:       %{?scl_prefix}rubygem-%{gem_name}
 Version:    0.7.2
-Release:    13%{?dist}
+Release:    14%{?dist}
 License:    MIT 
 Group:      Development/Languages
 URL:        http://anemone.rubyforge.org/
@@ -15,7 +15,7 @@ Source:     https://rubygems.org/downloads/%{gem_name}-%{version}.gem
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: %{?scl_prefix}rubygem(robotex) >= 1.0.0
-Requires: %{?scl_prefix}rubygem(nokogiri) >= 1.3.0 
+Requires: %{?scl_prefix_ror}rubygem(nokogiri) >= 1.3.0
 
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(rubygems)
