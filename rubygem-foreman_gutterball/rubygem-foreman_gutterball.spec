@@ -67,6 +67,9 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0} --no-rdoc --no-
 %{foreman_bundlerd_plugin}
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 0.0.1-6
+- rebuild for ror42 scl (jsherril@redhat.com)
+
 * Wed Feb 03 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.1-5
 - Don't set user/group permissions in files list (ericdhelms@gmail.com)
 
