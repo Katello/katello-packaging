@@ -93,6 +93,9 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 %doc %{gem_instdir}/CONTRIBUTORS.md
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 1.4.1-3
+- rebuild for ror42 scl (jsherril@redhat.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.4.1-2
 - Build rubygem-jenkins_api_client for RH22 SCL (ericdhelms@gmail.com)
 
