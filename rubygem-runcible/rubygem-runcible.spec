@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 1.7.2-2
+- rebuilding for ruby on rails 4.2 (jsherril@redhat.com)
+
 * Mon Apr 18 2016 Justin Sherrill <jsherril@redhat.com> 1.7.2-1
 - runcible 1.7.2 build (jsherril@redhat.com)
 
