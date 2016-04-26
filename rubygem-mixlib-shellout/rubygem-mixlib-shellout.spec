@@ -63,6 +63,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 2.2.1-3
+- rebuild for ror42 (jsherril@redhat.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 2.2.1-2
 - Build rubygem-mixlib-shellout for rh22 SCL (ericdhelms@gmail.com)
 
