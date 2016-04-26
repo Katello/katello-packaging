@@ -70,6 +70,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 0.30.0-8
+- rebuild for ror42 (jsherril@redhat.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.30.0-7
 - Include native extensions for qpid_messaging properly (ericdhelms@gmail.com)
 
