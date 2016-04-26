@@ -95,6 +95,9 @@ popd
 %{gem_instdir}/spec/
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 1.0.0-19
+- rebuilding for ruby on rails 4.2 (jsherril@redhat.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 1.0.0-18
 - Build rubygem-robotex for rh22 SCL (ericdhelms@gmail.com)
 
