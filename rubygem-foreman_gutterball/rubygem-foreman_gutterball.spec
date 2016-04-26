@@ -6,7 +6,7 @@
 Summary:   Gutterball plugin for Foreman and Katello
 Name: 	   %{?scl_prefix}rubygem-%{gem_name}
 Version:   0.0.1
-Release:   5%{?dist}
+Release:   6%{?dist}
 Group: 	   Development/Languages
 License:   GPLv3
 URL:       http://katello.org

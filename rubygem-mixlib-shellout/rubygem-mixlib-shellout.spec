@@ -6,7 +6,7 @@
 Summary: Run external commands on Unix or Windows
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 2.2.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group:   Development/Languages
 License: GPLv3
 URL:     https://github.com/chef/mixlib-shellout

@@ -5,7 +5,7 @@
 Summary: Jenkins Api client with features focused on automating Job configuration programaticaly
 Name:    %{?scl_prefix}rubygem-%{gem_name}
 Version: 1.4.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group:   Developmanet/Languages
 License: MIT
 URL:     https://github.com/arangamani/jenkins_api_client
@@ -17,8 +17,8 @@ Requires: %{?scl_prefix_ruby}rubygem(json)
 Requires: %{?scl_prefix_ruby}rubygem(thor) >= 0.16.0
 Requires: %{?scl_prefix}rubygem(mixlib-shellout) >= 1.1.0
 Requires: %{?scl_prefix}rubygem(terminal-table) >= 1.4.0
-Requires: %{?scl_prefix}rubygem(nokogiri) >= 1.6.0
-Requires: %{?scl_prefix}rubygem(nokogiri) < 2.0.0
+Requires: %{?scl_prefix_ror}rubygem(nokogiri) >= 1.6.0
+Requires: %{?scl_prefix_ror}rubygem(nokogiri) < 2.0.0
 
 BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildRequires: %{?scl_prefix_ruby}ruby(release)
@@ -26,8 +26,8 @@ BuildRequires: %{?scl_prefix_ruby}rubygem(json)
 BuildRequires: %{?scl_prefix_ruby}rubygem(thor) >= 0.16.0
 BuildRequires: %{?scl_prefix}rubygem(mixlib-shellout) >= 1.1.0
 BuildRequires: %{?scl_prefix}rubygem(terminal-table) >= 1.4.0
-BuildRequires: %{?scl_prefix}rubygem(nokogiri) >= 1.6.0
-BuildRequires: %{?scl_prefix}rubygem(nokogiri) < 2.0.0
+BuildRequires: %{?scl_prefix_ror}rubygem(nokogiri) >= 1.6.0
+BuildRequires: %{?scl_prefix_ror}rubygem(nokogiri) < 2.0.0
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
