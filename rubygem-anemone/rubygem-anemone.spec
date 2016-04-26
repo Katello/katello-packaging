@@ -59,6 +59,9 @@ cp -a .%{gem_dir}/* \
 %doc %{gem_instdir}/VERSION
 
 %changelog
+* Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 0.7.2-13
+- rebuild for ror42 scl (jsherril@redhat.com)
+
 * Wed Jan 06 2016 Eric D. Helms <ericdhelms@gmail.com> 0.7.2-12
 - Build rubygem-anemone for rh22 SCL (ericdhelms@gmail.com)
 
