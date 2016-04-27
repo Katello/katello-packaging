@@ -59,6 +59,9 @@ cp -a .%{gem_dir}/* \
 %doc %{gem_instdir}/VERSION
 
 %changelog
+* Wed Apr 27 2016 Justin Sherrill <jsherril@redhat.com> 0.7.2-14
+- more updates for ror42 builds (jsherril@redhat.com)
+
 * Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 0.7.2-13
 - rebuild for ror42 scl (jsherril@redhat.com)
 
