@@ -57,7 +57,6 @@ CONFIG_FILES=(
     /etc/tomcat
     /etc/squid
     /etc/puppet
-    /etc/gutterball
     /etc/qpid
     /etc/qpid-dispatch
     /etc/sysconfig/foreman.rpmsave
@@ -73,7 +72,6 @@ LOG_FILES=(
     /var/log/foreman
     /var/log/foreman-proxy
     /var/log/foreman-installer
-    /var/log/gutterball
     /var/log/tomcat
     /var/log/squid
     /var/log/capsule-certs-generate*
@@ -110,7 +108,6 @@ RPMS=(
     `rpm -qa | grep ^python-semantic-version`
     `rpm -qa | grep ^python-requests`
     `rpm -qa | grep ^python-isodate`
-    `rpm -qa | grep gutterball`
     `rpm -qa | grep $HOSTNAME`
     `rpm -qa | grep saslwrapper`
     `rpm -qa | grep ruby`
@@ -159,10 +156,8 @@ CONTENT=(
     /var/cache/candlepin
     /var/cache/foreman-proxy
     /var/cache/
-    /usr/bin/gutterball-db
     /opt/theforeman
     /var/www/html/pub/katello-rhsm-consumer
-    /tmp/gutterballkeystore.p12
 )
 
 katello-service stop
