@@ -100,6 +100,9 @@ cp -a .%{gem_dir}/* \
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Mon May 09 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.11-1
+- Update foreman_pipeline to 0.0.11 (#214) (xprazak2@users.noreply.github.com)
+
 * Thu Dec 17 2015 Eric D. Helms <ericdhelms@gmail.com> 0.0.8-2
 - 
 
