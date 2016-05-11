@@ -71,6 +71,7 @@ Provides a package for managing application life-cycle for Linux systems.
 %build
 #man pages
 a2x -d manpage -f manpage %{SOURCE0}
+gzip -f9 %{_sourcedir}/katello-service.8
 
 %install
 mkdir -p %{buildroot}/%{_mandir}/man8
@@ -95,7 +96,7 @@ install -d %{buildroot}/etc/bash_completion.d
 install -m 644 %{SOURCE8} %{buildroot}/etc/bash_completion.d/katello-service
 
 # install man page
-install -m 644 %{SOURCE0} %{buildroot}/%{_mandir}/man8
+install -m 644 %{_sourcedir}/katello-service.8.gz %{buildroot}/%{_mandir}/man8
 
 %clean
 %{__rm} -rf %{buildroot}
