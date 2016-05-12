@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -12,7 +12,11 @@ BuildArch: noarch
 
 Conflicts: pulp-consumer-client
 
+%if 0%{?sles_version}
+BuildRequires: python-devel >= 2.6
+%else
 BuildRequires: python2-devel
+%endif
 BuildRequires: python-setuptools
 BuildRequires: rpm-python
 Requires: gofer >= 2.5
@@ -75,6 +79,7 @@ exit 0
 exit 0
 
 %files
+%defattr(-,root,root,-)
 %config %{_sysconfdir}/gofer/plugins/katelloplugin.conf
 %{_prefix}/lib/gofer/plugins/katelloplugin.*
 %{_sysconfdir}/yum/pluginconf.d/package_upload.conf
@@ -84,6 +89,9 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Thu May 12 2016 Darin Lively <darinlively@gmail.com> 2.5.0-3
+- Added basic SLES build compatibility
+
 * Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-2
 - fixes #15012 - run katello-package-upload in %%posttrans (#219)
   (stephen@bitbin.de)
