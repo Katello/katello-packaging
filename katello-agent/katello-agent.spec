@@ -58,6 +58,10 @@ chkconfig goferd on
 service goferd restart > /dev/null 2>&1
 exit 0
 
+%posttrans
+katello-package-upload
+exit 0
+
 %postun
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
     if systemctl status goferd | grep 'active (running)'; then
