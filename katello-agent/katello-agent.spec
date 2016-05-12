@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -84,6 +84,10 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-2
+- fixes #15012 - run katello-package-upload in %%posttrans (#219)
+  (stephen@bitbin.de)
+
 * Thu Mar 17 2016 Eric D Helms <ericdhelms@gmail.com> 2.5.0-1
 - Refs #13589 - replace gofer plugin config file (jsherril@redhat.com)
 - fixes #14054 - ensure katello-agent service errors don't show during install
