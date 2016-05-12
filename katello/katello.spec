@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.1.0
-Release:    2.nightly%{?dist}
+Release:    3.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -161,6 +161,20 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-3.nightly
+- fixes #15010 - fix katello-service man page (#218) (stephen@bitbin.de)
+- Fixes #14881 - Add in /etc/qpid-dispatch/qdrouterd.conf for files which are
+  collected (#215) (bryan.kearney@gmail.com)
+- fixes #14784 - fix katello-backup syntax error (narbutas.tadas@gmail.com)
+- Fixes #14605 - clean temp files after foreman-debug (#202) (lzap@redhat.com)
+- Fixes #14608 - avoid collection of squid with sosreport (#203)
+  (lzap@redhat.com)
+- Fixes #13363 - Adding additional qpid debug statements to foreman-debug
+  (mmccune@redhat.com)
+- fixes #14161 - adds online backup for pulp database, BZ170292
+  (cfouant@redhat.com)
+- fixes #13121 - Allows for incremental backups, BZ1254413 (cfouant@redhat.com)
+
 * Fri Mar 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-2.nightly
 - fixes #13300 - allows backing up without pulp (cfouant@redhat.com)
 - Fixes #14105 - fixes backup/restore after moving to foreman-installer,
