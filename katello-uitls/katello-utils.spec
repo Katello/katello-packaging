@@ -4,8 +4,8 @@
 %global scl_rake /usr/bin/%{?scl:%{scl_prefix}}rake
 
 Name:           katello-utils
-Version:        2.4.0
-Release:        3%{?dist}
+Version:        3.0.0
+Release:        1%{?dist}
 Summary:        Additional tools for Katello
 
 Group:          Applications/Internet
