@@ -8,7 +8,7 @@
 
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.0.24
+Version: 0.0.25
 Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
