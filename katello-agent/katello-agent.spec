@@ -89,6 +89,10 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Mon May 16 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-3
+- Added basic SLES compatibility Tested against SLES 11 SP3
+  (darinlively@gmail.com)
+
 * Thu May 12 2016 Darin Lively <darinlively@gmail.com> 2.5.0-3
 - Added basic SLES build compatibility
 
