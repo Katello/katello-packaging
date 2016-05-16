@@ -63,6 +63,18 @@ Requires: lsof
 Requires: postgresql
 Requires: postgresql-server
 
+%pre
+if [ $1 -gt 1 ] # Pre script is passed 2 in an upgrade situation, see https://fedoraproject.org/wiki/Packaging:Scriptlets
+then
+  # Users must run the pre-upgrade script for 3.0. TODO: Remove this
+  if [ ! -f /var/lib/foreman/3.0_upgrade_ready ]
+  then
+    echo "You MUST upgrade to the latest 2.4 release, and execute the pre-upgrade script. See http://www.katello.org/docs/3.0/upgrade/index.html for more information."
+    exit 1
+  fi
+fi
+
+
 %description
 Provides a package for managing application life-cycle for Linux systems.
 
