@@ -2,9 +2,9 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-%global mainver 2.4.1
+%global mainver 2.4.2
 %global prever
-%global release 3
+%global release 1
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
