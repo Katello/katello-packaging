@@ -13,7 +13,7 @@ echo "Important packages such as the following will be removed:"
 echo ""
 echo "  * httpd (apache)"
 echo "  * mongodb"
-echo "  * tomcat6"
+echo "  * tomcat"
 echo "  * puppet"
 echo "  * ruby"
 echo "  * rubygems"
@@ -42,39 +42,41 @@ then
 fi
 
 CONFIG_FILES=(
-    /etc/pulp/
-    /etc/candlepin/
-    /etc/katello/
-    /usr/share/foreman
-    /usr/share/katello/
-    /var/lib/puppet/
-    /var/lib/pgsql/
-    /var/lib/mongodb/
-    /var/lib/katello/
-    /var/lib/pulp/
-    /etc/httpd/
-    /etc/tomcat6/
-    /usr/share/pulp
-    /var/lib/candlepin
+    /etc/pulp
+    /etc/candlepin
+    /etc/katello
+    /etc/httpd
+    /etc/tomcat6
     /etc/foreman
-    /var/lib/foreman
     /etc/tomcat
-    /etc/katello-installer
-    /etc/foreman-proxy/
-    /etc/puppet/environments
+    /etc/foreman-installer
+    /etc/foreman-proxy
     /etc/pki/katello-certs-tools
+    /etc/sudoers.d/foreman-proxy
+    /etc/hammer
+    /etc/tomcat
+    /etc/squid
+    /etc/puppet
+    /etc/gutterball
+    /etc/qpid
+    /etc/qpid-dispatch
+    /etc/sysconfig/foreman.rpmsave
 )
 
 LOG_FILES=(
-    /var/log/katello/
-    /var/log/tomcat6/
-    /var/log/pulp/
-    /var/log/candlepin/
-    /var/log/httpd/
-    /var/log/mongodb/
+    /var/log/katello
+    /var/log/tomcat6
+    /var/log/pulp
+    /var/log/candlepin
+    /var/log/httpd
+    /var/log/mongodb
     /var/log/foreman
-    /etc/tomcat
     /var/log/foreman-proxy
+    /var/log/foreman-installer
+    /var/log/gutterball
+    /var/log/tomcat
+    /var/log/squid
+    /var/log/capsule-certs-generate*
 )
 
 RPMS=(
@@ -110,17 +112,17 @@ RPMS=(
     `rpm -qa | grep ^python-isodate`
     `rpm -qa | grep gutterball`
     `rpm -qa | grep $HOSTNAME`
-    saslwrapper
-    ruby
-    rubygems
-    httpd
-    puppet
-    tomcat
-    tomcat6 
+    `rpm -qa | grep saslwrapper`
+    `rpm -qa | grep ruby`
+    `rpm -qa | grep rubygems`
+    `rpm -qa | grep httpd`
+    `rpm -qa | grep puppet`
+    `rpm -qa | grep tomcat`
+    `rpm -qa | grep squid`
 )
 
 CERT_FILES=(
-    /etc/pki/pulp/
+    /etc/pki/pulp
     /etc/pki/content/*
     /etc/pki/katello
     /root/ssl-build
@@ -129,6 +131,38 @@ CERT_FILES=(
     /etc/pki/tls/certs/pulp_consumers_ca.crt
     /etc/pki/tls/certs/pulp_ssl_cert.crt
     /var/www/html/pub/katello-ca*.rpm
+    /etc/pki/ca-trust/source/anchors/katello_server-host-cert.crt
+)
+
+CONTENT=(
+    /var/cache/pulp
+    /usr/share/foreman-proxy
+    /usr/share/foreman-installer-katello
+    /var/www/html/pub/katello-server-ca.crt
+    /usr/share/foreman
+    /var/lib/candlepin
+    /usr/share/katello
+    /var/lib/puppet
+    /var/lib/pgsql
+    /var/lib/mongodb
+    /var/lib/katello
+    /var/lib/pulp/
+    /var/lib/foreman
+    /usr/share/pulp
+    /var/lib/tomcat
+    /var/lib/qpidd
+    /usr/share/candlepin
+    /usr/share/tomcat
+    /usr/share/katello-installer-base
+    /usr/share/qpid
+    /usr/share/qpid-tools
+    /var/cache/candlepin
+    /var/cache/foreman-proxy
+    /var/cache/
+    /usr/bin/gutterball-db
+    /opt/theforeman
+    /var/www/html/pub/katello-rhsm-consumer
+    /tmp/gutterballkeystore.p12
 )
 
 katello-service stop
@@ -144,5 +178,9 @@ echo "Cleaning up log files"
 rm -rf ${LOG_FILES[*]}
 
 echo "Cleaning up Certs"
-# pulp cert stuff 
+# pulp cert stuff
 rm -rf ${CERT_FILES[*]}
+
+echo "Cleaning up content"
+#content
+rm -rf ${CONTENT[*]}
