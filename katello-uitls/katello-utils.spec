@@ -97,6 +97,9 @@ install -m 0644 man/katello-disconnected.man1 %{buildroot}%{_mandir}/man1/katell
 
 
 %changelog
+* Tue May 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1
+- Update katello-disconnected to 3.0.0 (#225) (eric.d.helms@gmail.com)
+
 * Tue Sep 01 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-3
 - Fixing erroneous requires within katello-utils (ericdhelms@gmail.com)
 
