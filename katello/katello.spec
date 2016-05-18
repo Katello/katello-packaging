@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.0.0
-Release:    4.rc3%{?dist}
+Release:    5.rc5%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -161,6 +161,10 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue May 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-5.rc5
+- fixes #15010 - fix katello-service man page (#218) (stephen@bitbin.de)
+- fixes #14784 - fix katello-backup syntax error (narbutas.tadas@gmail.com)
+
 * Tue Apr 19 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-4.rc3
 - Fixes #13363 - Adding additional qpid debug statements to foreman-debug
   (mmccune@redhat.com)
