@@ -2,7 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-%global prever .rc4
+%global prever .rc5
 %global mainver 3.0.0
 #global release 1
 
@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 6%{?prever}%{?dist}
+Release: 7%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
@@ -152,6 +152,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Wed May 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-7.rc5
+- 
+
 * Sun Apr 24 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-6.rc4
 - Add rubygem-katello 3.0 RC4 (ericdhelms@gmail.com)
 
