@@ -5,7 +5,7 @@
 
 Name:           katello-utils
 Version:        3.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Additional tools for Katello
 
 Group:          Applications/Internet
@@ -93,6 +93,10 @@ install -m 0644 man/katello-disconnected.man1 %{buildroot}%{_mandir}/man1/katell
 
 
 %changelog
+* Wed May 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-2
+- Update katello-disconnected properly for newer SCLs (#228)
+  (eric.d.helms@gmail.com)
+
 * Tue May 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-1
 - Update katello-disconnected to 3.0.0 (#225) (eric.d.helms@gmail.com)
 
