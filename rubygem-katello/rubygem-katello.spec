@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 7%{?prever}%{?dist}
+Release: 8%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
@@ -156,6 +156,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Sat May 21 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-8.rc5
+- Obsolete packages from 2.3 that were in 2.4 still (#200)
+
 * Wed May 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-7.rc5
 - 
 
