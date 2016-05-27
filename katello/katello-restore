@@ -61,7 +61,7 @@ def confirm
 end
 
 if !DIR.nil? && File.directory?(DIR)
-  if Dir.entries(DIR).include?(pulp_data.tar)
+  if Dir.entries(DIR).include?("pulp_data.tar")
     confirmed ? restore : confirm
   else
     puts "**** Given directory does not include pulp content ****"
