@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.1.0
-Release:    3.nightly%{?dist}
+Release:    4.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -159,6 +159,15 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri May 27 2016 Stephen Benjamin <stephen@redhat.com> 3.1.0-4.nightly
+- fixes #14858 - removes gutterball (#213) (cfouant@redhat.com)
+- Fixes #15146 - service-wait now correctly handles tomcat (#229)
+  (parthaa@gmail.com)
+- Fixes #14125 - Updating katello-remove cleanup (#189) (chrobert@redhat.com)
+- Have katello-backup report on times (#204) (jcpunk@gmail.com)
+- Fixes #15051 - Update katello-remove with help message (#221)
+  (chrobert@redhat.com)
+
 * Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-3.nightly
 - fixes #15010 - fix katello-service man page (#218) (stephen@bitbin.de)
 - Fixes #14881 - Add in /etc/qpid-dispatch/qdrouterd.conf for files which are
