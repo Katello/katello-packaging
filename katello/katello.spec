@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.0.0
-Release:    6.rc5%{?dist}
+Release:    7.rc6%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -159,6 +159,13 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri May 27 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-7.rc6
+- fixes #14858 - removes gutterball (#213)
+- Fixes #15146 - service-wait now correctly handles tomcat (#229)
+- Fixes #14125 - Updating katello-remove cleanup (#189) (chrobert@redhat.com)
+- Fixes #15051 - Update katello-remove with help message (#221)
+  (chrobert@redhat.com)
+
 * Sat May 21 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-6.rc5
 - 
 
