@@ -2,7 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-%global prever .rc5
+%global prever .rc6
 %global mainver 3.0.0
 #global release 1
 
@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 8%{?prever}%{?dist}
+Release: 9%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
@@ -156,6 +156,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Fri May 27 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-9.rc6
+- 
+
 * Sat May 21 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-8.rc5
 - Obsolete packages from 2.3 that were in 2.4 still (#200)
 
