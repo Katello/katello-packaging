@@ -2,11 +2,11 @@
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
-%global prever .rc5
+%global prever .rc6
 
 Name:    katello-installer-base
 Version: 3.0.0
-Release: 7%{prever}%{?dist}
+Release: 8%{prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
@@ -138,6 +138,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Fri May 27 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-8.rc6
+- 
+
 * Thu May 19 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-7.rc5
 - Add new source for RC5 katello-installer (ericdhelms@gmail.com)
 
