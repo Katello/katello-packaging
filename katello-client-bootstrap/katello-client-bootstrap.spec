@@ -48,6 +48,9 @@ cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 %{_var}/www/html/pub/bootstrap.py
 
 %changelog
+* Tue May 31 2016 Eric D Helms <ericdhelms@gmail.com> 1.1.0-1
+- Fixes #15251 - client-bootstrap 1.1.0 release (#231) (mmccune@gmail.com)
+
 * Fri Apr 08 2016 Eric D Helms <ericdhelms@gmail.com> 1.0.0-1
 - new package built with tito
 
