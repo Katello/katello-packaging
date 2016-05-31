@@ -27,7 +27,7 @@ Group:	 Applications/System
 Obsoletes: katello-installer
 Obsoletes: capsule-installer
 Requires: %{name} = %{version}-%{release}
-Requires: katello-service
+Requires: katello-service >= 3.0.0
 
 %description -n foreman-installer-katello
 A set of tools for installation of Katello and and Capsule.
