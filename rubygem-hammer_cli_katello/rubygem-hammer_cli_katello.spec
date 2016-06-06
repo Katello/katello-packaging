@@ -19,6 +19,7 @@ BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %if 0%{?scl:1}
 Obsoletes: rubygem-%{gem_name} < 0.0.17-3
+Obsoletes: rubygem-hammer_cli_gutterball
 %endif
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 

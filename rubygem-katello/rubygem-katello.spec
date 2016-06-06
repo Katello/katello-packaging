@@ -85,6 +85,7 @@ Obsoletes: ruby193-rubygem-strong_parameters
 Obsoletes: ruby193-rubygem-tire
 Obsoletes: ruby193-rubygem-less
 Obsoletes: ruby193-rubygem-hashr
+Obsoletes: ruby193-rubygem-foreman_gutterball
 
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(katello) = %{version}
