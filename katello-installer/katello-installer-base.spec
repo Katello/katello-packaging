@@ -37,7 +37,11 @@ Requires: katello-service >= 3.0.0
 %description -n foreman-installer-katello
 A set of tools for installation of Katello and and Capsule.
 
-%post -n foreman-installer-katello
+%posttrans -n foreman-installer-katello
+mv /etc/katello-installer/katello-installer.yaml.rpmsave /etc/katello-installer/katello-installer.yaml >/dev/null 2>&1 || :
+mv /etc/capsule-installer/capsule-installer.yaml.rpmsave /etc/capsule-installer/capsule-installer.yaml >/dev/null 2>&1 || :
+mv /etc/katello-installer/answers.katello-installer.yaml.rpmsave /etc/katello-installer/answers.katello-installer.yaml >/dev/null 2>&1 || :
+mv /etc/capsule-installer/answers.capsule-installer.yaml.rpmsave /etc/capsule-installer/answers.capsule-installer.yaml >/dev/null 2>&1 || :
 foreman-installer --scenario katello --migrations-only > /dev/null
 foreman-installer --scenario capsule --migrations-only > /dev/null
 
@@ -66,7 +70,9 @@ Requires:  %{name} = %{version}-%{release}
 A set of tools for installation of a Katello development environment using
 Katello and Foreman from git.
 
-%post -n foreman-installer-katello-devel
+%posttrans -n foreman-installer-katello-devel
+mv /etc/katello-devel-installer/katello-devel-installer.yaml.rpmsave /etc/katello-devel-installer/katello-devel-installer.yaml >/dev/null 2>&1 || :
+mv /etc/katello-devel-installer/answers.katello-devel-installer.yaml.rpmsave /etc/katello-devel-installer/answers.katello-devel-installer.yaml >/dev/null 2>&1 || :
 foreman-installer --scenario katello-devel --migrations-only > /dev/null
 
 %files -n foreman-installer-katello-devel
