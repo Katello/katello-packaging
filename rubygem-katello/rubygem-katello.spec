@@ -268,6 +268,9 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}%{?prever}
 
 %changelog
+* Mon Jun 13 2016 Justin Sherrill <jsherril@redhat.com> 2.4.3-1
+- building katello 2.4.3 (jsherril@redhat.com)
+
 * Mon May 16 2016 Justin Sherrill <jsherril@redhat.com> 2.4.2-1
 - build for katello 2.4.2 (jsherril@redhat.com)
 
