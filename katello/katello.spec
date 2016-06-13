@@ -159,6 +159,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-9
+- Release 3.0.0 (ericdhelms@gmail.com)
+
 * Fri Jun 03 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-8.rc8
 - 
 
