@@ -6,7 +6,7 @@
 
 Name:    katello-installer-base
 Version: 3.0.0
-Release: 12%{?prever}%{?dist}
+Release: 13%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
@@ -86,7 +86,7 @@ A set of tools for installation of Katello and Katello Capsule,
 including Foreman and Foreman Proxy.
 
 %prep
-%setup -q -n katello-installer-%{version}%{prever}
+%setup -q -n katello-installer-%{version}%{?prever}
 
 %build
 #replace shebangs
@@ -144,6 +144,8 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-13
+
 * Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-12
 - 
 
