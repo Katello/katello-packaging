@@ -6,12 +6,12 @@
 
 Name:    katello-installer-base
 Version: 3.0.0
-Release: 11%{?prever}%{?dist}
+Release: 12%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
 URL:     http://katello.org
-Source0: https://github.com/Katello/katello-installer/archive/%{version}%{prever}.tar.gz
+Source0: https://github.com/Katello/katello-installer/archive/%{version}%{?prever}.tar.gz
 
 BuildArch: noarch
 
@@ -144,6 +144,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-12
+- 
+
 * Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-11
 - Release 3.0.0 (ericdhelms@gmail.com)
 - Fixes #15299 - preserve legacy config during upgrade (#233)
