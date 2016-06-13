@@ -144,6 +144,12 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-11
+- Release 3.0.0 (ericdhelms@gmail.com)
+- Fixes #15299 - preserve legacy config during upgrade (#233)
+  (martin.bacovsky@gmail.com)
+- Fixes #15230 - Require newer katello-service (#230)
+
 * Tue May 31 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-10.rc8
 - 
 
