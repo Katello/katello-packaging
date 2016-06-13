@@ -157,6 +157,10 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-11
+- Release 3.0.0 (ericdhelms@gmail.com)
+- Fixes #15271: Obsolete removed gutterball gems (#232)
+
 * Fri Jun 03 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-11.rc8
 - 
 
