@@ -5,7 +5,7 @@ name=Katello 3.0
 baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/katello/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
-gpgcheck=0
+gpgcheck=1
 priority=1
 
 # Pulp RPMs as supported by Katello - This is a coordinated
@@ -15,7 +15,7 @@ name=Pulp Community Releases
 baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/pulp/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
-gpgcheck=0
+gpgcheck=1
 priority=1
 
 # Candlepin RPMs as supported by Katello - This is a coordinated
@@ -26,7 +26,7 @@ name=Candlepin: an open source entitlement management system.
 baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.0/candlepin/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
-gpgcheck=0
+gpgcheck=1
 priority=1
 
 # source repositories
