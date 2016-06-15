@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 11%{?prever}%{?dist}
+Release: 12%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
@@ -157,6 +157,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Wed Jun 15 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-12
+- 
+
 * Mon Jun 13 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-11
 - Release 3.0.0 (ericdhelms@gmail.com)
 - Fixes #15271: Obsolete removed gutterball gems (#232)
