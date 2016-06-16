@@ -15,6 +15,7 @@ end
 
 optparse.parse!
 DIR = ARGV.pop
+DIR.chop! if DIR.end_with?("/")
 
 def restore
   puts "#{DIR}"
@@ -32,17 +33,29 @@ def restore
 
   puts "Stopping Katello services"
   `katello-service stop`
-  `service postgresql stop`
   puts "Done.\n"
 
   puts "Restoring backend data"
   `tar --selinux --overwrite --listed-incremental=/dev/null -xf pulp_data.tar -C /`
-  `tar --selinux --overwrite --listed-incremental=/dev/null -xzf mongo_data.tar.gz -C /`
-  `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
+  if File.exist?('mongo_data.tar.gz')
+    `tar --selinux --overwrite --listed-incremental=/dev/null -xzf mongo_data.tar.gz -C /`
+    `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
+  else
+    `service postgresql start`
+    `runuser - postgres -c "dropdb foreman"`
+    `runuser - postgres -c "dropdb candlepin"`
+    `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/foreman.dump"`
+    `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/candlepin.dump"`
+    `service postgresql stop`
+
+    `service mongod start`
+    `echo 'db.dropDatabase();' | mongo pulp_database`
+    `mongorestore --host localhost mongo_dump/pulp_database/`
+    `service mongod stop`
+  end
   puts "Done.\n"
 
   puts "Restarting all Katello processes"
-  `service postgresql start`
   `katello-service start`
   puts "Done.\n"
 end
@@ -61,7 +74,7 @@ def confirm
 end
 
 if !DIR.nil? && File.directory?(DIR)
-  if Dir.entries(DIR).include?(pulp_data.tar)
+  if Dir.entries(DIR).include?('pulp_data.tar')
     confirmed ? restore : confirm
   else
     puts "**** Given directory does not include pulp content ****"
@@ -74,3 +87,4 @@ else
   puts optparse
   exit(-1)
 end
+
