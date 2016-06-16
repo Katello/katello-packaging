@@ -268,6 +268,9 @@ chown -R foreman.foreman %{foreman_dir}/public/apipie-cache
 %{gem_dir}/doc/%{gem_name}-%{version}%{?prever}
 
 %changelog
+* Thu Jun 16 2016 Justin Sherrill <jsherril@redhat.com> 2.4.4-1
+- building rubygem-katello 2.4.4 (jsherril@redhat.com)
+
 * Mon Jun 13 2016 Justin Sherrill <jsherril@redhat.com> 2.4.3-1
 - building katello 2.4.3 (jsherril@redhat.com)
 
