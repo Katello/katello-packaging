@@ -2,7 +2,7 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-%global mainver 2.4.3
+%global mainver 2.4.4
 %global prever
 %global release 1
 
