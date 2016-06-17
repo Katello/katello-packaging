@@ -3,7 +3,7 @@
 
 %global gem_name katello
 #global prever .rc8
-%global mainver 3.0.0
+%global mainver 3.0.1
 #global release 1
 
 %global foreman_dir /usr/share/foreman
@@ -23,7 +23,7 @@ Name:    %{?scl_prefix}rubygem-%{gem_name}
 Summary: Katello
 
 Version: %{mainver}
-Release: 12%{?prever}%{?dist}
+Release: 1%{?prever}%{?dist}
 Group:   Development/Ruby
 License: Distributable
 URL:     http://www.katello.org
