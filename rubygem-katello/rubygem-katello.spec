@@ -157,6 +157,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Fri Jun 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.1-1
+- Update rubygem-katello to 3.0.1 (ericdhelms@gmail.com)
+
 * Wed Jun 15 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.0-12
 - 
 
