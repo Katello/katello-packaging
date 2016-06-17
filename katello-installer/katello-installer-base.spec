@@ -144,6 +144,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Fri Jun 17 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.2-1
+- Update katello-installer to 3.0.2 (ericdhelms@gmail.com)
+
 * Wed Jun 15 2016 Eric D Helms <ericdhelms@gmail.com> 3.0.1-2
 - 
 
