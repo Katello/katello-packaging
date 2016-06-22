@@ -1,6 +1,6 @@
 Name: katello-agent
-Version: 2.5.0
-Release: 3%{?dist}
+Version: 2.6.0
+Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
