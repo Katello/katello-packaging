@@ -89,6 +89,9 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Wed Jun 22 2016 Justin Sherrill <jsherril@redhat.com> 2.6.0-1
+- building katello-agent 2.6.0 (jsherril@redhat.com)
+
 * Mon May 16 2016 Justin Sherrill <jsherril@redhat.com> 2.5.0-3
 - Added basic SLES compatibility Tested against SLES 11 SP3
   (darinlively@gmail.com)
