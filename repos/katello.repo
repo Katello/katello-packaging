@@ -2,7 +2,7 @@
 
 [katello]
 name=Katello Nightly
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/katello/@DIST@/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/katello/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -12,7 +12,7 @@ priority=1
 # copy of Pulp's packages in order to ensure compatibility
 [katello-pulp]
 name=Pulp Community Releases
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/pulp/@DIST@/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/pulp/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -23,7 +23,7 @@ priority=1
 
 [katello-candlepin]
 name=Candlepin: an open source entitlement management system.
-baseurl=https://fedorapeople.org/groups/katello/releases/yum/nightly/candlepin/@DIST@/$basearch/
+baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/candlepin/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
 gpgcheck=0
@@ -33,21 +33,21 @@ priority=1
 
 [katello-source]
 name=Katello Nightly Source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/katello/@DIST@/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.1/katello/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-pulp-source]
 name=Katello Pulp source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/pulp/@DIST@/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.1/pulp/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
 
 [katello-candlepin-source]
 name=Katello Candlepin source
-baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/nightly/candlepin/@DIST@/
+baseurl=https://fedorapeople.org/groups/katello/releases/source/srpm/3.1/candlepin/@DIST@/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=0
 gpgcheck=0
