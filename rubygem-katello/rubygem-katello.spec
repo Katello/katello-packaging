@@ -157,6 +157,27 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-0.2.rc1
+- building 3.1.0.rc1 rubygem-katello (jsherril@redhat.com)
+- Fixes #15271: Obsolete removed gutterball gems (#232)
+  (eric.d.helms@gmail.com)
+- Obsolete packages from 2.3 that were in 2.4 still (#200)
+  (eric.d.helms@gmail.com)
+- Fixes #13676 - Creating sub package for ostree (paji@redhat.com)
+- Update rubygem-katello for RH22 SCL (ericdhelms@gmail.com)
+- Fixes #12741: Move pulp/candlepin requires to metapackage
+  (ericdhelms@gmail.com)
+- Fixes #10291 - removes elasticsearch (cfouant@redhat.com)
+- Fixes #12511: Remove rubygem-hooks as a dependency (ericdhelms@gmail.com)
+- Fixes #12354 - obsolete uneeded gems (jsherril@redhat.com)
+- Refs #10621: Don't deploy katello.yml during RPM build (ericdhelms@gmail.com)
+- Update rubygem-katello to tfm SCL. (ericdhelms@gmail.com)
+- Remove rubygem-justified from rubygem-katello (ericdhelms@gmail.com)
+- Change rubygem-katello to source and build like other rubygems.
+  (ericdhelms@gmail.com)
+- Remove i18n_data dependency on rubygem-katello (ericdhelms@gmail.com)
+- fixes #11285 - require qpid-cpp-server-linearstore (stbenjam@redhat.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
