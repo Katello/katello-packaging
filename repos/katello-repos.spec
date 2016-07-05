@@ -59,6 +59,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-3.rc1
+- updates for katello 3.1 (jsherril@redhat.com)
+
 * Fri Mar 18 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-2.nightly
 - Fixes #14260: Ensure the leading dot is removed from dist in repos RPM
   (ericdhelms@gmail.com)
