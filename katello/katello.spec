@@ -159,6 +159,17 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4.rc1
+- updates for katello 3.1 (jsherril@redhat.com)
+- fixes #14858 - removes gutterball (#213) (cfouant@redhat.com)
+- Fixes #15146 - service-wait now correctly handles tomcat (#229)
+  (parthaa@gmail.com)
+- Fixes #14125 - Updating katello-remove cleanup (#189) (chrobert@redhat.com)
+- Have katello-backup report on times (#204) (jcpunk@gmail.com)
+- Fixes #15051 - Update katello-remove with help message (#221)
+  (chrobert@redhat.com)
+- Fix error with Katello-restore script `pulp_data' (narbutas.tadas@gmail.com)
+
 * Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-3.nightly
 - fixes #15010 - fix katello-service man page (#218) (stephen@bitbin.de)
 - Fixes #14881 - Add in /etc/qpid-dispatch/qdrouterd.conf for files which are
