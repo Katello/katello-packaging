@@ -15,13 +15,13 @@
 
 
 Name: pulp-katello
-Version: 1.0
+Version: 1.0.1
 Release: 1%{?dist}
 Summary: Plugins useful for katello interactions with pulp
 Group: Development/Languages
 License: GPLv2
 URL: https://fedorahosted.org/katello/
-Source0: https://codeload.github.com/Katello/pulp-katello-plugins/tar.gz/%{version}
+Source0: https://codeload.github.com/Katello/pulp-katello/tar.gz/%{version}
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -41,7 +41,7 @@ Provides a collection of platform plugins, client extensions and agent
 handlers that provide RPM support.
 
 %prep
-%setup  -n %{name}-plugins-%{version}%{?dashalphatag} 
+%setup  -n %{name}-%{version}%{?dashalphatag} 
 
 %build
 %{__python} setup.py build
@@ -56,7 +56,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{python_sitelib}/pulp_katello/
-%{python_sitelib}/pulp_katello_plugins*.egg-info
+%{python_sitelib}/pulp_katello*.egg-info
 %doc LICENSE
 %doc README.md
 
