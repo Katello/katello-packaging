@@ -62,6 +62,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Jul 07 2016 Eric D Helms <ericdhelms@gmail.com> 1.0.1-1
+- Update pulp-katello to 1.0.1 (#249) (eric.d.helms@gmail.com)
+
 * Mon Feb 01 2016 Justin Sherrill <jsherril@redhat.com> 1.0-1
 -  updating pulp-katello to 1.0 (jsherril@redhat.com)
 
