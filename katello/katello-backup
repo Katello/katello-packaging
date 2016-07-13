@@ -21,8 +21,8 @@ optparse = OptionParser.new do |opts|
       opts.abort("Previous backup directory does not exist: #{dir_path}")
     end
   end
-  
-  opts.on("--online-backup", "Backup Pulp data online") do |online|
+
+  opts.on("--online-backup", "Keep services online during backup") do |online|
     @options[:online] = online
   end
 
@@ -50,8 +50,6 @@ else
   FileUtils.chown(nil, 'postgres', @dir)
   FileUtils.chmod 0770, @dir
   FileUtils.cd @dir
-
-  `katello-service stop`
 
   CONFIGS=[
     '/etc/candlepin',
@@ -82,17 +80,17 @@ else
   `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=config.snar #{CONFIGS.join(' ')}`
   puts "Done."
 
-  puts "Backing up postgres db... "
-  `tar --selinux --create --gzip --file=pgsql_data.tar.gz --listed-incremental=postgres.snar /var/lib/pgsql/data/`
-  puts "Done."
+  if @options[:online]
+    puts "Backing up postgres db... "
+    `runuser - postgres -c "pg_dump -Fc foreman > #{@dir}/foreman.dump"`
+    `runuser - postgres -c "pg_dump -Fc candlepin > #{@dir}/candlepin.dump"`
+    puts "Done."
 
-  puts "Backing up mongo db... "
-  `tar --selinux --create --gzip --file=mongo_data.tar.gz --listed-incremental=mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
-  puts "Done."
+    puts "Backing up mongo db... "
+    `mongodump --host localhost --out mongo_dump`
+    puts "Done."
 
-  unless @options[:skip_pulp]
-    if @options[:online]
-      `katello-service start`
+    unless @options[:skip_pulp]
       puts "Backing up Pulp data... "
       matching = false
       until matching
@@ -103,13 +101,24 @@ else
       end
 
       puts "Done."
-    else
+    end
+  else
+    `katello-service stop`
+
+    puts "Backing up postgres db... "
+    `tar --selinux --create --gzip --file=pgsql_data.tar.gz --listed-incremental=postgres.snar /var/lib/pgsql/data/`
+    puts "Done."
+
+    puts "Backing up mongo db... "
+    `tar --selinux --create --gzip --file=mongo_data.tar.gz --listed-incremental=mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+    puts "Done."
+
+    unless @options[:skip_pulp]
       puts "Backing up Pulp data... "
       `tar --selinux --create --file=pulp_data.tar --listed-incremental=pulp.snar /var/lib/pulp/ /var/www/pub/`
       puts "Done."
-      `katello-service start`
     end
-  else
+
     `katello-service start`
   end
 
