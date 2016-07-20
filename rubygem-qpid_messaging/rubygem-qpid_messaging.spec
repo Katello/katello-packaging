@@ -70,6 +70,9 @@ rm -rf %{buildroot}%{gem_instdir}/ext
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Wed Jul 20 2016 Justin Sherrill <jsherril@redhat.com> 0.34.1-1
+- Fixes #13017 - remove priorities to use qpid from epel (jsherril@redhat.com)
+
 * Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 0.30.0-8
 - rebuild for ror42 (jsherril@redhat.com)
 
