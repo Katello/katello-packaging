@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        3.2.0
-Release:        1.nightly%{?dist}
+Release:        2.nightly%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -27,6 +27,9 @@ Defines yum repositories for Katello clients.
 %files -n katello-client-repos
 %defattr(-, root, root)
 %{_sysconfdir}/yum.repos.d/katello-client.repo
+%if 0%{?rhel} == 6
+%{_sysconfdir}/yum.repos.d/qpid-copr.repo
+%endif
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %prep
