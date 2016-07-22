@@ -14,6 +14,10 @@ Source3:        qpid-copr.repo
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
+BuildRequires: sed
+BuildRequires: ruby
+BuildRequires: python
+
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
 
@@ -52,10 +56,14 @@ install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/yum.repos.d/
 
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
+REPO_VERSION=$(echo "puts '%{release}' =~ /nightly/ ? 'nightly' : '%{version}'.split('.')[0..1].join('.')" | ruby)
+REPO_NAME=$(python -c  "print '${REPO_VERSION}'.title()")
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
     trimmed_dist=`echo %{dist} | sed 's/^\.//'`
     sed -i "s/@DIST@/${trimmed_dist}/" $repofile
+    sed -i "s/@REPO_VERSION@/${REPO_VERSION}/" $repofile
+    sed -i "s/@REPO_NAME@/${REPO_NAME}/" $repofile
 done
 
 %clean
