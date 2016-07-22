@@ -155,6 +155,10 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Fri Jul 22 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-0.2.rc2.1
+- Bumping for rubygem-katello 3.1 rc2 (jsherril@redhat.com)
+- Refs #13017 - use any qpid_mess version (jsherril@redhat.com)
+
 * Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-0.2.rc1
 - building 3.1.0.rc1 rubygem-katello (jsherril@redhat.com)
 - Fixes #15271: Obsolete removed gutterball gems (#232)
