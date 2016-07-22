@@ -141,6 +141,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Fri Jul 22 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-1.rc2
+- upgrade installer to 3.1.0 rc2 (jsherril@redhat.com)
+
 * Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-1.rc1
 - building 3.1.0.rc1 
 
