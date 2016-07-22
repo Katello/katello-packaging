@@ -159,6 +159,11 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Jul 22 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4.rc2
+- bumping katello for rc2 (jsherril@redhat.com)
+- Fixes #15484 - Handle pulp_streamer and squid in katello-service
+  (daviddavis@redhat.com)
+
 * Tue Jul 05 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4.rc1
 - updates for katello 3.1 (jsherril@redhat.com)
 - fixes #14858 - removes gutterball (#213) (cfouant@redhat.com)
