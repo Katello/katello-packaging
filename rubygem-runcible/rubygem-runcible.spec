@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Tue Jul 26 2016 Eric D Helms <ericdhelms@gmail.com> 1.8.0-1
+- Update Runcible to 1.8.0 (#258) (eric.d.helms@gmail.com)
+
 * Tue Apr 26 2016 Justin Sherrill <jsherril@redhat.com> 1.7.2-3
 - more ror42 builds (jsherril@redhat.com)
 
