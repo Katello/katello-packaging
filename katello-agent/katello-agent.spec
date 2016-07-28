@@ -24,6 +24,9 @@ Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
 Requires: subscription-manager
+%if 0%{?rhel} < 7
+Requires: yum-plugin-security
+%endif
 
 %description
 Provides plugin for gofer, which allows communicating with Katello server
@@ -123,7 +126,7 @@ exit 0
 - Adding el5 releaser. (ericdhelms@gmail.com)
 
 * Tue Feb 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.3.0-1
-- 
+-
 
 * Tue Feb 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.0-2
 - Bumping release to 2.2.0-2 (ericdhelms@gmail.com)
@@ -216,7 +219,7 @@ exit 0
 - Refit agent for pulp v2. (jortel@redhat.com)
 
 * Fri Oct 12 2012 Lukas Zapletal <lzap+git@redhat.com> 1.1.3-1
-- 
+-
 
 * Fri Aug 24 2012 Miroslav Suchý <msuchy@redhat.com> 1.1.2-1
 - 845643 - consistently use rpm macros (msuchy@redhat.com)
