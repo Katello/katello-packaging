@@ -13,6 +13,7 @@
     <packagelist>
        <!-- katello core packages -->
        <packagereq type="default">katello</packagereq>
+       <packagereq type="default">katello-capsule</packagereq>
        <packagereq type="default">tfm-rubygem-katello</packagereq>
        <packagereq type="default">katello-certs-tools</packagereq>
        <packagereq type="default">katello-common</packagereq>
