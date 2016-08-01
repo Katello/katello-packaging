@@ -15,7 +15,7 @@
 
 
 Name: pulp-katello
-Version: 1.0.1
+Version: 1.0.2
 Release: 1%{?dist}
 Summary: Plugins useful for katello interactions with pulp
 Group: Development/Languages
