@@ -146,6 +146,7 @@ Useful utilities for debug info collecting
 Summary: Provides a federation of katello services
 BuildArch: noarch
 Requires: findutils
+Requires: foreman-installer-%{name}
 
 %description capsule
 Provides a federation of katello services
