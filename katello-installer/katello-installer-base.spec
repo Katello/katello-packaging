@@ -52,8 +52,6 @@ foreman-installer --scenario capsule --migrations-only > /dev/null
 %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
 %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
-%{_sbindir}/capsule-certs-generate
-%{_sbindir}/katello-certs-check
 %{_sbindir}/capsule-remove
 
 %package -n foreman-installer-katello-devel
@@ -133,6 +131,8 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %{_datadir}/katello-installer-base/hooks
 %{_datadir}/katello-installer-base/checks
 %{_datadir}/katello-installer-base/parser_cache
+%{_sbindir}/capsule-certs-generate
+%{_sbindir}/katello-certs-check
 %doc README.*
 
 %changelog
