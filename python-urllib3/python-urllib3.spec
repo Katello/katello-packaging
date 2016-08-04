@@ -135,6 +135,9 @@ popd
 %endif # with_python3
 
 %changelog
+* Thu Aug 04 2016 Justin Sherrill <jsherril@redhat.com> 1.10.2-2.katello
+- new package built with tito
+
 * Mon Apr 13 2015 Matej Stuchlik <mstuchli@redhat.com> - 1.10.2-1
 - Update to 1.10.2
 Resolves: rhbz#1176257
