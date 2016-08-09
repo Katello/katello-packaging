@@ -52,8 +52,6 @@ foreman-installer --scenario capsule --migrations-only > /dev/null
 %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
 %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
-%{_sbindir}/katello-installer
-%{_sbindir}/capsule-installer
 %{_sbindir}/capsule-certs-generate
 %{_sbindir}/katello-certs-check
 %{_sbindir}/capsule-remove
@@ -110,8 +108,6 @@ install -d -m0755 %{buildroot}/%{_sbindir}
 
 cp -dpR checks modules hooks %{buildroot}/%{_datadir}/katello-installer-base
 
-cp -dpR bin/katello-installer %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-installer
-cp -dpR bin/capsule-installer %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-installer
 cp -dpR bin/capsule-certs-generate %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-certs-generate
 cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-certs-check
 cp -dpR bin/capsule-remove %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-remove
@@ -127,8 +123,6 @@ cp -dpR config/katello-devel.migrations %{buildroot}/%{_sysconfdir}/foreman-inst
 cp -dpR config/capsule.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/capsule.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
-ln -sf %{_datadir}/foreman-installer-katello/bin/katello-installer %{buildroot}/%{_sbindir}/katello-installer
-ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-installer %{buildroot}/%{_sbindir}/capsule-installer
 ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-certs-generate %{buildroot}/%{_sbindir}/capsule-certs-generate
 ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot}/%{_sbindir}/katello-certs-check
 ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_sbindir}/capsule-remove
