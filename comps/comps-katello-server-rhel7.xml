@@ -52,6 +52,10 @@
 
        <!-- katello thirdparty non-rubygem packages -->
        <packagereq type="default">python-urllib3</packagereq>
+
+       <!-- temporary qpid packages -->
+       <packagereq type="default">qpid-dispatch-router</packagereq>
+       <packagereq type="default">qpid-dispatch-tools</packagereq>
     </packagelist>
   </group>
   <group>
