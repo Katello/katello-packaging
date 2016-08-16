@@ -14,6 +14,7 @@ However to release RPMs from this repo, you also require:
 * koji client and an account (certificate) on koji.katello.org
 * [tito](https://github.com/dgoodwin/tito) 0.5.6 or higher
 * ``scl-utils-build`` for scl packages
+* [quvi](http://koji.fedoraproject.org/koji/packageinfo?packageID=10165) package that is used by git-annex
 
 ## HOWTO: checkout
 
