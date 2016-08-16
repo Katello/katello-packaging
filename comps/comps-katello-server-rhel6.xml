@@ -57,6 +57,13 @@
        <packagereq type="default">python-qpid-proton</packagereq>
        <packagereq type="default">qpid-proton-c</packagereq>
        <packagereq type="default">qpid-proton-cpp</packagereq>
+       <packagereq type="default">python-qpid-messaging</packagereq>
+       <packagereq type="default">qpid-cpp-client</packagereq>
+       <packagereq type="default">qpid-cpp-client-devel</packagereq>
+       <packagereq type="default">qpid-cpp-server</packagereq>
+       <packagereq type="default">qpid-cpp-server-devel</packagereq>
+       <packagereq type="default">qpid-cpp-server-ha</packagereq>
+       <packagereq type="default">qpid-cpp-server-linearstore</packagereq>
     </packagelist>
   </group>
   <group>
