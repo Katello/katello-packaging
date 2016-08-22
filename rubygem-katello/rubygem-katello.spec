@@ -39,8 +39,8 @@ Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
 Requires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
-Requires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
-Requires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
+Requires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
+Requires: %{?scl_prefix}rubygem(foreman-tasks) < 0.9.0
 Requires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 Requires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
@@ -59,8 +59,8 @@ BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 BuildRequires: %{?scl_prefix}rubygem(bastion) >= 3.0.0
 BuildRequires: %{?scl_prefix}rubygem(bastion) < 4.0.0
-BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.7.1
-BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.8.0
+BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
+BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.9.0
 BuildRequires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
 BuildRequires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
