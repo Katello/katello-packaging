@@ -5,20 +5,21 @@ require 'optparse'
 ACTIONS = ['restart', 'stop', 'start', 'status', 'list']
 COMMAND = '/usr/sbin/service-wait'
 SERVICES = {
-  'mongod'                => 5,
-  'postgresql'            => 5,
-  'qpidd'                 => 10,
-  'qdrouterd'             => 10,
-  'squid'                 => 10,
-  'tomcat'                => 20,
-  'tomcat6'               => 20,
-  'pulp_workers'          => 20,
-  'pulp_celerybeat'       => 20,
-  'pulp_resource_manager' => 20,
-  'pulp_streamer'         => 20,
-  'foreman-proxy'         => 20,
-  'httpd'                 => 30,
-  'foreman-tasks'         => 30
+  'mongod'                   => 5,
+  'postgresql'               => 5,
+  'qpidd'                    => 10,
+  'qdrouterd'                => 10,
+  'squid'                    => 10,
+  'tomcat'                   => 20,
+  'tomcat6'                  => 20,
+  'pulp_workers'             => 20,
+  'pulp_celerybeat'          => 20,
+  'pulp_resource_manager'    => 20,
+  'pulp_streamer'            => 20,
+  'foreman-proxy'            => 20,
+  'smart_proxy_dynflow_core' => 20,
+  'httpd'                    => 30,
+  'foreman-tasks'            => 30
 }
 
 @options = {:excluded => []}
