@@ -67,6 +67,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Aug 31 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4
+- Katello 3.1 builds (jsherril@redhat.com)
+
 * Fri Jul 22 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-3.rc2
 - Fixes #13017 - remove priorities to use qpid from epel (jsherril@redhat.com)
 - Refs #13017 - include qpid-copr for client repos (jsherril@redhat.com)
