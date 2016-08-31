@@ -106,7 +106,7 @@ install -d -m0755 %{buildroot}/%{_datadir}/foreman-installer-katello-devel
 
 install -d -m0755 %{buildroot}/%{_sbindir}
 
-cp -dpR checks modules hooks %{buildroot}/%{_datadir}/katello-installer-base
+cp -dpR checks modules hooks parser_cache %{buildroot}/%{_datadir}/katello-installer-base
 
 cp -dpR bin/capsule-certs-generate %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-certs-generate
 cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-certs-check
@@ -132,6 +132,7 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %{_datadir}/katello-installer-base/modules
 %{_datadir}/katello-installer-base/hooks
 %{_datadir}/katello-installer-base/checks
+%{_datadir}/katello-installer-base/parser_cache
 %doc README.*
 
 %changelog
