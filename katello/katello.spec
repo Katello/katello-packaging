@@ -159,6 +159,11 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Aug 31 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-5
+- Katello 3.1 builds (jsherril@redhat.com)
+- Fixes #16028 - Ignoring proxy when pinging services (#267)
+  (daviddavis@users.noreply.github.com)
+
 * Fri Jul 22 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4.rc2
 - bumping katello for rc2 (jsherril@redhat.com)
 - Fixes #15484 - Handle pulp_streamer and squid in katello-service
