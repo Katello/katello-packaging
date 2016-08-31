@@ -70,6 +70,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Aug 31 2016 Eric D Helms <ericdhelms@gmail.com> 2.1.0-1
+- Update rubygem-hammer_cli_csv to 2.1.0 (#277) (eric.d.helms@gmail.com)
+
 * Tue Mar 15 2016 Eric D Helms <ericdhelms@gmail.com> 2.0.0-2
 - Remove requires on ruby(abi) for hammer_cli_csv (ericdhelms@gmail.com)
 
