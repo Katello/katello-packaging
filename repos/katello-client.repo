@@ -5,7 +5,7 @@ name=Katello Client 3.1
 baseurl=https://fedorapeople.org/groups/katello/releases/yum/3.1/client/@DIST@/$basearch/
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-katello
 enabled=1
-gpgcheck=0
+gpgcheck=1
 
 # source repositories
 
