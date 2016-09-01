@@ -67,6 +67,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Thu Sep 01 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-5
+- Turn on gpg check for 3.1 (jsherril@redhat.com)
+
 * Wed Aug 31 2016 Justin Sherrill <jsherril@redhat.com> 3.1.0-4
 - Katello 3.1 builds (jsherril@redhat.com)
 
