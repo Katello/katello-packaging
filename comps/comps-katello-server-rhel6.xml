@@ -64,6 +64,8 @@
        <packagereq type="default">qpid-cpp-server-devel</packagereq>
        <packagereq type="default">qpid-cpp-server-ha</packagereq>
        <packagereq type="default">qpid-cpp-server-linearstore</packagereq>
+
+       <packagereq type="default">tfm-rubygem-awesome_print</packagereq>
     </packagelist>
   </group>
   <group>
