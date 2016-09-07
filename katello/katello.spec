@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.2.0
-Release:    1.nightly%{?dist}
+Release:    2.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -174,6 +174,29 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Sep 07 2016 Eric D Helms <ericdhelms@gmail.com> 3.2.0-2.nightly
+- fixes #16373 - include rex services in katello-service (#275)
+  (stephen@bitbin.de)
+- Fixes #16028 - Ignoring proxy when pinging services (#267)
+  (daviddavis@users.noreply.github.com)
+- Refs #15845 - add installer dep to katello-capsule (jsherril@redhat.com)
+- Fixes #15823 - Do not send mail on cron error (#257) (chrobert@redhat.com)
+- Fixes #15845 - add cronjob to clean puppet envs (jsherril@redhat.com)
+- fixes #15454 - Changes online pulp backup to fully online backup (#240)
+  (cfouant@redhat.com)
+- Fixes #15484 - Handle pulp_streamer and squid in katello-service
+  (daviddavis@redhat.com)
+- bumping pkgs for nightly 3.2 (jsherril@redhat.com)
+- fixes #14858 - removes gutterball (#213) (cfouant@redhat.com)
+- Fixes #15146 - service-wait now correctly handles tomcat (#229)
+  (parthaa@gmail.com)
+- Fixes #14125 - Updating katello-remove cleanup (#189) (chrobert@redhat.com)
+- Have katello-backup report on times (#204) (jcpunk@gmail.com)
+- Fixes #15051 - Update katello-remove with help message (#221)
+  (chrobert@redhat.com)
+- Fix error with Katello-restore script `pulp_data' (narbutas.tadas@gmail.com)
+- Fix error with Katello-restore script `pulp_data' (narbutas.tadas@gmail.com)
+
 * Thu May 12 2016 Eric D Helms <ericdhelms@gmail.com> 3.1.0-3.nightly
 - fixes #15010 - fix katello-service man page (#218) (stephen@bitbin.de)
 - Fixes #14881 - Add in /etc/qpid-dispatch/qdrouterd.conf for files which are
