@@ -76,6 +76,11 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Fri Sep 09 2016 Eric D Helms <ericdhelms@gmail.com> 0.1.0-1
+- Update hammer-cli-katello to 0.1.0 (#283) (eric.d.helms@gmail.com)
+- Fixes #15271: Obsolete removed gutterball gems (#232)
+  (eric.d.helms@gmail.com)
+
 * Tue May 17 2016 Justin Sherrill <jsherril@redhat.com> 0.0.26-1
 - Update rubygem-hammer_cli_katello to 0.0.26 (komidore64@gmail.com)
 
