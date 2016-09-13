@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.6.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -24,8 +24,12 @@ Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
 Requires: subscription-manager
-%if 0%{?rhel} < 7
+%if 0%{?rhel} == 6
 Requires: yum-plugin-security
+%endif
+
+%if 0%{?rhel} == 5
+Requires: yum-security
 %endif
 
 %description
