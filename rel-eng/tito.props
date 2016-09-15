@@ -11,11 +11,11 @@ lib_dir = rel-eng/custom/
 [builder]
 fetch_strategy = custom.ForemanSourceStrategy
 
-[katello-nightly-rhel5]
+[katello-3.2-rhel5]
 disttag = .el5
 whitelist = katello-repos katello-agent
 
-[katello-nightly-rhel6]
+[katello-3.2-rhel6]
 disttag = .el6
 scl = tfm
 blacklist = rubygem-jenkins_api_client
@@ -23,7 +23,7 @@ blacklist = rubygem-jenkins_api_client
   rubygem-terminal-table
   python-urllib3
 
-[katello-nightly-rhel7]
+[katello-3.2-rhel7]
 disttag = .el7
 scl = tfm
 blacklist = rubygem-jenkins_api_client
@@ -47,12 +47,12 @@ whitelist = rubygem-jenkins_api_client
   rubygem-terminal-table
   python-urllib3
 
-[katello-nightly-fedora22]
-disttag = .fc22
+[katello-3.2-fedora23]
+disttag = .fc23
 whitelist = katello-repos katello-agent
 
-[katello-nightly-fedora23]
-disttag = .fc23
+[katello-3.2-fedora24]
+disttag = .fc24
 whitelist = katello-repos katello-agent
 
 [requirements]
