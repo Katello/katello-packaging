@@ -75,6 +75,10 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Thu Sep 15 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-3
+- bumped katello-repos release (jomitsch@redhat.com)
+- allow for easier repo version setting (jsherril@redhat.com)
+
 * Thu Jul 21 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-2.nightly
 - Refs #13017 - include qpid-copr for client repos (jsherril@redhat.com)
 
