@@ -136,6 +136,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-1.rc1
+- 3.2.0 rc1 build
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
