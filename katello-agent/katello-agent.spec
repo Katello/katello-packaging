@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.6.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -96,6 +96,9 @@ exit 0
 %doc LICENSE
 
 %changelog
+* Fri Sep 16 2016 Justin Sherrill <jsherril@redhat.com> 2.6.0-4
+- Fixes #16524 - use yum-security for el5 (jsherril@redhat.com)
+
 * Thu Jul 28 2016 Eric D Helms <ericdhelms@gmail.com> 2.6.0-2
 - fixes #15366 - add yum-plugin-security dep to rhel5/6 packages (#234)
   (komidore64@gmail.com)
