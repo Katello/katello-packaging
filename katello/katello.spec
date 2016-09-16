@@ -174,6 +174,12 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-2.rc1
+- Bumping to 3.2 rc1 (jomitsch@redhat.com)
+- refs #16523 - fix error in find command (#285) (stephen@bitbin.de)
+- fixes #16523 - support puppet 4 environments in clean up script (#284)
+  (stephen@bitbin.de)
+
 * Wed Sep 07 2016 Eric D Helms <ericdhelms@gmail.com> 3.2.0-2.nightly
 - fixes #16373 - include rex services in katello-service (#275)
   (stephen@bitbin.de)
