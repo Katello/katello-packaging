@@ -17,6 +17,9 @@ BuildArch:      noarch
 BuildRequires: sed
 BuildRequires: ruby
 BuildRequires: python
+%if 0%{?fedora} > 23
+BuildRequires: rubygems
+%endif
 
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
