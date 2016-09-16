@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        3.2.0
-Release:        3%{?dist}
+Release:        3.rc1%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -17,6 +17,9 @@ BuildArch:      noarch
 BuildRequires: sed
 BuildRequires: ruby
 BuildRequires: python
+%if 0%{?fedora} > 23
+BuildRequires: rubygems
+%endif
 
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
