@@ -78,6 +78,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-3.rc1
+- Bumping to 3.2 rc1 (jomitsch@redhat.com)
+
 * Thu Sep 15 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-3
 - bumped katello-repos release (jomitsch@redhat.com)
 - allow for easier repo version setting (jsherril@redhat.com)
