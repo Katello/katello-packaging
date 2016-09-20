@@ -92,7 +92,7 @@ sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/kate
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-devel.yaml
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/capsule.yaml
 
-sed -ri 'sX^INSTALLER_DIR.*$XINSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/capsule-certs-generate
+sed -ri 'sX  INSTALLER_DIR.*$X  INSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/capsule-certs-generate
 sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installer-baseXg' config/*.yaml
 sed -ri 'sX\:module_dirs.*$X:module_dirs: \["%{_datadir}/katello-installer-base/modules", "%{_datadir}/foreman-installer/modules"\]Xg' config/*.yaml
 sed -ri 'sX\:hook_dirs.*$X:hook_dirs: \["%{_datadir}/katello-installer-base/hooks"\]Xg' config/*.yaml
