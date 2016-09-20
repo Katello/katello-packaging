@@ -155,6 +155,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Tue Sep 20 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-0.2.rc1.1
+- bumping rubygem to rc1.1 (jomitsch@redhat.com)
+
 * Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-0.2.rc1
 - Updated rubygems-katello for 3.2 (jomitsch@redhat.com)
 - refs #16171 - tasks req should match gemspec (#274) (stephen@bitbin.de)
