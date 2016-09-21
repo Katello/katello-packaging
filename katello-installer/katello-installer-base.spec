@@ -6,7 +6,7 @@
 
 Name:    katello-installer-base
 Version: 3.2.0
-Release: 1%{?prever}%{?dist}
+Release: 2%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
@@ -136,6 +136,14 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Wed Sep 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-2.rc1
+- Fixes #16626: Properly replace INSTALLER_DIR in capsule-certs-generate (#294)
+  (eric.d.helms@gmail.com)
+
+* Wed Sep 21 2016 John Mitsch <jomitsch@redhat.com>
+- Fixes #16626: Properly replace INSTALLER_DIR in capsule-certs-generate (#294)
+  (eric.d.helms@gmail.com)
+
 * Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-1.rc1
 - 3.2.0 rc1 build
 
