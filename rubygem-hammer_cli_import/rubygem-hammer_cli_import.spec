@@ -80,6 +80,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Thu Sep 22 2016 Eric D Helms <ericdhelms@gmail.com> 0.11.3-1
+- Update rubygem-hammer_cli_import to 0.11.3 (#287) (eric.d.helms@gmail.com)
+
 * Tue Jul 26 2016 Eric D Helms <ericdhelms@gmail.com> 0.11.2-1
 - Update rubygem-hammer_cli_import to 0.11.1 (#251) (eric.d.helms@gmail.com)
 - updating hammer_cli_import (jsherril@redhat.com)
