@@ -23,7 +23,6 @@ Source6:    katello-restore
 Source7:    katello-backup
 Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
-Source10:   katello-clean-empty-puppet-environments 
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -80,7 +79,6 @@ mkdir -p %{buildroot}/%{_mandir}/man8
 #copy cron scripts to be scheduled
 install -d -m0755 %{buildroot}%{_sysconfdir}/cron.weekly
 install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-orphans
-install -m 755 %{SOURCE10} %{buildroot}%{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
@@ -127,7 +125,6 @@ Common runtime components of %{name}
 %{_bindir}/katello-backup
 %{_bindir}/katello-restore
 %{_bindir}/qpid-core-dump
-%config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 
 # ------ Debug ----------------
@@ -152,7 +149,6 @@ Requires: foreman-installer-%{name}
 Provides a federation of katello services
 
 %files capsule
-%config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 
 # ------ Service ----------------
 %package service
