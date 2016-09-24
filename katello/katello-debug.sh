@@ -30,8 +30,8 @@ copy_files() {
 
 
 # Installer
-add_files /var/log/{katello,capsule}-installer/*
-add_files /etc/{katello,capsule}-installer/*
+add_files /var/log/foreman-installer/*
+add_files /etc/foreman-installer/*
 add_cmd "find /root/ssl-build -ls | sort -k 11" "katello_ssl_build_dir"
 add_cmd "find /etc/pki -ls | sort -k 11" "katello_pki_dir"
 
@@ -45,12 +45,17 @@ add_files /etc/splice/*
 add_files /etc/httpd/conf.d/splice.conf
 
 # Candlepin
-add_files /var/log/candlepin/*
-add_files /var/log/tomcat6/*
-add_files /var/log/tomcat/*
+add_files /var/log/candlepin/audit*.log*
+add_files /var/log/candlepin/candlepin*.log*
+add_files /var/log/candlepin/cpdb*.log*
+add_files /var/log/candlepin/cpinit*.log*
+add_files /var/log/candlepin/error*.log*
+add_files /var/log/tomcat*/catalina*.log*
+add_files /var/log/tomcat*/host-manager*.log*
+add_files /var/log/tomcat*/localhost*.log*
+add_files /var/log/tomcat*/manager*.log*
 add_files /etc/candlepin/candlepin.conf
-add_files /etc/tomcat6/server.xml
-add_files /etc/tomcat/server.xml
+add_files /etc/tomcat*/server.xml
 
 # Pulp
 add_files /etc/pulp/*.conf
@@ -98,7 +103,10 @@ fi
 # Squid (*)
 if [ $NOGENERIC -eq 0 ]; then
   add_files /etc/squid/squid.conf
-  add_files /var/log/squid/*
+  add_files /var/log/squid/access*.log*
+  add_files /var/log/squid/cache*.log*
+  add_files /var/log/squid/store*.log*
+  add_files /var/log/squid/squid*.out*
 fi
 
 # Qpid Debug
