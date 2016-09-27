@@ -12,6 +12,7 @@
     <uservisible>true</uservisible>
     <packagelist>
        <packagereq type="default">katello-agent</packagereq>
+       <packagereq type="default">katello-agent-fact-plugin</packagereq>
        <packagereq type="default">katello-client-repos</packagereq>
     </packagelist>
   </group>
