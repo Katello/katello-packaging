@@ -117,6 +117,9 @@ A subscription-manager plugin to add an additional fact 'network.fqdn' if not pr
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Tue Sep 27 2016 Justin Sherrill <jsherril@redhat.com> 2.7.0-1
+- Refs #16134 - add new subpackage for sub-man plugin (jsherril@redhat.com)
+
 * Fri Sep 16 2016 Justin Sherrill <jsherril@redhat.com> 2.6.0-4
 - Fixes #16524 - use yum-security for el5 (jsherril@redhat.com)
 
