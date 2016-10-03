@@ -106,11 +106,11 @@ else
     `katello-service stop`
 
     puts "Backing up postgres db... "
-    `tar --selinux --create --gzip --file=pgsql_data.tar.gz --listed-incremental=postgres.snar /var/lib/pgsql/data/`
+    `tar --selinux --create --file=pgsql_data.tar --listed-incremental=postgres.snar /var/lib/pgsql/data/`
     puts "Done."
 
     puts "Backing up mongo db... "
-    `tar --selinux --create --gzip --file=mongo_data.tar.gz --listed-incremental=mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+    `tar --selinux --create --file=mongo_data.tar --listed-incremental=mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
     puts "Done."
 
     unless @options[:skip_pulp]
@@ -120,6 +120,9 @@ else
     end
 
     `katello-service start`
+
+    `gzip pgsql_data.tar`
+    `gzip mongo_data.tar`
   end
 
   @time = Time.now
