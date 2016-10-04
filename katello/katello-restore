@@ -14,7 +14,7 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
-DIR = ARGV.pop
+DIR = ARGV.pop.dup
 DIR.chop! if DIR.end_with?("/")
 
 def restore
