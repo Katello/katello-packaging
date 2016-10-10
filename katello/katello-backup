@@ -10,7 +10,7 @@ require 'date'
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
 
-  opts.on("--skip-pulp", "Create backup without Pulp content for debugging only") do |config_only|
+  opts.on("--skip-pulp-content", "Create backup without Pulp content for debugging only") do |config_only|
     @options[:config_only] = config_only
   end
 
