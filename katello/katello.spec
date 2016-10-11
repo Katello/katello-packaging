@@ -174,6 +174,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Oct 11 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-2.rc2
+- 3.2 rc2 builds (jsherril@redhat.com)
+
 * Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-2.rc1
 - Bumping to 3.2 rc1 (jomitsch@redhat.com)
 - refs #16523 - fix error in find command (#285) (stephen@bitbin.de)
