@@ -78,6 +78,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Tue Oct 11 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-3.rc2
+- 3.2 rc2 builds (jsherril@redhat.com)
+
 * Fri Sep 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-3.rc1
 - Bumping to 3.2 rc1 (jomitsch@redhat.com)
 
