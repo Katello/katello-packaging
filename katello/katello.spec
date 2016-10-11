@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.2.0
-Release:    2.rc1%{?dist}
+Release:    2.rc2%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
