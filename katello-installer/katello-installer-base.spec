@@ -136,6 +136,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Tue Oct 11 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-2.rc2
+- Adding 3.2.0.rc2 tarball for katello-installer (jomitsch@redhat.com)
+
 * Wed Sep 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-2.rc1
 - Fixes #16626: Properly replace INSTALLER_DIR in capsule-certs-generate (#294)
   (eric.d.helms@gmail.com)
