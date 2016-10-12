@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-ACTIONS = ['restart', 'stop', 'start', 'status', 'list']
+ACTIONS = ['restart', 'stop', 'start', 'status', 'list', 'enable', 'disable']
 COMMAND = '/usr/sbin/service-wait'
 SERVICES = {
   'mongod'                   => 5,
@@ -50,7 +50,7 @@ end
 
 def service_exists?(service)
   upstart = File.exist?("/etc/init.d/#{service}")
-  systemd = `systemctl is-enabled #{service} 2>&1` && $?.success?
+  systemd = `systemctl cat #{service} 2>&1` && $?.success?
   upstart || systemd
 end
 
