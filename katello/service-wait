@@ -109,6 +109,22 @@ after_status() {
   test 1 -eq 1 # noop
 }
 
+before_enable() {
+  test 1 -eq 1 # noop
+}
+
+after_enable() {
+  test 1 -eq 1 # noop
+}
+
+before_disable() {
+  test 1 -eq 1 # noop
+}
+
+after_disable() {
+  test 1 -eq 1 # noop
+}
+
 case "$COMMAND" in
   start)
     before_start
@@ -133,6 +149,18 @@ case "$COMMAND" in
     /sbin/service "$SERVICE" "$COMMAND"
     RETVAL=$?
     after_status
+    ;;
+  enable)
+    before_enable
+    /usr/sbin/chkconfig "$SERVICE" on
+    RETVAL=$?
+    after_enable
+    ;;
+  disable)
+    before_disable
+    /usr/sbin/chkconfig "$SERVICE" off
+    RETVAL=$?
+    after_disable
     ;;
   test-wait)
     echo -n "Starting $SERVICE... "
