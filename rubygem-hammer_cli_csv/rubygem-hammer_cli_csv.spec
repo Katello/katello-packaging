@@ -8,7 +8,7 @@
 
 Summary: CSV input/output command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 2.1.1
+Version: 2.1.2
 Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
@@ -60,6 +60,7 @@ cp -pa .%{gem_dir}/* \
 %files
 %dir %{gem_instdir}
 %{gem_instdir}/lib
+%{gem_instdir}/locale
 %{gem_instdir}/test
 %config(noreplace) %{_root_sysconfdir}/%{confdir}/cli.modules.d/csv.yml
 %exclude %{gem_cache}
