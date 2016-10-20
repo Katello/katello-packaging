@@ -6,7 +6,7 @@ require 'fileutils'
 confirmed = false
 
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: katello-restore /path/to/dir [options]\n eg: $ katello-restore /tmp/katello-backup"
+  opts.banner = "Usage: katello-restore /path/to/dir [options]\n eg: $ katello-restore /tmp/backup/katello-backup-2016-09-30T00:00:00+00:00"
 
   opts.on("-y", "--assumeyes", "Answer yes for all questions") do
     confirmed = true
@@ -14,7 +14,7 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
-DIR = ARGV.pop
+DIR = ARGV.pop.dup
 DIR.chop! if DIR.end_with?("/")
 
 def restore

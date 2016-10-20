@@ -1,6 +1,6 @@
 Name: katello-agent
-Version: 2.6.0
-Release: 2%{?dist}
+Version: 2.7.0
+Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -24,8 +24,13 @@ Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
 Requires: subscription-manager
-%if 0%{?rhel} < 7
+Requires: %{name}-fact-plugin
+%if 0%{?rhel} == 6
 Requires: yum-plugin-security
+%endif
+
+%if 0%{?rhel} == 5
+Requires: yum-security
 %endif
 
 %description
@@ -56,6 +61,12 @@ cp etc/yum/pluginconf.d/package_upload.conf %{buildroot}/%{_sysconfdir}/yum/plug
 
 mkdir -p %{buildroot}%{_sbindir}
 cp bin/katello-package-upload %{buildroot}%{_sbindir}/katello-package-upload
+
+
+mkdir -p %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/
+mkdir -p %{buildroot}%{_datadir}/rhsm-plugins/
+cp etc/rhsm/pluginconf.d/fqdn.FactsPlugin.conf %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
+cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 
 %clean
 rm -rf %{buildroot}
@@ -90,6 +101,20 @@ exit 0
 %{_prefix}/lib/yum-plugins
 
 %doc LICENSE
+
+%package fact-plugin
+BuildArch:  noarch
+Summary:    Adds an fqdn fact plugin for subscription-manager
+Group:   Development/Languages
+
+Requires:   subscription-manager
+
+%description fact-plugin
+A subscription-manager plugin to add an additional fact 'network.fqdn' if not present
+
+%files fact-plugin
+%config %{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
+%{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
 * Thu Jul 28 2016 Eric D Helms <ericdhelms@gmail.com> 2.6.0-2
