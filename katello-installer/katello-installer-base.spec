@@ -2,7 +2,7 @@
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
-%global prever .rc2
+%global prever .rc3
 
 Name:    katello-installer-base
 Version: 3.2.0
@@ -136,6 +136,12 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Fri Oct 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-2.rc3
+- 
+
+* Fri Oct 21 2016 John Mitsch <jomitsch@redhat.com>
+- 
+
 * Tue Oct 11 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-2.rc2
 - Adding 3.2.0.rc2 tarball for katello-installer (jomitsch@redhat.com)
 
