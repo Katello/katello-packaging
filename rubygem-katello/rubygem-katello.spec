@@ -4,7 +4,7 @@
 %global gem_name katello
 %global prever .rc3
 %global mainver 3.2.0
-%global release 3
+%global release 4
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
@@ -155,6 +155,12 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Wed Oct 26 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-0.4.rc3
+- 
+
+* Wed Oct 26 2016 John Mitsch <jomitsch@redhat.com>
+- 
+
 * Fri Oct 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-0.3.rc3
 - 
 
