@@ -35,8 +35,10 @@ def reset_katello
 end
 
 def restore_databases
-  puts "Restoring backend data"
-  `tar --selinux --overwrite --listed-incremental=/dev/null -xf pulp_data.tar -C /`
+  if File.exist?('pulp_data.tar')
+    puts "Restoring Pulp data"
+    `tar --selinux --overwrite --listed-incremental=/dev/null -xf pulp_data.tar -C /`
+  end
   if File.exist?('mongo_data.tar.gz')
     `tar --selinux --overwrite --listed-incremental=/dev/null -xzf mongo_data.tar.gz -C /`
     `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
@@ -77,9 +79,9 @@ def restore
 end
 
 def backup_valid?
-  files = Dir.entries(DIR).delete_if { |filename| filename.start_with? '.' }
-  (ONLINE_BACKUP_FILES + STANDARD_BACKUP_FILES - files).empty? \
-    || (OFFLINE_BACKUP_FILES + STANDARD_BACKUP_FILES - files).empty?
+  files = Dir.entries(DIR)
+  (ONLINE_BACKUP_FILES + 'config_files.tar.gz' - files).empty? \
+    || (OFFLINE_BACKUP_FILES + 'config_files.tar.gz' - files).empty?
 end
 
 def confirm
