@@ -94,8 +94,13 @@ sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/caps
 
 sed -ri 'sX  INSTALLER_DIR.*$X  INSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/capsule-certs-generate
 sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installer-baseXg' config/*.yaml
-sed -ri 'sX\:module_dirs.*$X:module_dirs: \["%{_datadir}/katello-installer-base/modules", "%{_datadir}/foreman-installer/modules"\]Xg' config/*.yaml
-sed -ri 'sX\:hook_dirs.*$X:hook_dirs: \["%{_datadir}/katello-installer-base/hooks"\]Xg' config/*.yaml
+
+# module paths
+sed -ri 'sX./_build/modulesX%{_datadir}/foreman-installer/modulesXg' config/*.yaml
+sed -ri 'sX../katello-installer/modulesX%{_datadir}/katello-installer-base/modulesXg' config/*.yaml
+
+#hooks
+sed -i -e 'sX../katello-installer/hooksX%{_datadir}/katello-installer-base/hooksXg' config/*.yaml
 
 %install
 install -d -m0755 %{buildroot}%{_sysconfdir}/foreman-installer/scenarios.d
