@@ -1,5 +1,12 @@
 #!/bin/bash
 
+red='\033[0;31m'
+NC='\033[0m'
+function failed {
+            echo -e "${red}Something went wrong, exiting...${NC}"
+            exit 1
+         }
+
 for var in $@; do
    if [[ $var == "--help" || $var == "-h" ]]
        then echo -e "This script is used to remove all katello related packages and services. \nThis should only be used if you are sure you are wanting to completly remove Katello from this machine and lose all of your settings and synced content."
@@ -83,7 +90,7 @@ RPMS=(
     `rpm -qa | grep foreman-client`
     `rpm -qa | grep foreman-proxy`
     `rpm -qa | grep candlepin`
-    `rpm -qa | grep katello`
+    `rpm -qa | grep -P '(?!.*katello-common)katello'`
     `rpm -qa | grep ^pulp`
     `rpm -qa | grep ^python-pulp`
     `rpm -qa | grep ^pulp-`
@@ -160,22 +167,25 @@ CONTENT=(
     /var/www/html/pub/katello-rhsm-consumer
 )
 
-katello-service stop
+katello-service stop || { failed; }
 
 echo "Removing RPMs"
-yum erase -y ${RPMS[*]}
+yum erase -y ${RPMS[*]} || { failed; }
 
 echo "Cleaning up configuration files"
-rm -rf ${CONFIG_FILES[*]}
+rm -rf ${CONFIG_FILES[*]} || { failed; }
 
 echo "Cleaning up log files"
 # logs
-rm -rf ${LOG_FILES[*]}
+rm -rf ${LOG_FILES[*]} || { failed; }
 
 echo "Cleaning up Certs"
 # pulp cert stuff
-rm -rf ${CERT_FILES[*]}
+rm -rf ${CERT_FILES[*]} || { failed; }
 
 echo "Cleaning up content"
 #content
-rm -rf ${CONTENT[*]}
+rm -rf ${CONTENT[*]} || { failed; }
+
+echo "Removing katello-common RPM"
+yum erase -y `rpm -qa | grep katello-common` || { failed; }
