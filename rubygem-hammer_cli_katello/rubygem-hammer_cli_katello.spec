@@ -8,7 +8,7 @@
 
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.1.1
+Version: 0.1.2
 Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
@@ -76,6 +76,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Thu Nov 10 2016 John Mitsch <jomitsch@redhat.com> 0.1.2-1
+- 
+
 * Fri Oct 21 2016 John Mitsch <jomitsch@redhat.com> 0.1.1-1
 - Fixes #15271: Obsolete removed gutterball gems (#232)
   (eric.d.helms@gmail.com)
