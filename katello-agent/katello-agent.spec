@@ -1,5 +1,5 @@
 Name: katello-agent
-Version: 2.7.0
+Version: 2.8.0
 Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
@@ -31,6 +31,11 @@ Requires: yum-plugin-security
 
 %if 0%{?rhel} == 5
 Requires: yum-security
+%endif
+
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+Requires: python2-tracer >= 1.6.12 
+Requires: python-rhsm
 %endif
 
 %description
@@ -68,6 +73,12 @@ mkdir -p %{buildroot}%{_datadir}/rhsm-plugins/
 cp etc/rhsm/pluginconf.d/fqdn.FactsPlugin.conf %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
 cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6 
+cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
+cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
+cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
+%endif
+
 %clean
 rm -rf %{buildroot}
 
@@ -78,6 +89,11 @@ exit 0
 
 %posttrans
 katello-package-upload
+
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+katello-tracer-upload
+%endif
+
 exit 0
 
 %postun
@@ -99,6 +115,11 @@ exit 0
 %{_sysconfdir}/yum/pluginconf.d/package_upload.conf
 %attr(750, root, root) %{_sbindir}/katello-package-upload
 %{_prefix}/lib/yum-plugins
+
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
+%attr(750, root, root) %{_sbindir}/katello-tracer-upload
+%endif
 
 %doc LICENSE
 
