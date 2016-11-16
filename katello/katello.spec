@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.2.0
-Release:    3.rc3%{?dist}
+Release:    4%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -174,6 +174,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Nov 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-4
+- 
+
 * Fri Oct 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-3.rc3
 - Fixes #16927 - Dir.exist? isnt available on el6 (ruby 1.8)
   (seanokeeffe797@gmail.com)
