@@ -17,7 +17,7 @@
 #
 
 Name:           katello-client-bootstrap
-Version:        1.1.0
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Client bootstrap utility for Foreman and Katello
 
