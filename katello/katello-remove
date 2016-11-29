@@ -105,7 +105,7 @@ RPMS=(
     `rpm -qa | grep ^python-saslwrapper`
     `rpm -qa | grep ^python-amqp`
     `rpm -qa | grep ^python-billiard`
-    `rpm -qa | grep ^python-semantic-version`
+    `rpm -qa | grep ^python-semantic_version`
     `rpm -qa | grep ^python-requests`
     `rpm -qa | grep ^python-isodate`
     `rpm -qa | grep $HOSTNAME`
