@@ -17,7 +17,7 @@
 #
 
 Name:           katello-client-bootstrap
-Version:        1.2.0
+Version:        1.2.1
 Release:        1%{?dist}
 Summary:        Client bootstrap utility for Foreman and Katello
 
@@ -48,6 +48,9 @@ cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 %{_var}/www/html/pub/bootstrap.py
 
 %changelog
+* Mon Dec 05 2016 zjhuntin <zhunting@redhat.com> 1.2.1-1
+- Add katello-client-bootstrap 1.2.0 (zhunting@redhat.com)
+
 * Mon Nov 21 2016 Eric D Helms <ericdhelms@gmail.com> 1.2.0-1
 - Add katello-client-boostrap 1.2.0 (ericdhelms@gmail.com)
 
