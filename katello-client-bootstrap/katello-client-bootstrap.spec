@@ -48,6 +48,9 @@ cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 %{_var}/www/html/pub/bootstrap.py
 
 %changelog
+* Mon Dec 05 2016 Eric D Helms <ericdhelms@gmail.com> 1.2.2-1
+- Add katello-client-bootstrap 1.2.2 (zhunting@redhat.com)
+
 * Mon Nov 21 2016 Eric D Helms <ericdhelms@gmail.com> 1.2.0-1
 - Add katello-client-boostrap 1.2.0 (ericdhelms@gmail.com)
 
