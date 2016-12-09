@@ -1,0 +1,139 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'fileutils'
+require 'date'
+
+@options = {}
+@dir = nil
+
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: capsule-backup /path/to/dir [options]\n eg: $ capsule-backup /tmp/capsule-backup"
+
+  opts.on("--skip-pulp-content", "Create backup without Pulp content for debugging only") do |config_only|
+    @options[:config_only] = config_only
+  end
+
+  opts.on("--incremental [PREVIOUS_BACKUP_DIR]", String, "Backup changes since previous backup") do |dir_path|
+    if File.directory?(dir_path)
+      dir_path.chop! if dir_path.end_with? "/"
+      @options[:incremental] = dir_path
+    else
+      opts.abort("Previous backup directory does not exist: #{dir_path}")
+    end
+  end
+
+  opts.on("--online-backup", "Keep services online during backup") do |online|
+    @options[:online] = online
+  end
+
+  opts.parse!
+
+  if ARGV.length == 0
+    opts.abort("**** ERROR: Please specify an export directory ****")
+  elsif ARGV.length != 1
+    puts opts
+    exit(-1)
+  end
+
+  @dir = ARGV[0].dup
+end
+
+def backup_db_online
+
+  puts "Backing up mongo db... "
+  `mongodump --host localhost --out mongo_dump`
+  puts "Done."
+end
+
+def backup_pulp_online
+  puts "Backing up Pulp data... "
+  matching = false
+ 
+  until matching
+    checksum1 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
+    `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+    checksum2 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
+    matching = (checksum1 == checksum2)
+  end
+  puts "Done."
+end
+
+def backup_db_offline
+
+  puts "Backing up mongo db... "
+  `tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+  puts "Done."
+end
+
+def backup_pulp_offline
+  puts "Backing up Pulp data... "
+  `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+  puts "Done."
+end
+
+def compress_files
+  `gzip mongo_data.tar`
+end
+
+if @dir.nil?
+  puts "**** ERROR: Please specify an export directory ****"
+  puts optparse
+  exit(-1)
+else
+  @dir << "/" unless @dir.end_with? "/"
+  @dir << "capsule-backup-" + DateTime.now.to_s
+  @time = Time.now
+  puts "Starting backup: #{@time}"
+  FileUtils.mkdir_p(@dir)
+  puts "Creating backup folder #{@dir}"
+  FileUtils.chmod 0770, @dir
+  FileUtils.cd @dir
+
+  CONFIGS=[
+    '/etc/foreman-proxy',
+    '/etc/httpd',
+    '/etc/foreman-installer',
+    '/etc/pki/katello',
+    '/etc/pki/katello-certs-tools',
+    '/etc/pki/pulp',
+    '/etc/pulp',
+    '/etc/puppet',
+    '/etc/qpid',
+    '/etc/qpid-dispatch',
+    '/root/ssl-build',
+    '/var/www/html/pub',
+    '/var/lib/puppet/foreman_cache_data',
+    '/var/lib/puppet/ssl',
+    '/etc/squid'
+  ]
+  
+  certs_tar = `cat /etc/foreman-installer/scenarios.d/capsule-answers.yaml | grep certs_tar | awk '{print $2}'`.chomp
+  
+
+  if File.exist?(certs_tar) != true
+     puts "Tar file is not present on the system in path #{certs_tar} please move the file back to that location or generate a new one on the main server."
+     exit(-1)
+  end     
+
+  puts "Backing up config files... and certs.tar file"
+  `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} #{certs_tar}`
+  puts "Done."
+
+  `cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
+
+  if @options[:online]
+    backup_db_online
+    backup_pulp_online unless @options[:config_only]
+  else
+    `katello-service stop`
+    backup_db_offline
+    backup_pulp_offline unless @options[:config_only]
+    `katello-service start`
+    compress_files
+  end
+
+  @time = Time.now
+  puts "Done with backup: #{@time}"
+  puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
+end
