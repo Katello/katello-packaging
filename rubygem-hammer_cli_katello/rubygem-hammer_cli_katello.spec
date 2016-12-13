@@ -76,6 +76,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Tue Dec 13 2016 Eric D Helms <ericdhelms@gmail.com> 0.1.3-1
+- Update hammer_cli_katello to 0.1.3 (ericdhelms@gmail.com)
+
 * Thu Nov 10 2016 John Mitsch <jomitsch@redhat.com> 0.1.2-1
 - 
 
