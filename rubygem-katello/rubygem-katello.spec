@@ -4,7 +4,7 @@
 %global gem_name katello
 #global prever .rc3
 %global mainver 3.2.1
-%global release 1
+%global release 2
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
@@ -155,6 +155,10 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.1-2
+- Automatic commit of package [rubygem-katello] minor release [3.2.1-1].
+  (jomitsch@redhat.com)
+
 * Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.1-1
 -
 
