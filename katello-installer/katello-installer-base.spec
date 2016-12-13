@@ -1,4 +1,4 @@
-# Not building for scl rigth now
+# Not building for scl right now
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
@@ -22,9 +22,10 @@ Requires: katello-selinux
 Requires: openssl
 Requires: katello-certs-tools
 Requires: foreman-proxy
+Requires: /bin/readlink
 
 %package -n foreman-installer-katello
-Summary: Scenario for installing Katello and/or Capsule with foreman-installer
+Summary: Foreman-installer scenarios for Katello and Foreman proxies with content
 Group:	 Applications/System
 Obsoletes: katello-installer
 Obsoletes: capsule-installer
@@ -32,13 +33,17 @@ Requires: %{name} = %{version}-%{release}
 Requires: katello-service >= 3.0.0
 
 %description -n foreman-installer-katello
-A set of tools for installation of Katello and and Capsule.
+A set of tools for installation of Katello and Foreman proxies with content
 
 %posttrans -n foreman-installer-katello
-mv /etc/katello-installer/katello-installer.yaml.rpmsave /etc/katello-installer/katello-installer.yaml >/dev/null 2>&1 || :
-mv /etc/capsule-installer/capsule-installer.yaml.rpmsave /etc/capsule-installer/capsule-installer.yaml >/dev/null 2>&1 || :
-mv /etc/katello-installer/answers.katello-installer.yaml.rpmsave /etc/katello-installer/answers.katello-installer.yaml >/dev/null 2>&1 || :
-mv /etc/capsule-installer/answers.capsule-installer.yaml.rpmsave /etc/capsule-installer/answers.capsule-installer.yaml >/dev/null 2>&1 || :
+# See if the currently selected scenario is capsule - and migrate it to be foreman-proxy-content
+if [[ "`/bin/readlink -f /etc/foreman-installer/scenarios.d/last_scenario.yaml`" == "/etc/foreman-installer/scenarios.d/capsule.yaml" ]];
+then
+  mv /etc/foreman-installer/scenarios.d/capsule-answers.yaml /etc/foreman-installer/scenarios.d/foreman-proxy-content-answers.yaml
+  rm /etc/foreman-installer/scenarios.d/last_scenario.yaml
+  ln -s /etc/foreman-installer/scenarios.d/foreman-proxy-content.yaml /etc/foreman-installer/scenarios.d/last_scenario.yaml
+fi
+
 foreman-installer --scenario katello --migrations-only > /dev/null
 foreman-installer --scenario capsule --migrations-only > /dev/null
 
@@ -46,15 +51,14 @@ foreman-installer --scenario capsule --migrations-only > /dev/null
 %{_datadir}/foreman-installer-katello/bin
 %config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-answers.yaml
 %config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/capsule-answers.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/capsule.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content-answers.yaml
+%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.yaml
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
 %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
-%dir %{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
-%{_sysconfdir}/foreman-installer/scenarios.d/capsule.migrations
-%{_sbindir}/capsule-certs-generate
+%dir %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.migrations
+%{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.migrations
+%{_sbindir}/foreman-proxy-certs-generate
 %{_sbindir}/katello-certs-check
-%{_sbindir}/capsule-remove
 
 %package -n foreman-installer-katello-devel
 Summary:   Installer scenario for Katello development setup from git
@@ -90,9 +94,9 @@ sed -ri '1sX(/usr/bin/ruby|/usr/bin/env ruby)X%{scl_ruby}X' bin/*
 #configure the paths
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-answers.yaml config/katello.yaml
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-devel.yaml
-sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/capsule.yaml
+sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/foreman-proxy-content.yaml
 
-sed -ri 'sX  INSTALLER_DIR.*$X  INSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/capsule-certs-generate
+sed -ri 'sX  INSTALLER_DIR.*$X  INSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/foreman-proxy-certs-generate
 sed -ri 'sX\:installer_dir.*$X:installer_dir: %{_datadir}/katello-installer-baseXg' config/*.yaml
 
 # module paths
@@ -113,24 +117,22 @@ install -d -m0755 %{buildroot}/%{_sbindir}
 
 cp -dpR checks modules hooks parser_cache %{buildroot}/%{_datadir}/katello-installer-base
 
-cp -dpR bin/capsule-certs-generate %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-certs-generate
+cp -dpR bin/foreman-proxy-certs-generate %{buildroot}/%{_datadir}/foreman-installer-katello/bin/foreman-proxy-certs-generate
 cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-certs-check
-cp -dpR bin/capsule-remove %{buildroot}/%{_datadir}/foreman-installer-katello/bin/capsule-remove
 
 cp -dpR config/katello-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/katello-devel-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/capsule-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/foreman-proxy-content-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
 cp -dpR config/katello.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/katello.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/katello-devel.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/katello-devel.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/capsule.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/capsule.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/foreman-proxy-content.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
+cp -dpR config/foreman-proxy-content.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
-ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-certs-generate %{buildroot}/%{_sbindir}/capsule-certs-generate
+ln -sf %{_datadir}/foreman-installer-katello/bin/foreman-proxy-certs-generate %{buildroot}/%{_sbindir}/foreman-proxy-certs-generate
 ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot}/%{_sbindir}/katello-certs-check
-ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_sbindir}/capsule-remove
 
 %files
 %defattr(-,root,root,-)

@@ -1,181 +1,182 @@
-#!/bin/bash
+#!/usr/bin/env ruby
 
-for var in $@; do
-   if [[ $var == "--help" || $var == "-h" ]]
-       then echo -e "This script is used to remove all katello related packages and services. \nThis should only be used if you are sure you are wanting to completly remove Katello from this machine and lose all of your settings and synced content."
-       exit 1
-     fi
-done
+require 'optparse'
+require 'fileutils'
 
-echo ""
-echo "WARNING: This script will erase many packages and config files."
-echo "Important packages such as the following will be removed:"
-echo ""
-echo "  * httpd (apache)"
-echo "  * mongodb"
-echo "  * tomcat"
-echo "  * puppet"
-echo "  * ruby"
-echo "  * rubygems"
-echo "  * All Katello and Foreman Packages"
-echo ""
-echo "Once these packages and configuration files are removed there is no going back."
-echo "If you use this system for anything other than Katello and Foreman you probably"
-echo "do not want to execute this script."
-echo ""
-read -p "Read the source for a list of what is removed.  Are you sure(Y/N)? " -n 1 -r
-echo    # (optional) move to a new line
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    echo "** cancelled **"
-    exit 1
-fi
+optparse = OptionParser.new do |opts|
+  opts.banner = "This script is used to remove all katello related packages and services. \nThis should only be used if you are sure you are wanting to completly remove Katello from this machine and lose all of your settings and synced content."
 
-echo ""
-echo "ARE YOU SURE?: This script permanently deletes data and configuration."
-read -p "Read the source for a list of what is removed.  Type [remove] to continue? " -r
-echo    # (optional) move to a new line
-if [[ ! $REPLY = remove ]]
-then
-    echo "** cancelled **"
-    exit 1
-fi
+  opts.parse!
+end
 
-CONFIG_FILES=(
-    /etc/pulp
-    /etc/candlepin
-    /etc/katello
-    /etc/httpd
-    /etc/tomcat6
-    /etc/foreman
-    /etc/tomcat
-    /etc/foreman-installer
-    /etc/foreman-proxy
-    /etc/pki/katello-certs-tools
-    /etc/sudoers.d/foreman-proxy
-    /etc/hammer
-    /etc/tomcat
-    /etc/squid
-    /etc/puppet
-    /etc/qpid
-    /etc/qpid-dispatch
-    /etc/sysconfig/foreman.rpmsave
-)
+def confirmed?
+  puts "\nARE YOU SURE?: This script permanently deletes data and configuration."
+  print "Read the source for a list of what is removed.  Type [remove] to continue? "
+  'remove' == (gets.chomp)
+end
 
-LOG_FILES=(
-    /var/log/katello
-    /var/log/tomcat6
-    /var/log/pulp
-    /var/log/candlepin
-    /var/log/httpd
-    /var/log/mongodb
-    /var/log/foreman
-    /var/log/foreman-proxy
-    /var/log/foreman-installer
-    /var/log/tomcat
-    /var/log/squid
-    /var/log/capsule-certs-generate*
-)
+CONFIG_FILES=[
+  '/etc/pulp',
+  '/etc/candlepin',
+  '/etc/katello',
+  '/etc/httpd',
+  '/etc/tomcat6',
+  '/etc/foreman',
+  '/etc/tomcat',
+  '/etc/foreman-installer',
+  '/etc/foreman-proxy',
+  '/etc/pki/katello-certs-tools',
+  '/etc/sudoers.d/foreman-proxy',
+  '/etc/hammer',
+  '/etc/tomcat',
+  '/etc/squid',
+  '/etc/puppet',
+  '/etc/qpid',
+  '/etc/qpid-dispatch',
+  '/etc/sysconfig/foreman.rpmsave'
+]
 
-RPMS=(
-    `rpm -qa | grep puppetlabs-release`
-    `rpm -qa | grep foreman-release`
-    `rpm -qa | grep foreman-client`
-    `rpm -qa | grep foreman-proxy`
-    `rpm -qa | grep candlepin`
-    `rpm -qa | grep katello`
-    `rpm -qa | grep ^pulp`
-    `rpm -qa | grep ^python-pulp`
-    `rpm -qa | grep ^pulp-`
-    `rpm -qa | grep mongo`
-    `rpm -qa | grep postgre`
-    `rpm -qa | grep ^mod_`
-    `rpm -qa | grep ^rubygem`
-    `rpm -qa | grep ^ruby193`
-    `rpm -qa | grep ^tfm`
-    `rpm -qa | grep ^foreman`
-    `rpm -qa | grep ^qpid`
-    `rpm -qa | grep ^python-crane`
-    `rpm -qa | grep ^python-celery`
-    `rpm -qa | grep ^python-gofer`
-    `rpm -qa | grep ^python-qpid`
-    `rpm -qa | grep ^python-kombu`
-    `rpm -qa | grep ^python-webpy`
-    `rpm -qa | grep ^python-nectar`
-    `rpm -qa | grep ^python-saslwrapper`
-    `rpm -qa | grep ^python-amqp`
-    `rpm -qa | grep ^python-billiard`
-    `rpm -qa | grep ^python-semantic_version`
-    `rpm -qa | grep ^python-requests`
-    `rpm -qa | grep ^python-isodate`
-    `rpm -qa | grep $HOSTNAME`
-    `rpm -qa | grep saslwrapper`
-    `rpm -qa | grep ruby`
-    `rpm -qa | grep rubygems`
-    `rpm -qa | grep httpd`
-    `rpm -qa | grep puppet`
-    `rpm -qa | grep tomcat`
-    `rpm -qa | grep squid`
-)
+LOG_FILES=[
+  '/var/log/katello',
+  '/var/log/tomcat6',
+  '/var/log/pulp',
+  '/var/log/candlepin',
+  '/var/log/httpd',
+  '/var/log/mongodb',
+  '/var/log/foreman',
+  '/var/log/foreman-proxy',
+  '/var/log/foreman-installer',
+  '/var/log/tomcat',
+  '/var/log/squid',
+  '/var/log/capsule-certs-generate*'
+]
 
-CERT_FILES=(
-    /etc/pki/pulp
-    /etc/pki/content/*
-    /etc/pki/katello
-    /root/ssl-build
-    /etc/pki/tls/certs/katello-node.crt
-    /etc/pki/tls/private/katello-node.key
-    /etc/pki/tls/certs/pulp_consumers_ca.crt
-    /etc/pki/tls/certs/pulp_ssl_cert.crt
-    /var/www/html/pub/katello-ca*.rpm
-    /etc/pki/ca-trust/source/anchors/katello_server-host-cert.crt
-)
+RPMS=[
+  'puppetlabs-release',
+  'foreman-release',
+  'foreman-client',
+  'foreman-proxy',
+  'candlepin',
+  'katello',
+  '^pulp',
+  '^python-pulp',
+  '^pulp-',
+  'mongo',
+  'postgre',
+  '^mod_',
+  '^rubygem',
+  '^ruby193',
+  '^tfm',
+  '^foreman',
+  '^qpid',
+  '^python-crane',
+  '^python-celery',
+  '^python-gofer',
+  '^python-qpid',
+  '^python-kombu',
+  '^python-webpy',
+  '^python-nectar',
+  '^python-saslwrapper',
+  '^python-amqp',
+  '^python-billiard',
+  '^python-semantic_version',
+  '^python-requests',
+  '^python-isodate',
+  '$HOSTNAME',
+  'saslwrapper',
+  'ruby',
+  'rubygems',
+  'httpd',
+  'puppet',
+  'tomcat',
+  'squid'
+]
 
-CONTENT=(
-    /var/cache/pulp
-    /usr/share/foreman-proxy
-    /usr/share/foreman-installer-katello
-    /var/www/html/pub/katello-server-ca.crt
-    /usr/share/foreman
-    /var/lib/candlepin
-    /usr/share/katello
-    /var/lib/puppet
-    /var/lib/pgsql
-    /var/lib/mongodb
-    /var/lib/katello
-    /var/lib/pulp/
-    /var/lib/foreman
-    /usr/share/pulp
-    /var/lib/tomcat
-    /var/lib/qpidd
-    /usr/share/candlepin
-    /usr/share/tomcat
-    /usr/share/katello-installer-base
-    /usr/share/qpid
-    /usr/share/qpid-tools
-    /var/cache/candlepin
-    /var/cache/foreman-proxy
-    /var/cache/
-    /opt/theforeman
-    /var/www/html/pub/katello-rhsm-consumer
-)
+CERT_FILES=[
+  '/etc/pki/pulp',
+  '/etc/pki/content/*',
+  '/etc/pki/katello',
+  '/root/ssl-build',
+  '/etc/pki/tls/certs/katello-node.crt',
+  '/etc/pki/tls/private/katello-node.key',
+  '/etc/pki/tls/certs/pulp_consumers_ca.crt',
+  '/etc/pki/tls/certs/pulp_ssl_cert.crt',
+  '/var/www/html/pub/katello-ca*.rpm',
+  '/etc/pki/ca-trust/source/anchors/katello_server-host-cert.crt'
+]
 
-katello-service stop
+CONTENT=[
+  '/var/cache/pulp',
+  '/usr/share/foreman-proxy',
+  '/usr/share/foreman-installer-katello',
+  '/var/www/html/pub/katello-server-ca.crt',
+  '/usr/share/foreman',
+  '/var/lib/candlepin',
+  '/usr/share/katello',
+  '/var/lib/puppet',
+  '/var/lib/pgsql',
+  '/var/lib/mongodb',
+  '/var/lib/katello',
+  '/var/lib/pulp/',
+  '/var/lib/foreman',
+  '/usr/share/pulp',
+  '/var/lib/tomcat',
+  '/var/lib/qpidd',
+  '/usr/share/candlepin',
+  '/usr/share/tomcat',
+  '/usr/share/katello-installer-base',
+  '/usr/share/qpid',
+  '/usr/share/qpid-tools',
+  '/var/cache/candlepin',
+  '/var/cache/foreman-proxy',
+  '/var/cache/',
+  '/opt/theforeman',
+  '/var/www/html/pub/katello-rhsm-consumer'
+]
 
-echo "Removing RPMs"
-yum erase -y ${RPMS[*]}
+def remove
+  `katello-service stop`
 
-echo "Cleaning up configuration files"
-rm -rf ${CONFIG_FILES[*]}
+  puts "Removing RPMs"
+  RPMS.each do | rpm |
+    packages =  `rpm -qa | grep "#{rpm}"`
+    packages.lines.each { | package | `yum erase -y "#{ package.strip }" > /dev/null 2>&1` }
+  end
 
-echo "Cleaning up log files"
-# logs
-rm -rf ${LOG_FILES[*]}
+  puts "Cleaning up configuration files"
+  FileUtils.rm_rf CONFIG_FILES
 
-echo "Cleaning up Certs"
-# pulp cert stuff
-rm -rf ${CERT_FILES[*]}
+  puts "Cleaning up log files"
+  # logs
+  FileUtils.rm_rf LOG_FILES
 
-echo "Cleaning up content"
-#content
-rm -rf ${CONTENT[*]}
+  puts "Cleaning up Certs"
+  # pulp cert stuff
+  FileUtils.rm_rf CERT_FILES
+
+  puts "Cleaning up content"
+  #content
+  FileUtils.rm_rf CONTENT
+end
+
+puts "\nWARNING: This script will erase many packages and config files."
+puts "Important packages such as the following will be removed:\n"
+puts "  * httpd (apache)"
+puts "  * mongodb"
+puts "  * tomcat"
+puts "  * puppet"
+puts "  * ruby"
+puts "  * rubygems"
+puts "  * All Katello and Foreman Packages\n"
+puts "Once these packages and configuration files are removed there is no going back."
+puts "If you use this system for anything other than Katello and Foreman you probably"
+puts "do not want to execute this script.\n"
+
+print "Read the source for a list of what is removed.  Are you sure(Y/N)? "
+
+response = gets.chomp
+if /[Y]/i.match(response)
+  confirmed? ? remove : (puts "**** cancelled ****")
+else
+  puts "**** cancelled ****"
+end
