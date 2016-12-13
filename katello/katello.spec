@@ -5,8 +5,8 @@
 %global confdir common
 
 Name:       katello
-Version:    3.2.0
-Release:    4%{?dist}
+Version:    3.2.1
+Release:    1%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -174,6 +174,10 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.1-1
+- fixes #16825 - verifies valid backup exists before attempting to restore
+  (#303) (cfouant@redhat.com)
+
 * Wed Nov 16 2016 John Mitsch <jomitsch@redhat.com> 3.2.0-4
 - 
 
