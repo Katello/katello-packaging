@@ -5,7 +5,7 @@
 #global prever .rc4
 
 Name:    katello-installer-base
-Version: 3.2.1
+Version: 3.2.2
 Release: 1%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
@@ -136,6 +136,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.2-1
+- 
+
 * Tue Nov 15 2016 John Mitsch <jomitsch@redhat.com> 3.2.1-1
 - 
 
