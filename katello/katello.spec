@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.3.0
-Release:    1.nightly%{?dist}
+Release:    2.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -175,6 +175,33 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Dec 14 2016 Eric D Helms <ericdhelms@gmail.com> 3.3.0-2.nightly
+- refs #17567 - enable use of katello-remove for Foreman proxies (#324)
+  (cfouant@redhat.com)
+- fixes #17621 - python-semantic_version rpm name (cfouant@redhat.com)
+- Fixes #17114 - foreman-debug counts size instead lines (#297)
+  (pmoravec@redhat.com)
+- fixes #17174 - fixes restore failure if missing pulp database
+  (cfouant@redhat.com)
+- Fixes #17047 - Redirect cron to /dev/null (#311) (chrobert@redhat.com)
+- Fixes #16927 - Dir.exist? isnt available on el6 (ruby 1.8)
+  (seanokeeffe797@gmail.com)
+- fixes #16825 - verifies valid backup exists before attempting to restore
+  (#303) (cfouant@redhat.com)
+- Fixes #16251 - Add katello-service disable/enable options
+  (seanokeeffe797@gmail.com)
+- fixes #16746 - creates subdirectory for backups (#299) (cfouant@redhat.com)
+- fixes #16795 - fixes katello-restore syntax failure (#301)
+  (cfouant@redhat.com)
+- fixes #16732 - gzips archive after services turned back on (#298)
+  (cfouant@redhat.com)
+- Fixes #16586 - restart gofer with katello-service (#291)
+  (chrobert@redhat.com)
+- refs #16523 - fix error in find command (#285) (stephen@bitbin.de)
+- fixes #16523 - support puppet 4 environments in clean up script (#284)
+  (stephen@bitbin.de)
+- Katello version bump to 3.3.0 (jomitsch@redhat.com)
+
 * Wed Sep 07 2016 Eric D Helms <ericdhelms@gmail.com> 3.2.0-2.nightly
 - fixes #16373 - include rex services in katello-service (#275)
   (stephen@bitbin.de)
