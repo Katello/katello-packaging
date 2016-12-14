@@ -6,12 +6,12 @@
 
 Name:    katello-installer-base
 Version: 3.2.2
-Release: 1%{?prever}%{?dist}
+Release: 2%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
 URL:     http://katello.org
-Source0: https://github.com/Katello/katello-installer/archive/%{version}%{?prever}.tar.gz
+Source0: https://fedorapeople.org/groups/katello/releases/source/tarball/katello-installer-%{version}.tar.gz
 
 BuildArch: noarch
 Obsoletes: katello-installer < 2.1.0
@@ -136,6 +136,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/capsule-remove %{buildroot}/%{_
 %doc README.*
 
 %changelog
+* Wed Dec 14 2016 Eric D Helms <ericdhelms@gmail.com> 3.2.2-2
+- 
+
 * Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.2-1
 - 
 
