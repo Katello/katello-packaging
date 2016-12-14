@@ -142,16 +142,17 @@ Useful utilities for debug info collecting
 %files debug
 %{_datadir}/foreman/script/foreman-debug.d/katello-debug.sh
 
-%package capsule
+%package -n foreman-proxy-content
 Summary: Provides a federation of katello services
 BuildArch: noarch
 Requires: findutils
 Requires: foreman-installer-%{name}
+Obsoletes: katello-capsule
 
-%description capsule
+%description -n foreman-proxy-content
 Provides a federation of katello services
 
-%files capsule
+%files -n foreman-proxy-content
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 
 # ------ Service ----------------
