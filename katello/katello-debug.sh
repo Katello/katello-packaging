@@ -13,11 +13,11 @@ then
   exit 1
 fi
 
-# foreman-debug will truncate any file beyond 5k lines
+# foreman-debug will truncate any file beyond fixed size limit,
 # for larger files we need to copy the entire file.
 copy_files() {
   for FILE in $*; do
-    echo "Copying entire file: $FILE"
+    printv "Copying entire file: $FILE"
     if [ \( -f "$FILE" -o -h "$FILE" \) -a \( -r "$FILE" -a -s "$FILE" \) ]; then
       printv " - $FILE"
       SUBDIR=$(dirname $FILE)
@@ -26,8 +26,6 @@ copy_files() {
     fi
   done
 }
-
-
 
 # Installer
 add_files /var/log/foreman-installer/*
@@ -80,15 +78,6 @@ add_cmd "qpid-stat --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b
 # Gofer
 add_files /etc/gofer
 add_files /var/log/gofer
-
-#foreman-tasks export
-if hash foreman-rake 2>/dev/null; then
-  echo "Exporting tasks, this may take a few minutes."
-  tasks_filename=`foreman-rake foreman_tasks:export_tasks 2> /tmp/tasks_export.log | tail -n 1 | awk '{print $2}'`
-  copy_files $tasks_filename
-  add_files /tmp/tasks_export.log
-  rm -f $tasks_filename /tmp/tasks_export.log
-fi
 
 # FreeIPA (*)
 if [ $NOGENERIC -eq 0 ]; then
