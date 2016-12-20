@@ -14,14 +14,14 @@
 
 Summary:    A Foreman plugin that cooperates with Jenkins
 Name:       %{?scl_prefix}rubygem-%{gem_name}
-Version:    0.0.11
+Version:    0.1.0
 Release:    1%{?foremandist}%{?dist}
 Group:      Applications/System
 License:    GPLv3
 URL:        http://github.com/theforeman/foreman_pipeline
 Source0:    http://rubygems.org/downloads/%{gem_name}-%{version}.gem
 
-Requires:   foreman >= 1.11.0
+Requires:   foreman >= 1.13.0
 Requires:   %{?scl_prefix}rubygem(jenkins_api_client) < 2.0.0
 Requires:   %{?scl_prefix}rubygem-katello >= 3.0.0
 Requires:   %{?scl_prefix}rubygem-katello < 4.0.0
@@ -31,7 +31,7 @@ Requires:   %{?scl_prefix_ruby}ruby(release)
 Requires:   %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildRequires: foreman-assets
-BuildRequires: foreman-plugin >= 1.11.0
+BuildRequires: foreman-plugin >= 1.13.0
 BuildRequires: %{?scl_prefix}rubygem(jenkins_api_client) < 2.0.0
 BuildRequires: %{?scl_prefix}rubygem-katello >= 3.0.0
 BuildRequires: %{?scl_prefix}rubygem-katello < 4.0.0
@@ -92,7 +92,6 @@ cp -a .%{gem_dir}/* \
 %exclude %{gem_instdir}/.*
 %exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/test
-%exclude %{gem_instdir}/public
 %exclude %{gem_cache}
 
 %files doc
