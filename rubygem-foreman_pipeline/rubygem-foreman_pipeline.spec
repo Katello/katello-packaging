@@ -99,6 +99,9 @@ cp -a .%{gem_dir}/* \
 %doc %{gem_instdir}/LICENSE
 
 %changelog
+* Tue Dec 20 2016 Justin Sherrill <jsherril@redhat.com> 0.1.0-1
+- Update foreman_pipeline to 0.1.0 (oprazak@redhat.com)
+
 * Mon May 09 2016 Eric D Helms <ericdhelms@gmail.com> 0.0.11-1
 - Update foreman_pipeline to 0.0.11 (#214) (xprazak2@users.noreply.github.com)
 
