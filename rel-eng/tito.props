@@ -35,12 +35,12 @@ whitelist = rubygem-jenkins_api_client
   rubygem-terminal-table
   python-urllib3
 
-[katello-nightly-fedora22]
-disttag = .fc22
+[katello-nightly-fedora24]
+disttag = .fc24
 whitelist = katello-repos katello-agent
 
-[katello-nightly-fedora23]
-disttag = .fc23
+[katello-nightly-fedora25]
+disttag = .fc25
 whitelist = katello-repos katello-agent
 
 [requirements]
