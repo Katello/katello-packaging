@@ -174,6 +174,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed Dec 21 2016 John Mitsch <jomitsch@redhat.com> 3.2.2-1
+- bumping to 3.2.2 (jomitsch@redhat.com)
+
 * Tue Dec 13 2016 John Mitsch <jomitsch@redhat.com> 3.2.1-1
 - fixes #16825 - verifies valid backup exists before attempting to restore
   (#303) (cfouant@redhat.com)
