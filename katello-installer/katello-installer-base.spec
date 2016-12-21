@@ -64,6 +64,7 @@ foreman-installer --scenario capsule --migrations-only > /dev/null
 Summary:   Installer scenario for Katello development setup from git
 Group:	   Applications/System
 Requires:  %{name} = %{version}-%{release}
+Requires:  foreman-installer-katello
 
 %description -n foreman-installer-katello-devel
 A set of tools for installation of a Katello development environment using
