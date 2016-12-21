@@ -138,6 +138,9 @@ A subscription-manager plugin to add an additional fact 'network.fqdn' if not pr
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Wed Dec 21 2016 Justin Sherrill <jsherril@redhat.com> 2.8.0-1
+- Refs #17230 - added tracer support (seanokeeffe797@gmail.com)
+
 * Tue Sep 27 2016 Justin Sherrill <jsherril@redhat.com> 2.7.0-1
 - Refs #16134 - add new subpackage for sub-man plugin (jsherril@redhat.com)
 
