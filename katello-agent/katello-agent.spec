@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.8.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -34,7 +34,7 @@ Requires: yum-security
 %endif
 
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
-Requires: python2-tracer >= 1.6.12 
+Requires: python2-tracer >= 0.6.12
 Requires: python-rhsm
 %endif
 
