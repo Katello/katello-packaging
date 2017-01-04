@@ -71,6 +71,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Wed Jan 04 2017 Eric D Helms <ericdhelms@gmail.com> 2.2.1-1
+- Update hammer_cli_csv to 2.2.1 (thomasmckay@redhat.com)
+
 * Tue Dec 20 2016 Justin Sherrill <jsherril@redhat.com> 2.2.0-1
 - Update hammer_cli_csv to 2.2.0 (thomasmckay@redhat.com)
 
