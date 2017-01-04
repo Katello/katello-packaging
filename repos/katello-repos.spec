@@ -1,5 +1,5 @@
 Name:           katello-repos
-Version:        3.3.0
+Version:        3.4.0
 Release:        1.nightly%{?dist}
 Summary:        Definition of yum repositories for Katello
 
