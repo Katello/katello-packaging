@@ -125,5 +125,7 @@ echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" >
 
 add_cmd "mongo pulp_database /tmp/pulp_running_tasks.js" "pulp-running_tasks"
 
+add_cmd "hammer ping" "hammer-ping"
+
 # Legend:
 # * - already collected by sosreport tool (skip when -g option was provided)
