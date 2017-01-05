@@ -143,6 +143,8 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-1.nightly.rc1
+- 3.3.0.rc1 build
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
