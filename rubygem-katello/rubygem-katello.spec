@@ -155,6 +155,11 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-0.1.rc1.1
+- 3.3.0 rc1 releases (jsherril@redhat.com)
+- Require bastion 4.X (ericdhelms@gmail.com)
+- Katello version bump to 3.3.0 (jomitsch@redhat.com)
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
