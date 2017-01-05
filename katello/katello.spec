@@ -175,6 +175,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-2.rc1
+- 3.3.0 rc1 releases (jsherril@redhat.com)
+
 * Wed Dec 14 2016 Eric D Helms <ericdhelms@gmail.com> 3.3.0-2.nightly
 - refs #17567 - enable use of katello-remove for Foreman proxies (#324)
   (cfouant@redhat.com)
