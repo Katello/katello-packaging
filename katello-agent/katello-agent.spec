@@ -19,7 +19,7 @@ BuildRequires: python2-devel
 %endif
 BuildRequires: python-setuptools
 BuildRequires: rpm-python
-Requires: gofer >= 2.5
+Requires: gofer >= 2.7.6
 Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
