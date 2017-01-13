@@ -109,6 +109,12 @@ if [ $NOGENERIC -eq 0 ]; then
   add_files /var/log/squid/squid*.out*
 fi
 
+# Disk Space Checks
+
+add_cmd "du -sh /var/lib/pgsql" "postgres_disk_space"
+add_cmd "du -sh /var/lib/mongodb" "mongodb_disk_space"
+add_cmd "df -h" "disk_space_output"
+
 # Qpid Debug
 add_cmd "qpid-stat -q --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b amqps://localhost:5671" "qpid-stat-q"
 add_cmd "qpid-stat -u --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b amqps://localhost:5671" "qpid-stat-u"
