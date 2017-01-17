@@ -111,6 +111,7 @@ else
     '/etc/pki/pulp',
     '/etc/pulp',
     '/etc/puppet',
+    '/etc/puppetlabs',
     '/etc/qpid',
     '/etc/qpid-dispatch',
     '/etc/sysconfig/tomcat*',
@@ -123,7 +124,7 @@ else
   ]
 
   puts "Backing up config files... "
-  `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')}`
+  `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null`
   puts "Done."
 
   `cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
