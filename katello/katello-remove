@@ -31,6 +31,7 @@ CONFIG_FILES=[
   '/etc/tomcat',
   '/etc/squid',
   '/etc/puppet',
+  '/etc/puppetlabs',
   '/etc/qpid',
   '/etc/qpid-dispatch',
   '/etc/sysconfig/foreman.rpmsave'
