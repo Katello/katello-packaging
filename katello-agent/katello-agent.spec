@@ -84,7 +84,7 @@ rm -rf %{buildroot}
 
 %post
 chkconfig goferd on
-service goferd restart > /dev/null 2>&1
+touch /tmp/katello-agent-restart
 exit 0
 
 %posttrans
