@@ -57,6 +57,9 @@ add_files /var/log/tomcat*/manager*.log*
 add_files /etc/candlepin/candlepin.conf
 add_files /etc/tomcat*/server.xml
 
+# RHSM
+add_files /var/log/rhsm/*
+
 # Pulp
 add_files /etc/pulp/*.conf
 add_files /etc/httpd/conf.d/pulp.conf
