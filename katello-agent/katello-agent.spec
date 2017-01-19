@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.8.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -138,6 +138,9 @@ A subscription-manager plugin to add an additional fact 'network.fqdn' if not pr
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Thu Jan 19 2017 Eric D Helms <ericdhelms@gmail.com> 2.8.0-3
+- Fixes #18012 - depend on newer gofer (cduryee@redhat.com)
+
 * Thu Dec 29 2016 Justin Sherrill <jsherril@redhat.com> 2.8.0-2
 - fixing tracer version requirement (jsherril@redhat.com)
 
