@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.8.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -89,10 +89,6 @@ exit 0
 
 %posttrans
 katello-package-upload
-
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-katello-tracer-upload
-%endif
 
 exit 0
 
