@@ -93,7 +93,11 @@ opt_parser = OptionParser.new do |opt|
 end
 opt_parser.parse!
 
-STDOUT.print("This will modify your system. If you are using custom certificates, you will have to run the #{options[:program]}-installer again with custom certificate options after this script completes. Have you taken the necessary precautions (backups, snapshots, etc...) and  want to proceed with changing your hostname? [y/n]:")
+# kept as variables for easy changing in backports
+proxy = "Foreman Proxy"
+plural_proxy = "Foreman Proxies"
+
+STDOUT.print("This will modify your system. You will need to re-register any #{ plural_proxy } and #{options[:scenario].capitalize} clients after script completion. #{ plural_proxy } will have to be reinstalled. If you are using custom certificates, you will have to run the #{options[:program]}-installer again with custom certificate options after this script completes. Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with changing your hostname? [y/n]:")
 response = yesno
 unless response
   STDOUT.puts "Hostname change aborted, no changes have been made to your system"
@@ -105,10 +109,6 @@ unless options[:username] && options[:password]
   puts opt_parser
   exit
 end
-
-# kept as variables for easy changing in backports
-proxy = "Foreman Proxy"
-plural_proxy = "Foreman Proxies"
 
 if ARGV[0] && ARGV.count >= 1
   new_hostname = ARGV[0]
