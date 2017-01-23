@@ -137,7 +137,7 @@ else
   `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null`
   puts "Done."
 
-  `cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
+  `shopt -s dotglob ; cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
 
   if @options[:online]
     backup_db_online
