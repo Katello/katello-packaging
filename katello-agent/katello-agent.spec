@@ -1,6 +1,6 @@
 Name: katello-agent
-Version: 2.8.0
-Release: 4%{?dist}
+Version: 2.9.0
+Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -84,7 +84,7 @@ rm -rf %{buildroot}
 
 %post
 chkconfig goferd on
-service goferd restart > /dev/null 2>&1
+touch /tmp/katello-agent-restart
 exit 0
 
 %posttrans
@@ -93,15 +93,7 @@ katello-package-upload
 exit 0
 
 %postun
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-    if systemctl status goferd | grep 'active (running)'; then
-        systemctl restart goferd > /dev/null 2>&1
-    fi
-%else
-    if service goferd status | grep 'is running'; then
-        service goferd restart > /dev/null 2>&1
-    fi
-%endif
+touch /tmp/katello-agent-restart
 exit 0
 
 %files
