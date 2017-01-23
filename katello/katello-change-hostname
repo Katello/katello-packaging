@@ -2,6 +2,7 @@
 
 require "socket"
 require "optparse"
+require "rubygems"
 require 'yaml'
 
 raise 'Must run as root' unless Process.uid == 0
