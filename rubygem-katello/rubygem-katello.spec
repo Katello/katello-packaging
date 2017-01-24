@@ -155,6 +155,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Tue Jan 24 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-0.1.rc2
+- rubygem-katello 3.3.0.rc2 (jsherril@redhat.com)
+
 * Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-0.1.rc1.1
 - 3.3.0 rc1 releases (jsherril@redhat.com)
 - Require bastion 4.X (ericdhelms@gmail.com)
