@@ -175,6 +175,12 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Jan 24 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-2.rc2
+- katello-3.3.0.rc2 build (jsherril@redhat.com)
+- fixes #17908 - fixes error creating gzip files before they are compressed
+  (cfouant@redhat.com)
+- Fixes #11607 - Add hammer ping to debug (chrobert@redhat.com)
+
 * Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-2.rc1
 - 3.3.0 rc1 releases (jsherril@redhat.com)
 
