@@ -65,11 +65,11 @@ end
 
 def backup_db_offline
   puts "Backing up postgres db... "
-  `tar --selinux --create --file=pgsql_data.tar.gz --listed-incremental=.postgres.snar /var/lib/pgsql/data/`
+  `tar --selinux --create --file=pgsql_data.tar --listed-incremental=.postgres.snar /var/lib/pgsql/data/`
   puts "Done."
 
   puts "Backing up mongo db... "
-  `tar --selinux --create --file=mongo_data.tar.gz --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+  `tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
   puts "Done."
 end
 
