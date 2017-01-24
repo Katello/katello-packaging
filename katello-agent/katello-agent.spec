@@ -1,5 +1,5 @@
 Name: katello-agent
-Version: 2.9.0
+Version: 2.9.1
 Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
@@ -36,6 +36,7 @@ Requires: yum-security
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 Requires: python2-tracer >= 0.6.12
 Requires: python-rhsm
+Requires: crontabs
 %endif
 
 %description
@@ -77,6 +78,10 @@ cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
+
+# crontab
+mkdir -p %{buildroot}%{_sysconfdir}/cron.d/
+cp extra/katello-agent-send.cron %{buildroot}%{_sysconfdir}/cron.d/%{name}
 %endif
 
 %clean
@@ -107,6 +112,7 @@ exit 0
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 %{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 %attr(750, root, root) %{_sbindir}/katello-tracer-upload
+%config(noreplace) %attr(0644, root, root) %{_sysconfdir}/cron.d/%{name}
 %endif
 
 %doc LICENSE
