@@ -8,7 +8,7 @@ require 'yaml'
 raise 'Must run as root' unless Process.uid == 0
 
 DEFAULT_SCENARIO = File.basename(File.readlink("/etc/foreman-installer/scenarios.d/last_scenario.yaml")).split(".")[0]
-DEFAULT_SCENARIO == "katello" ? DEFAULT_PROGRAM = "foreman" : DEFAULT_PROGRAM = DEFAULT_SCENARIO
+DEFAULT_PROGRAM = DEFAULT_SCENARIO == "katello" ? "foreman" : DEFAULT_SCENARIO
 
 def is_rhel_version?(version)
   `cat /etc/redhat-release`[/(\d+\.)/].include?(version)
@@ -97,7 +97,12 @@ opt_parser.parse!
 proxy = "Foreman Proxy"
 plural_proxy = "Foreman Proxies"
 
-STDOUT.print("This will modify your system. You will need to re-register any #{ plural_proxy } and #{options[:scenario].capitalize} clients after script completion. #{ plural_proxy } will have to be reinstalled. If you are using custom certificates, you will have to run the #{options[:program]}-installer again with custom certificate options after this script completes. Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with changing your hostname? [y/n]:")
+STDOUT.print("This will modify your system. You will need to re-register any #{ plural_proxy } and " \
+             "#{options[:scenario].capitalize} clients after script completion. #{ plural_proxy } " \
+             "will have to be reinstalled. If you are using custom certificates, you will have to run the " \
+             "#{options[:program]}-installer again with custom certificate options after this script completes." \
+             " Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with " \
+             "changing your hostname? [y/n]:")
 response = yesno
 unless response
   STDOUT.puts "Hostname change aborted, no changes have been made to your system"
