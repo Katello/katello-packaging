@@ -24,6 +24,7 @@ Source7:    katello-backup
 Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
 Source10:   katello-clean-empty-puppet-environments 
+Source11:   katello-change-hostname
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -85,6 +86,7 @@ install -m 755 %{SOURCE10} %{buildroot}%{_sysconfdir}/cron.weekly/katello-clean-
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
+install -Dp -m0755 %{SOURCE11} %{buildroot}%{_bindir}/katello-change-hostname
 install -Dp -m0755 %{SOURCE9} %{buildroot}%{_bindir}/qpid-core-dump
 install -Dp -m0755 %{SOURCE7} %{buildroot}%{_bindir}/katello-backup
 install -Dp -m0755 %{SOURCE6} %{buildroot}%{_bindir}/katello-restore
@@ -127,6 +129,7 @@ Common runtime components of %{name}
 %{_bindir}/katello-backup
 %{_bindir}/katello-restore
 %{_bindir}/qpid-core-dump
+%{_bindir}/katello-change-hostname
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 
