@@ -123,6 +123,16 @@ else
     '/var/lib/puppet/ssl'
   ]
 
+  puts "Generating metadata ... "
+  metadata = File.new 'metadata', 'w'
+  metadata.puts `cat /etc/redhat-release`
+  metadata.puts "Plugin list: "
+  plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
+  plugin_list.each do |line|
+    plugin = line.split
+    metadata.puts "  #{plugin[2]} #{plugin[3]}".chop
+  end
+
   puts "Backing up config files... "
   `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null`
   puts "Done."
