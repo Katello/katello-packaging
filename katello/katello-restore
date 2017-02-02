@@ -80,8 +80,8 @@ end
 
 def backup_valid?
   files = Dir.entries(DIR)
-  (ONLINE_BACKUP_FILES + 'config_files.tar.gz' - files).empty? \
-    || (OFFLINE_BACKUP_FILES + 'config_files.tar.gz' - files).empty?
+  (ONLINE_BACKUP_FILES + ['config_files.tar.gz'] - files).empty? \
+    || (OFFLINE_BACKUP_FILES + ['config_files.tar.gz'] - files).empty?
 end
 
 def confirm
