@@ -66,6 +66,7 @@ add_files /etc/httpd/conf.d/pulp.conf
 add_files /etc/pulp/server/plugins.conf.d/nodes/distributor/*
 add_files /var/log/httpd/pulp-http{s,}_access_ssl.log*
 add_files /var/log/httpd/pulp-http{s,}_error_ssl.log*
+add_files /etc/default/pulp*
 
 # MongoDB (*)
 if [ $NOGENERIC -eq 0 ]; then
