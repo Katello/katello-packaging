@@ -2,6 +2,7 @@
 
 require 'optparse'
 require 'fileutils'
+require 'date'
 
 STANDARD_BACKUP_FILES = ['config_files.tar.gz', 'pulp_data.tar']
 ONLINE_BACKUP_FILES = ['mongo_dump', 'candlepin.dump', 'foreman.dump']
@@ -91,7 +92,9 @@ def confirm
   print "Are you sure(Y/N)? "
   response = gets.chomp
   if /[Y]/i.match(response)
+    puts "Starting restore from #{DIR}: #{Time.now}"
     restore
+    puts "Done with restore: #{Time.now}"
   else
     puts "**** cancelled ****"
   end
