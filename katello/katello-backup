@@ -27,6 +27,10 @@ optparse = OptionParser.new do |opts|
     @options[:online] = online
   end
 
+  opts.on("--logical-db-backup", "Also dump full database schema during offline backup") do |logical|
+    @options[:logical_backup] = logical
+  end
+
   opts.parse!
 
   if ARGV.length == 0
@@ -40,12 +44,12 @@ optparse = OptionParser.new do |opts|
 end
 
 def backup_db_online
-  puts "Backing up postgres db... "
+  puts "Backing up postgres online schema db... "
   `runuser - postgres -c "pg_dump -Fc foreman > #{@dir}/foreman.dump"`
   `runuser - postgres -c "pg_dump -Fc candlepin > #{@dir}/candlepin.dump"`
   puts "Done."
 
-  puts "Backing up mongo db... "
+  puts "Backing up mongo online schema db... "
   `mongodump --host localhost --out mongo_dump`
   puts "Done."
 end
@@ -91,8 +95,7 @@ if @dir.nil?
 else
   @dir << "/" unless @dir.end_with? "/"
   @dir << "katello-backup-" + DateTime.now.to_s
-  @time = Time.now
-  puts "Starting backup: #{@time}"
+  puts "Starting backup: #{Time.now}"
   FileUtils.mkdir_p(@dir)
   puts "Creating backup folder #{@dir}"
   FileUtils.chown(nil, 'postgres', @dir)
@@ -143,6 +146,9 @@ else
     backup_db_online
     backup_pulp_online unless @options[:config_only]
   else
+    if @options[:logical_backup]
+        backup_db_online
+    end
     `katello-service stop`
     backup_db_offline
     backup_pulp_offline unless @options[:config_only]
@@ -150,8 +156,7 @@ else
     compress_files
   end
 
-  @time = Time.now
-  puts "Done with backup: #{@time}"
+  puts "Done with backup: #{Time.now}"
   puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
 end
 
