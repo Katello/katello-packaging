@@ -126,9 +126,16 @@ add_cmd "rpm -qa | grep qpid" "qpid-rpm-qa"
 add_cmd "mongo pulp_database --eval \"db.reserved_resources.find().pretty().shellPrint()\"" "mongo-reserved_resources"
 add_cmd "mongo pulp_database --eval \"db.task_status.find().pretty().shellPrint()\"" "mongo-task_status"
 
-echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" > /tmp/pulp_running_tasks.js
+TEMP_DIR=`mktemp -d`
+cleanup() {
+  rm $TEMP_DIR/pulp_running_tasks.js
+  rmdir $TEMP_DIR
+}
+trap "cleanup" SIGHUP SIGINT SIGTERM EXIT
 
-add_cmd "mongo pulp_database /tmp/pulp_running_tasks.js" "pulp-running_tasks"
+echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" > $TEMP_DIR/pulp_running_tasks.js
+
+add_cmd "mongo pulp_database $TEMP_DIR/pulp_running_tasks.js" "pulp-running_tasks"
 
 add_cmd "hammer ping" "hammer-ping"
 
