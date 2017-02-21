@@ -78,6 +78,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Tue Feb 21 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-2
+- Katello 3.3.0 packages (jsherril@redhat.com)
+
 * Thu Jan 05 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-1.rc1
 - 3.3.0 rc1 releases (jsherril@redhat.com)
 - Updated for fedora 24 (jomitsch@redhat.com)
