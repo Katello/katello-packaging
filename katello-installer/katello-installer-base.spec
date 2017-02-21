@@ -141,6 +141,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Tue Feb 21 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-5
+- Katello 3.3.0 packages (jsherril@redhat.com)
+
 * Thu Jan 26 2017 Justin Sherrill <jsherril@redhat.com> 3.3.0-4.rc2
 - katello-installer 3.3.0.rc2-4 (jsherril@redhat.com)
 
