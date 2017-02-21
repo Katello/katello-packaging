@@ -28,11 +28,9 @@ Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 Anemone is a Ruby library that makes it quick and painless to write programs that spider a website. It provides a simple DSL for performing actions on every page of a site, skipping certain URLs, and calculating the shortest path to a given page on a site.
 
 %prep
-%setup -q -c -T -n %{pkg_name}-%{version}
-mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} - << \EOF}
-gem install --local --install-dir .%{gem_dir} \
-            --force %{SOURCE0}
+%setup -n %{pkg_name}-%{version} -q -c -T
+%{?scl:scl enable %{scl} - <<EOF}
+%gem_install -n %{SOURCE0}
 %{?scl:EOF}
 
 %install
@@ -54,6 +52,7 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/spec/
 
 %doc
+%doc %{gem_docdir}
 %doc %{gem_instdir}/CHANGELOG.rdoc
 %doc %{gem_instdir}/README.rdoc
 %doc %{gem_instdir}/VERSION
