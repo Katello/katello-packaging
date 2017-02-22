@@ -91,10 +91,9 @@ def manage_services(action)
         puts "#{COMMAND} #{service} #{action}"
         puts `#{COMMAND} #{service} #{action}`
       end
-    end
     failures << service unless $?.success?
+    end
   end
-end
 
   if failures.empty?
     puts "Success!"
