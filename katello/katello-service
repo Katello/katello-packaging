@@ -78,7 +78,19 @@ def manage_services(action)
 
   services_by_priority(action == 'stop').each do |service|
     if service_exists?(service)
-      puts `#{COMMAND} #{service} #{action}`
+      case action
+      when 'enable', 'disable'
+        if `which systemctl 2>&1` && $?.success?
+          puts "systemctl #{action} #{service}.service"
+          puts `systemctl #{action} #{service}.service`
+        else
+          puts "chkconfig #{service} on"
+          puts `chkconfig #{service} on`
+        end
+      else
+        puts "#{COMMAND} #{service} #{action}"
+        puts `#{COMMAND} #{service} #{action}`
+      end
       failures << service unless $?.success?
     end
   end
