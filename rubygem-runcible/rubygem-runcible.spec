@@ -71,6 +71,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Wed Feb 22 2017 Eric D Helms <ericdhelms@gmail.com> 1.9.2-1
+- runcible 1.9.2 (jsherril@redhat.com)
+
 * Mon Nov 21 2016 Justin Sherrill <jsherril@redhat.com> 1.9.1-1
 - runcible-1.9.1 build (jsherril@redhat.com)
 
