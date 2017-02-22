@@ -10,7 +10,7 @@ katello-service - Script to control Katello server.
 SYNOPSIS
 --------
 
-*katello-service* {*start*|*stop*|*status*|*reload*|*restart*|*list*}
+*katello-service* {*start*|*stop*|*status*|*reload*|*restart*|*list*|*enable*|*disable*}
 
 DESCRIPTION
 -----------
@@ -22,11 +22,17 @@ This script does exactly this.
 OPTIONS
 -------
 
-*start*|*stop*|*status*|*reload*|*restart*::
+*start*|*stop*|*status*|*reload*|*restart*|*enable*|*disable*::
     Perform specified action against all Katello services.
 
 *list*::
 	List all Katello services and if it is enabled or disabled.
+
+*enable*::
+        Enable all Katello services
+	
+*disable*::
+	Disable all Katello services
 
 *--exclude* SERVICE::
     Perform action on all but these services
