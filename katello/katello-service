@@ -36,10 +36,6 @@ OptionParser.new do |opts|
     @options[:only] = only
   end
 
-  opts.on("-v", "--verbose", "To be used with status, to increase verbosity") do |v|
-    @options[:verbose] = v
-  end
-
   opts.parse!
 
   if ARGV.length == 0 || ARGV.length != 1
@@ -77,18 +73,6 @@ def list_services
   puts `chkconfig --list 2>&1 | grep '#{regex}'`
 end
 
-def status_services(action)
-  if `which systemctl 2>&1` && $?.success? && !(@options.include?(:verbose))
-    regex = services_by_priority.map { |service| "^[^a-z_-]*#{service}.service" }.join('\|')
-    puts `systemctl list-units --all \*.service | grep -e '#{regex}' -e '^ *UNIT'`
-  else
-    services_by_priority.each do |service|
-      puts "#{COMMAND} #{service} #{action}"
-      puts `#{COMMAND} #{service} #{action}`
-    end
-  end
-end
-
 def manage_services(action)
   failures = []
 
@@ -124,8 +108,6 @@ when 'list'
   list_services
 when 'restart'
   %w(stop start).each { |action| manage_services action }
-when 'status'
-  status_services @options[:action]
 else
   manage_services @options[:action]
 end
