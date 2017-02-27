@@ -93,7 +93,7 @@ including Foreman and Foreman Proxy.
 sed -ri '1sX(/usr/bin/ruby|/usr/bin/env ruby)X%{scl_ruby}X' bin/*
 
 #configure the paths
-sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-answers.yaml config/katello.yaml
+sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-answers.yaml config/katello.yaml bin/foreman-proxy-certs-generate
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-devel.yaml
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/foreman-proxy-content.yaml
 
