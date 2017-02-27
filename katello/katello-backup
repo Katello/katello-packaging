@@ -89,8 +89,10 @@ def create_pulp_data_tar
 end
 
 def compress_files
-  `gzip pgsql_data.tar`
-  `gzip mongo_data.tar`
+  psql = spawn('gzip', 'pgsql_data.tar')
+  mongo = spawn('gzip', 'mongo_data.tar')
+  Process.wait(psql)
+  Process.wait(mongo)
 end
 
 if @dir.nil?
