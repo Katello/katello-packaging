@@ -33,9 +33,9 @@ Defines yum repositories for Katello clients.
 
 %files -n katello-client-repos
 %defattr(-, root, root)
-%{_sysconfdir}/yum.repos.d/katello-client.repo
+%config %{_sysconfdir}/yum.repos.d/katello-client.repo
 %if 0%{?rhel} == 6
-%{_sysconfdir}/yum.repos.d/qpid-copr.repo
+%config %{_sysconfdir}/yum.repos.d/qpid-copr.repo
 %endif
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
@@ -74,7 +74,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, root)
-%{_sysconfdir}/yum.repos.d/*.repo
+%config %{_sysconfdir}/yum.repos.d/*.repo
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
