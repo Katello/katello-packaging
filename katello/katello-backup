@@ -15,6 +15,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on("--incremental [PREVIOUS_BACKUP_DIR]", String, "Backup changes since previous backup") do |dir_path|
+    opts.abort("Please specify the previous backup directory.") unless dir_path
     if File.directory?(dir_path)
       dir_path.chop! if dir_path.end_with? "/"
       @options[:incremental] = dir_path
