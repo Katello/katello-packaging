@@ -166,6 +166,8 @@ end
 STDOUT.puts "stopping services"
 `katello-service stop`
 
+public_dir = "/var/www/html/pub"
+public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
 STDOUT.puts "deleting old certs"
 `
 rm -rf #{scenario_answers["certs"]["pki_dir"]}{,.bak}
@@ -187,8 +189,11 @@ rm -f /etc/tomcat/keystore
 rm -f /etc/pki/katello/keystore
 cp -r #{ssl_build_dir} #{ssl_backup_dir}
 rm -rf #{ssl_build_dir}
+mkdir #{public_backup_dir}
+mv #{public_dir}/*.rpm #{public_backup_dir}
 `
 STDOUT.puts "backed up #{ssl_build_dir} to #{ssl_backup_dir}"
+STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
 STDOUT.puts "updating hostname in /etc/hosts"
 `sed -i -e 's/#{old_hostname}/#{new_hostname}/g' /etc/hosts`
 
