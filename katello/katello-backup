@@ -89,6 +89,12 @@ if @dir.nil?
   puts "**** ERROR: Please specify an export directory ****"
   puts optparse
   exit(-1)
+end
+
+if Dir.exist?(@dir)
+  puts "**** ERROR: Directory already exists. Please specify a new export directory ****"
+  puts optparse
+  exit(-1)
 else
   @dir << "/" unless @dir.end_with? "/"
   @dir << "katello-backup-" + DateTime.now.to_s
