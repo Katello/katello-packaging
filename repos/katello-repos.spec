@@ -1,6 +1,6 @@
 Name:           katello-repos
-Version:        3.3.0
-Release:        3%{?dist}
+Version:        3.3.1
+Release:        1%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -78,6 +78,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Mar 15 2017 Eric D Helms <ericdhelms@gmail.com> 3.3.1-1
+- 
+
 * Thu Mar 09 2017 Eric D Helms <ericdhelms@gmail.com> 3.3.0-3
 - Release Katello 3.3.1 (ericdhelms@gmail.com)
 
