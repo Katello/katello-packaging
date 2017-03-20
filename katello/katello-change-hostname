@@ -214,6 +214,9 @@ installer_output = `#{installer}`
 installer_success = $?.success?
 STDOUT.puts installer_output
 
+STDOUT.puts "Regenerating ueber certs"
+`foreman-rake katello:regenerate_ueber_certs`
+
 if installer_success
   STDOUT.puts "
   Hostname change complete!
