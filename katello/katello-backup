@@ -7,6 +7,8 @@ require 'date'
 @options = {}
 @dir = nil
 
+EXCLUDED="--exclude goferd,foreman-proxy,squid,smart_proxy_dynflow_core,qdrouterd,qpidd"
+
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
 
@@ -164,10 +166,10 @@ else
     if @options[:logical_backup]
         backup_db_online
     end
-    `katello-service stop`
+    `katello-service stop #{EXCLUDED}`
     backup_db_offline
     backup_pulp_offline unless @options[:config_only]
-    `katello-service start`
+    `katello-service start #{EXCLUDED}`
     compress_files
   end
 
