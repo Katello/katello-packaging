@@ -57,7 +57,7 @@ def backup_pulp_online
  
   until matching
     checksum1 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
-    `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+    create_pulp_data_tar
     checksum2 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
     matching = (checksum1 == checksum2)
   end
@@ -76,8 +76,12 @@ end
 
 def backup_pulp_offline
   puts "Backing up Pulp data... "
-  `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+  create_pulp_data_tar
   puts "Done."
+end
+
+def create_pulp_data_tar
+  `tar --selinux --create --file=pulp_data.tar --exclude=var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
 end
 
 def compress_files
