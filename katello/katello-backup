@@ -44,14 +44,22 @@ optparse = OptionParser.new do |opts|
   @dir = ARGV[0].dup
 end
 
+def run_cmd(command)
+  `#{command}`
+  if $?.exitstatus != 0
+    STDERR.puts "Failed '#{command}'"
+    exit(-1)
+  end
+end
+
 def backup_db_online
-  puts "Backing up postgres online schema db... "
-  `runuser - postgres -c "pg_dump -Fc foreman > #{@dir}/foreman.dump"`
-  `runuser - postgres -c "pg_dump -Fc candlepin > #{@dir}/candlepin.dump"`
+  puts "Backing up postgres online schema... "
+  run_cmd("runuser - postgres -c 'pg_dump -Fc foreman > #{@dir}/foreman.dump'")
+  run_cmd("runuser - postgres -c 'pg_dump -Fc candlepin > #{@dir}/candlepin.dump'")
   puts "Done."
 
-  puts "Backing up mongo online schema db... "
-  `mongodump --host localhost --out mongo_dump`
+  puts "Backing up mongo online schema... "
+  run_cmd('mongodump --host localhost --out mongo_dump')
   puts "Done."
 end
 
@@ -70,11 +78,11 @@ end
 
 def backup_db_offline
   puts "Backing up postgres db... "
-  `tar --selinux --create --file=pgsql_data.tar --listed-incremental=.postgres.snar /var/lib/pgsql/data/`
+  run_cmd('tar --selinux --create --file=pgsql_data.tar --listed-incremental=.postgres.snar /var/lib/pgsql/data/')
   puts "Done."
 
   puts "Backing up mongo db... "
-  `tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+  run_cmd('tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/')
   puts "Done."
 end
 
@@ -85,7 +93,7 @@ def backup_pulp_offline
 end
 
 def create_pulp_data_tar
-  `tar --selinux --create --file=pulp_data.tar --exclude=var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+  run_cmd('tar --selinux --create --file=pulp_data.tar --exclude=/var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/')
 end
 
 def compress_files
@@ -144,7 +152,7 @@ else
   end
 
   puts "Backing up config files... "
-  `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null`
+  run_cmd("tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null")
   puts "Done."
 
   `shopt -s dotglob ; cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
