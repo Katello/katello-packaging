@@ -75,6 +75,7 @@ end
 
 def manage_services(action)
   failures = []
+  `logger -t #{$0} -p daemon '*** #{action} initiated ***'`
 
   services_by_priority(action == 'stop').each do |service|
     if service_exists?(service)
@@ -97,8 +98,10 @@ def manage_services(action)
 
   if failures.empty?
     puts "Success!"
+    `logger -t #{$0} -p daemon '*** #{action} finished successfuly ***'`
   else
     puts "Some services failed to #{action}: #{failures.join(',')}"
+    `logger -t #{$0} -p daemon.warning '*** #{action} failed: #{failures.join(',')} ***'`
     exit 1
   end
 end
