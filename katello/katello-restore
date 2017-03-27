@@ -5,7 +5,7 @@ require 'fileutils'
 require 'date'
 
 STANDARD_BACKUP_FILES = ['config_files.tar.gz', 'pulp_data.tar']
-ONLINE_BACKUP_FILES = ['mongo_dump', 'candlepin.dump', 'foreman.dump']
+ONLINE_BACKUP_FILES = ['mongo_dump', 'candlepin.dump', 'foreman.dump', 'pg_globals.dump']
 OFFLINE_BACKUP_FILES = ['mongo_data.tar.gz', 'pgsql_data.tar.gz']
 
 confirmed = false
@@ -47,6 +47,7 @@ def restore_databases
     `service postgresql start`
     `runuser - postgres -c "dropdb foreman"`
     `runuser - postgres -c "dropdb candlepin"`
+    `runuser - postgres -c "psql -f #{DIR}/pg_globals.dump postgres 2>/dev/null"`
     `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/foreman.dump"`
     `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/candlepin.dump"`
     `service postgresql stop`
