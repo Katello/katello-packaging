@@ -74,7 +74,7 @@ mkdir -p %{buildroot}%{_datadir}/rhsm-plugins/
 cp etc/rhsm/pluginconf.d/fqdn.FactsPlugin.conf %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
 cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6 
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
 cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
@@ -89,6 +89,11 @@ rm -rf %{buildroot}
 
 %post
 chkconfig goferd on
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+  /bin/systemctl start goferd > /dev/null 2>&1 || :
+%else
+  /sbin/service goferd start > /dev/null 2>&1 || :
+%endif
 touch /tmp/katello-agent-restart
 exit 0
 
