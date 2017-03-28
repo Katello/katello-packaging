@@ -112,7 +112,7 @@ if @dir.nil?
   exit(-1)
 else
   @dir << "/" unless @dir.end_with? "/"
-  @dir << "katello-backup-" + DateTime.now.to_s
+  @dir << "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
   puts "Starting backup: #{Time.now}"
   FileUtils.mkdir_p(@dir)
   puts "Creating backup folder #{@dir}"
