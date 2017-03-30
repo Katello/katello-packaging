@@ -1,6 +1,6 @@
 Name:           katello-repos
 Version:        3.4.0
-Release:        1.nightly%{?dist}
+Release:        1.rc1%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -49,7 +49,7 @@ rm -rf %{buildroot}
 #prepare dir structure
 install -d -m 0755 %{buildroot}%{_sysconfdir}/yum.repos.d
 install -d -m 0755 %{buildroot}%{_sysconfdir}/pki/rpm-gpg/
- 
+
 install -m 644 %{SOURCE0} %{buildroot}%{_sysconfdir}/yum.repos.d/
 install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/yum.repos.d/
 
@@ -103,7 +103,7 @@ rm -rf %{buildroot}
 - Fixes #7760: Adds client repo (ericdhelms@gmail.com)
 
 * Tue Feb 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.3.0-1
-- 
+-
 
 * Tue Feb 24 2015 Eric D. Helms <ericdhelms@gmail.com> 2.2.0-2
 - Bump release to 2.2.0-2 (ericdhelms@gmail.com)
@@ -140,7 +140,7 @@ rm -rf %{buildroot}
 - remove old changelog entries (msuchy@redhat.com)
 
 * Tue Dec 18 2012 Miroslav Suchý <msuchy@redhat.com> 1.3.2-1
-- rebuild 
+- rebuild
 
 * Thu Dec 06 2012 Eric D Helms <ehelms@redhat.com> 1.3.1-1
 - Bumping package versions for 1.3. (ehelms@redhat.com)
