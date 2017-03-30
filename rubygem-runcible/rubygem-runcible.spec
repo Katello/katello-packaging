@@ -69,6 +69,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Wed Mar 29 2017 Eric D. Helms <ericdhelms@gmail.com> 1.11.0-1
+- Update rubygem-runcible to 1.11.0 (ericdhelms@gmail.com)
+
 * Thu Mar 23 2017 Justin Sherrill <jsherril@redhat.com> 1.10.0-1
 - Runcible 1.10.0 (jsherril@redhat.com)
 - Use gem_install macro (ericdhelms@gmail.com)
