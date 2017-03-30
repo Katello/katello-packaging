@@ -2,9 +2,9 @@
 %{!?scl:%global pkg_name %{name}}
 
 %global gem_name katello
-# %%global prever .rc1
+%global prever .rc1
 %global mainver 3.4.0
-%global release 1.nightly
+%global release 1
 
 %global foreman_dir /usr/share/foreman
 %global foreman_bundlerd_dir %{foreman_dir}/bundler.d
@@ -30,7 +30,7 @@ URL:     http://www.katello.org
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 Requires: katello-selinux
-Requires: foreman >= 1.11.0
+Requires: foreman >= 1.15.0
 Requires: foreman-postgresql
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 Requires: %{?scl_prefix}rubygem(bastion) >= 5.0.0
@@ -54,7 +54,7 @@ Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildRequires: foreman-assets
-BuildRequires: foreman-plugin >= 1.11.0
+BuildRequires: foreman-plugin >= 1.15.0
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 BuildRequires: %{?scl_prefix}rubygem(bastion) >= 5.0.0
