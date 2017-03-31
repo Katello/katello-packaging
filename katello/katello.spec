@@ -5,7 +5,7 @@
 %global confdir common
 
 Name:       katello
-Version:    3.4.0
+Version:    3.5.0
 Release:    1.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
@@ -23,7 +23,7 @@ Source6:    katello-restore
 Source7:    katello-backup
 Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
-Source10:   katello-clean-empty-puppet-environments 
+Source10:   katello-clean-empty-puppet-environments
 Source11:   katello-change-hostname
 
 BuildRequires: asciidoc
