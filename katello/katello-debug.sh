@@ -36,6 +36,7 @@ add_cmd "find /etc/pki -ls | sort -k 11" "katello_pki_dir"
 # Katello
 add_files /etc/pulp/server/plugins.d/*
 add_files /etc/foreman/plugins/katello.yaml
+add_files /var/log/httpd/katello-reverse-proxy_access_ssl.log*
 
 # Splice
 add_files /var/log/splice/*
