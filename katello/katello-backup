@@ -140,6 +140,8 @@ else
     '/root/ssl-build',
     '/var/lib/candlepin',
     '/var/www/html/pub',
+    '/opt/puppetlabs/puppet/cache/foreman_cache_data',
+    '/opt/puppetlabs/puppet/ssl/',
     '/var/lib/puppet/foreman_cache_data',
     '/var/lib/puppet/ssl'
   ]
