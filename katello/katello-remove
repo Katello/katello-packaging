@@ -115,6 +115,7 @@ CONTENT=[
   '/var/lib/candlepin',
   '/usr/share/katello',
   '/var/lib/puppet',
+  '/opt/puppetlabs/puppet',
   '/var/lib/pgsql',
   '/var/lib/mongodb',
   '/var/lib/katello',
