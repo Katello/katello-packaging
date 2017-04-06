@@ -83,3 +83,6 @@ cp -pa .%{gem_dir}/* \
 exit 0
 
 %changelog
+* Thu Apr 06 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-1
+- new package built with tito
+
