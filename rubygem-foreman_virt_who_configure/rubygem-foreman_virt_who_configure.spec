@@ -6,7 +6,7 @@
 
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.1
-Release: 1%{?foremandist}%{?dist}
+Release: 2%{?foremandist}%{?dist}
 Summary: A plugin to make virt-who configuration easy
 Group: Applications/Systems
 License: GPLv3
@@ -83,6 +83,9 @@ cp -pa .%{gem_dir}/* \
 exit 0
 
 %changelog
+* Thu Apr 06 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-2
+- 
+
 * Thu Apr 06 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-1
 - new package built with tito
 
