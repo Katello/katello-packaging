@@ -29,6 +29,7 @@
        <packagereq type="default">foreman-installer-katello</packagereq>
        <packagereq type="default">foreman-installer-katello-devel</packagereq>
        <packagereq type="default">tfm-rubygem-foreman_pipeline</packagereq>
+       <packagereq type="default">tfm-rubygem-foreman_virt_who_configure</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_katello</packagereq>
        <packagereq type="default">tfm-rubygem-hammer_cli_import</packagereq>
        <packagereq type="default">katello-client-bootstrap</packagereq>
@@ -65,6 +66,7 @@
     <uservisible>true</uservisible>
     <packagelist>
        <packagereq type="optional">tfm-rubygem-foreman_pipeline-doc</packagereq>
+       <packagereq type="optional">tfm-rubygem-foreman_virt_who_configure-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-hpricot-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-jenkins_api_client-doc</packagereq>
        <packagereq type="optional">tfm-rubygem-mixlib-shellout-doc</packagereq>
