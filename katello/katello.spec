@@ -178,6 +178,31 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc1
+- Prep 3.4 RC1 (ericdhelms@gmail.com)
+- Fixes #19054 - Use a timestamp without special characters in kbackup These
+  special characters can cause issues for programs, the timestamp will now read
+  20170328172811, allowing the files to still be sorted by date.
+  (jomitsch@redhat.com)
+- Fixes #18335 - add pg_dumpall -g to online-backup (riehecky@fnal.gov)
+- Fixes #18333: run_cmd takes exit status args (riehecky@fnal.gov)
+- Fixes #18270 - Restart puppet services after hostname change
+  (jomitsch@redhat.com)
+- Fixes #19018 - katello-service sends logger messages (lzap+git@redhat.com)
+- Fixes #18965 - exclude unnecessary services (lzap+git@redhat.com)
+- Fixes #18333 katello-backup returns 0 exit code even when failing
+  (riehecky@fnal.gov)
+- Fixes #18571 - Address the use of known directories in collecting all debug
+  data. (bkearney@redhat.com)
+- Run the tar compression in parallel (riehecky@fnal.gov)
+- fixes #18925 - Add schema to full backup if dbfiles are corrupted
+  (riehecky@fnal.gov)
+- Fixes #18242 - Omit katello-export directory in katello-backup
+  (jomitsch@redhat.com)
+- Refs #18403 - Regenerate ueber certs after hostname change Depends on
+  https://github.com/Katello/katello/pull/6680 (jomitsch@redhat.com)
+- Added timestamps to restore process (riehecky@fnal.gov)
+
 * Thu Mar 09 2017 Eric D Helms <ericdhelms@gmail.com> 3.4.0-1.nightly
 - fixes #18756 - adds proper error message to katello-backup --incremental
   failure (cfouant@redhat.com)
