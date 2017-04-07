@@ -6,7 +6,7 @@
 
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.0.1
-Release: 1%{?foremandist}%{?dist}
+Release: 4%{?foremandist}%{?dist}
 Summary: A plugin to make virt-who configuration easy
 Group: Applications/Systems
 License: GPLv3
@@ -15,15 +15,15 @@ URL: https://github.com/theforeman/foreman_virt_who_configure
 Source0: http://rubygems.org/gems/%{gem_name}-%{version}.gem
 Requires: foreman >= 1.11
 Requires: %{?scl_prefix_ruby}ruby(release)
-Requires: %{?scl_prefix_ruby}ruby 
-Requires: %{?scl_prefix_ruby}ruby(rubygems) 
+Requires: %{?scl_prefix_ruby}ruby
+Requires: %{?scl_prefix_ruby}ruby(rubygems)
 Requires: %{?scl_prefix}rubygem(katello) >= 3.0
 BuildRequires: foreman-assets
 BuildRequires: foreman-plugin >= 1.11
 BuildRequires: %{?scl_prefix}rubygem(katello) >= 3.0
 BuildRequires: %{?scl_prefix_ruby}ruby(release)
-BuildRequires: %{?scl_prefix_ruby}ruby 
-BuildRequires: %{?scl_prefix_ruby}rubygems-devel 
+BuildRequires: %{?scl_prefix_ruby}ruby
+BuildRequires: %{?scl_prefix_ruby}rubygems-devel
 BuildArch: noarch
 Provides: %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 Provides: foreman-plugin-%{plugin_name}
@@ -83,3 +83,9 @@ cp -pa .%{gem_dir}/* \
 exit 0
 
 %changelog
+* Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.1-4
+- new package built with tito
+
+* Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com>
+- new package built with tito
+
