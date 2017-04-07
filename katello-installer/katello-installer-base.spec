@@ -144,6 +144,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc1
+- new package built with tito
+
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
 
