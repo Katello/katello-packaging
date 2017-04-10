@@ -236,6 +236,8 @@ if installer_success
 
   Short hostnames have not been updated, please update those manually.
   "
+  exit(true)
 else
   STDOUT.puts "Something went wrong with the #{options[:scenario].capitalize} installer! Please check the above output and the corresponding logs"
+  exit(false)
 end
