@@ -19,6 +19,7 @@ SERVICES = {
   'foreman-proxy'            => 20,
   'smart_proxy_dynflow_core' => 20,
   'httpd'                    => 30,
+  'puppetserver'             => 30,
   'foreman-tasks'            => 30,
   'goferd'                   => 30
 }
