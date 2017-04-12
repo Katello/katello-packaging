@@ -50,6 +50,13 @@ def yesno
   end
 end
 
+def hammer_ping_success
+  hammer_ping = `hammer ping`
+  success = $?.success?
+  service_failed = hammer_ping.include? "FAIL"
+  success && !service_failed
+end
+
 options = {}
 options[:program] = DEFAULT_PROGRAM
 options[:scenario] = DEFAULT_SCENARIO
@@ -106,20 +113,26 @@ STDOUT.print("This script will modify your system. You will need to re-register 
 response = yesno
 unless response
   STDOUT.puts "Hostname change aborted, no changes have been made to your system"
-  exit
+  exit(false)
 end
 
 unless options[:username] && options[:password]
   STDOUT.puts "Username and/or Password options are missing!"
   puts opt_parser
-  exit
+  exit(false)
 end
 
 if ARGV[0] && ARGV.count >= 1
   new_hostname = ARGV[0]
 else
   puts opt_parser
-  exit
+  exit(false)
+end
+
+STDOUT.puts "\nChecking overall health of server"
+unless hammer_ping_success
+  STDOUT.puts "There is a problem with the server, please check 'hammer ping'"
+  exit(false)
 end
 
 # Get the hostname from your system
@@ -129,7 +142,7 @@ scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{options[
 ssl_build_dir = scenario_answers["certs"]["ssl_build_dir"]
 ssl_backup_dir = "#{ssl_build_dir}-#{timestamp}-#{old_hostname}"
 
-STDOUT.puts "\nUpdating default #{proxy}"
+STDOUT.puts "Updating default #{proxy}"
 default_capsule_id = `hammer -u #{options[:username]} -p #{options[:password]} capsule list | grep #{old_hostname} | awk '{ print $1 }'`[0]
 # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
 `hammer -u #{options[:username]} -p #{options[:password]} capsule update --id #{default_capsule_id} --url https://#{new_hostname}:9090 --new-name #{new_hostname} 2> /dev/null`
