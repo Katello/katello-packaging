@@ -61,7 +61,7 @@ add_files /var/log/rhsm/*
 # Pulp
 add_files /etc/pulp/*.conf
 add_files /etc/httpd/conf.d/pulp.conf
-add_files /etc/pulp/server/plugins.conf.d/nodes/distributor/*
+add_files /etc/pulp/server/plugins.conf.d/*
 add_files /var/log/httpd/pulp-http{s,}_access_ssl.log*
 add_files /var/log/httpd/pulp-http{s,}_error_ssl.log*
 add_files /etc/default/pulp*
@@ -138,6 +138,7 @@ echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" >
 add_cmd "mongo pulp_database $TEMP_DIR/pulp_running_tasks.js" "pulp-running_tasks"
 
 add_cmd "hammer ping" "hammer-ping"
+add_cmd "katello-service status" "katello_service_status"
 
 # Legend:
 # * - already collected by sosreport tool (skip when -g option was provided)
