@@ -37,7 +37,7 @@ the packages locally and quickly.
 
 1. Copy mock/site-defaults.cfg.basic to site-defaults.cfg, or look at other
    example configs for more options.
-1. `tito build --rpm --test --builder builder.MockBuilder --arg mock_config_dir=mock/ --arg mock=el6-scl`
+1. `tito build --rpm --test --builder mock --arg mock_config_dir=mock/ --arg mock=el6-scl`
 
 The last argument is the name of the mock config in mock/, which includes SCL
 and non-SCL variants.
