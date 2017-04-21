@@ -12,8 +12,8 @@ Release:        2.katello%{?dist}
 Summary:        Python HTTP library with thread-safe connection pooling and file post
 
 License:        MIT
-URL:            http://urllib3.readthedocs.org/
-Source0:        http://pypi.python.org/packages/source/u/%{srcname}/%{srcname}-%{version}.tar.gz
+URL:            https://urllib3.readthedocs.io/
+Source0:        https://pypi.python.org/packages/source/u/%{srcname}/%{srcname}-%{version}.tar.gz
 
 # Patch to change default behaviour to check SSL certs for validity
 # https://bugzilla.redhat.com/show_bug.cgi?id=855320
