@@ -16,8 +16,7 @@ BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
-Requires:  %{?scl_prefix}rubygem(rest-client) < 2.0.0
+Requires:  %{?scl_prefix}rubygem(rest-client) < 3.0.0
 Requires:  %{?scl_prefix}rubygem(oauth)
 Requires:  %{?scl_prefix_ror}rubygem(i18n) >= 0.5.0
 Requires:  %{?scl_prefix_ror}rubygem(activesupport) >= 3.0.10
