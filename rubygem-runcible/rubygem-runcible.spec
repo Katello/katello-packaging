@@ -68,6 +68,10 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Tue Apr 25 2017 Justin Sherrill <jsherril@redhat.com> 2.0.0-1
+- Update rest client requirement for runcible (jsherril@redhat.com)
+- Upgrade to runcible 2.0 (jsherril@redhat.com)
+
 * Wed Mar 29 2017 Eric D. Helms <ericdhelms@gmail.com> 1.11.0-1
 - Update rubygem-runcible to 1.11.0 (ericdhelms@gmail.com)
 
