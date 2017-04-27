@@ -154,6 +154,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Thu Apr 27 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-0.2.rc2
+- Add RC2 (ericdhelms@gmail.com)
+
 * Mon Apr 10 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-0.2.rc1
 - Bump foreman-tasks requirement to less than 1.0.0 (ericdhelms@gmail.com)
 
