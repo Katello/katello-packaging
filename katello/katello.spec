@@ -178,6 +178,12 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Thu Apr 27 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc2
+- Add RC2 (ericdhelms@gmail.com)
+- Fixes #17060 - Addition to katello-debug.sh (ahumbe@redhat.com)
+- Fixes #19216 - include puppetserver in katello-service
+  (Klaas-@users.noreply.github.com)
+
 * Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc1
 - Prep 3.4 RC1 (ericdhelms@gmail.com)
 - Fixes #19054 - Use a timestamp without special characters in kbackup These
