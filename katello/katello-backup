@@ -156,11 +156,11 @@ else
     metadata.puts "  #{plugin[2]} #{plugin[3]}".chop
   end
 
+  FileUtils.cp Dir.glob("#{@options[:incremental]}/.*.snar"), @dir if @options[:incremental]
+
   puts "Backing up config files... "
   run_cmd("tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null", [0,2])
   puts "Done."
-
-  `shopt -s dotglob ; cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
 
   if @options[:online]
     backup_db_online
