@@ -1,11 +1,11 @@
 Name: katello-agent
-Version: 2.9.1
-Release: 2%{?dist}
+Version: 3.0.0
+Release: 1%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
 URL:     https://github.com/Katello/katello-agent
-Source0: https://codeload.github.com/Katello/katello-agent/tar.gz/%{version}
+Source0: https://codeload.github.com/Katello/katello-agent/tar.gz/%{version}#/%{name}-%{version}.tar.gz
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
@@ -67,13 +67,15 @@ cp src/katello/agent/katelloplugin.py %{buildroot}/%{_prefix}/lib/gofer/plugins
 
 mkdir -p %{buildroot}/%{_prefix}/lib/yum-plugins
 cp src/yum-plugins/package_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
+cp src/yum-plugins/enabled_repos_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 
 mkdir -p %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/
 cp etc/yum/pluginconf.d/package_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/package_upload.conf
+cp etc/yum/pluginconf.d/enabled_repos_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/enabled_repos_upload.conf
 
 mkdir -p %{buildroot}%{_sbindir}
 cp bin/katello-package-upload %{buildroot}%{_sbindir}/katello-package-upload
-
+cp bin/katello-enabled-repos-upload %{buildroot}%{_sbindir}/katello-enabled-repos-upload
 
 mkdir -p %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/
 mkdir -p %{buildroot}%{_datadir}/rhsm-plugins/
@@ -85,6 +87,9 @@ cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
 
+# cache directory
+mkdir -p %{buildroot}/var/cache/katello-agent/
+
 # crontab
 mkdir -p %{buildroot}%{_sysconfdir}/cron.d/
 cp extra/katello-agent-send.cron %{buildroot}%{_sysconfdir}/cron.d/%{name}
@@ -94,12 +99,6 @@ cp extra/katello-agent-send.cron %{buildroot}%{_sysconfdir}/cron.d/%{name}
 rm -rf %{buildroot}
 
 %post
-chkconfig goferd on
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-  /bin/systemctl start goferd > /dev/null 2>&1 || :
-%else
-  /sbin/service goferd start > /dev/null 2>&1 || :
-%endif
 touch /tmp/katello-agent-restart
 exit 0
 
@@ -117,7 +116,11 @@ exit 0
 %config %{_sysconfdir}/gofer/plugins/katelloplugin.conf
 %{_prefix}/lib/gofer/plugins/katelloplugin.*
 %{_sysconfdir}/yum/pluginconf.d/package_upload.conf
+%{_sysconfdir}/yum/pluginconf.d/enabled_repos_upload.conf
+
+/var/cache/katello-agent/
 %attr(750, root, root) %{_sbindir}/katello-package-upload
+%attr(750, root, root) %{_sbindir}/katello-enabled-repos-upload
 %{_prefix}/lib/yum-plugins
 
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
