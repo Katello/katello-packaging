@@ -107,6 +107,7 @@ CERT_FILES=[
 ]
 
 CONTENT=[
+  '/var/cache/pulp',
   '/usr/share/foreman-proxy',
   '/usr/share/foreman-installer-katello',
   '/var/www/html/pub/katello-server-ca.crt',
@@ -114,11 +115,10 @@ CONTENT=[
   '/var/lib/candlepin',
   '/usr/share/katello',
   '/var/lib/puppet',
-  '/opt/puppetlabs/puppet',
   '/var/lib/pgsql',
   '/var/lib/mongodb',
   '/var/lib/katello',
-  '/var/lib/pulp',
+  '/var/lib/pulp/',
   '/var/lib/foreman',
   '/usr/share/pulp',
   '/var/lib/tomcat',
@@ -128,18 +128,12 @@ CONTENT=[
   '/usr/share/katello-installer-base',
   '/usr/share/qpid',
   '/usr/share/qpid-tools',
+  '/var/cache/candlepin',
+  '/var/cache/foreman-proxy',
   '/var/cache/',
   '/opt/theforeman',
   '/var/www/html/pub/katello-rhsm-consumer'
 ]
-
-CONTENT.map! do |dir|
-  if File.readlines('/proc/mounts').any?{ |line| line.split(" ")[1] =~ /#{dir}$/ }
-    dir + '/*'
-  else
-    dir
-  end
-end
 
 def remove
   `katello-service stop`

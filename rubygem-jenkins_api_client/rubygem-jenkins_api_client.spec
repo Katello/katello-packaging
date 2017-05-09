@@ -45,10 +45,13 @@ BuildArch: noarch
 Documentation for %{name}
 
 %prep
-%setup -n %{pkg_name}-%{version} -q -c -T
-%{?scl:scl enable %{scl} - <<EOF}
-%gem_install -n %{SOURCE0}
-%{?scl:EOF}
+%setup -q -c -T
+mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} "}
+gem install --local --install-dir .%{gem_dir} \
+            --bindir .%{_bindir} \
+            --force %{SOURCE0} --no-ri --no-rdoc
+%{?scl:"}
 
 %install
 mkdir -p %{buildroot}%{gem_dir}
@@ -85,7 +88,6 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 
 
 %files doc
-%doc %{gem_docdir}
 %doc %{gem_instdir}/README.md
 %doc %{gem_instdir}/CHANGELOG.md
 %doc %{gem_instdir}/CONTRIBUTORS.md

@@ -5,7 +5,7 @@
 %global confdir common
 
 Name:       katello
-Version:    3.5.0
+Version:    3.4.0
 Release:    1.nightly%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
@@ -23,7 +23,7 @@ Source6:    katello-restore
 Source7:    katello-backup
 Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
-Source10:   katello-clean-empty-puppet-environments
+Source10:   katello-clean-empty-puppet-environments 
 Source11:   katello-change-hostname
 
 BuildRequires: asciidoc
@@ -178,34 +178,6 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
-* Thu Mar 09 2017 Eric D Helms <ericdhelms@gmail.com> 3.4.0-1.nightly
-- fixes #18756 - adds proper error message to katello-backup --incremental
-  failure (cfouant@redhat.com)
-- Fixes #18266 - remove old certs in pub/ on hostname change
-  (jomitsch@redhat.com)
-- Fixes #18231 - task export is too slow in debug (lzap+git@redhat.com)
-- Updated katello-service docs (#385) (roygwilliams.kxw@gmail.com)
-- Modified katello-service to support enable/disable for systemd (#383)
-  (roygwilliams.kxw@gmail.com)
-- Fixes #18368 - Add arrays of strings... (akofink@redhat.com)
-- Fixes #18396 - Collect /etc/default/pulp* items in katello-debug (#371)
-  (Aftermath@users.noreply.github.com)
-- #358 allow globbing to catch the *.snar files during incremental backups
-  (ericlake@gmail.com)
-- fixes #18277 - adds a metadata file to backup (#366) (cfouant@redhat.com)
-- Fixes #17522 - Add katello-change-hostname command (#323)
-  (jomitsch@redhat.com)
-- fixes #18117, #18118 - adds Puppet 4 to katello-backup and katello-remove
-  (cfouant@redhat.com)
-- Fixes #18198 - collect httpd pulp logs in katello-debug (pmoravec@redhat.com)
-- Fixes #18145 - add RHSM log to katello-debug (chrobert@redhat.com)
-- fixes #17908 - fixes error creating gzip files before they are compressed
-  (cfouant@redhat.com)
-- Fixes #17950 - Add proxy ENV vars to debug (chrobert@redhat.com)
-- Fixes #18075 - Add space check on mongo/postgres (chrobert@redhat.com)
-- Fixes #11607 - Add hammer ping to debug (chrobert@redhat.com)
-- Bumping nightly builds to 3.4.0 (jsherril@redhat.com)
-
 * Wed Dec 14 2016 Eric D Helms <ericdhelms@gmail.com> 3.3.0-2.nightly
 - refs #17567 - enable use of katello-remove for Foreman proxies (#324)
   (cfouant@redhat.com)
