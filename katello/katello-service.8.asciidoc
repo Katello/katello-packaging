@@ -39,6 +39,9 @@ OPTIONS
 
 *--only* SERVICE::
     Perform action on specified services only
+    
+*-v*, *--verbose*::
+    To increase verbosity of status (systemd only)
 
 SEE ALSO
 --------
