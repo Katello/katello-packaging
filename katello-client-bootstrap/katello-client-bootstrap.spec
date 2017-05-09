@@ -43,6 +43,7 @@ mkdir -p %{buildroot}/%{_var}/www/html/pub/
 cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 
 %files
+%doc README.md
 %defattr(-,apache,apache,-)
 %{_var}/www/html/pub
 %{_var}/www/html/pub/bootstrap.py
