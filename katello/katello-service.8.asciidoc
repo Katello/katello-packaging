@@ -30,7 +30,7 @@ OPTIONS
 
 *enable*::
         Enable all Katello services
-	
+
 *disable*::
 	Disable all Katello services
 
@@ -39,6 +39,9 @@ OPTIONS
 
 *--only* SERVICE::
     Perform action on specified services only
+
+*-v*, *--verbose*::
+    To increase verbosity of status (systemd only)
 
 SEE ALSO
 --------
