@@ -50,9 +50,9 @@ foreman-installer --scenario capsule --migrations-only > /dev/null
 %files -n foreman-installer-katello
 %{_datadir}/foreman-installer-katello/bin
 %config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-answers.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello.yaml
+%config %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello.yaml
 %config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content-answers.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.yaml
+%config %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.yaml
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
 %{_sysconfdir}/foreman-installer/scenarios.d/katello.migrations
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/foreman-proxy-content.migrations
@@ -77,7 +77,7 @@ foreman-installer --scenario katello-devel --migrations-only > /dev/null
 
 %files -n foreman-installer-katello-devel
 %config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel-answers.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.yaml
+%config %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.yaml
 %dir %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
 %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
 
