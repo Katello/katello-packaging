@@ -19,6 +19,7 @@ SERVICES = {
   'foreman-proxy'            => 20,
   'smart_proxy_dynflow_core' => 20,
   'httpd'                    => 30,
+  'puppetserver'             => 30,
   'foreman-tasks'            => 30,
   'goferd'                   => 30
 }
@@ -75,6 +76,7 @@ end
 
 def manage_services(action)
   failures = []
+  `logger -t #{$0} -p daemon.info '*** #{action} initiated ***'`
 
   services_by_priority(action == 'stop').each do |service|
     if service_exists?(service)
@@ -97,8 +99,10 @@ def manage_services(action)
 
   if failures.empty?
     puts "Success!"
+    `logger -t #{$0} -p daemon.info '*** #{action} finished successfuly ***'`
   else
     puts "Some services failed to #{action}: #{failures.join(',')}"
+    `logger -t #{$0} -p daemon.warning '*** #{action} failed: #{failures.join(',')} ***'`
     exit 1
   end
 end

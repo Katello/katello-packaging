@@ -39,28 +39,12 @@ Summary:    Documentation for rubygem-%{gem_name}
 This package contains documentation for rubygem-%{gem_name}.
 
 %prep
-
-%{?scl:scl enable %{scl} "}
-gem unpack %{SOURCE0}
-%{?scl:"}
-%setup -q -D -T -n  %{gem_name}-%{version}
-%{?scl:scl enable %{scl} "}
-gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
-%{?scl:"}
-%{?scl:scl enable %{scl} "}
-gem build %{gem_name}.gemspec
-%{?scl:"}
+%setup -n %{pkg_name}-%{version} -q -c -T
+%{?scl:scl enable %{scl} - <<EOF}
+%gem_install -n %{SOURCE0}
+%{?scl:EOF}
 
 %build
-%if 0%{?fedora} > 18
-%gem_install
-%else
-mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} "}
-gem install --local --install-dir .%{gem_dir} \
-            --force --rdoc %{gem_name}-%{version}.gem
-%{?scl:"}
-%endif
 
 %install
 mkdir -p %{buildroot}%{gem_dir}

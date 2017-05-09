@@ -4,7 +4,7 @@
 %global gem_name runcible
 
 Name:           %{?scl_prefix}rubygem-%{gem_name}
-Version:        1.9.2
+Version:        2.0.0
 Release:        1%{?dist}
 Summary:        A gem exposing Pulp's juiciest parts
 Group:          Applications/System
@@ -16,8 +16,7 @@ BuildArch:  noarch
 Provides:   %{?scl_prefix}rubygem(%{gem_name}) = %{version}
 %{?scl:Obsoletes: ruby193-rubygem-%{gem_name}}
 
-Requires:  %{?scl_prefix}rubygem(rest-client) >= 1.6.1
-Requires:  %{?scl_prefix}rubygem(rest-client) < 2.0.0
+Requires:  %{?scl_prefix}rubygem(rest-client) < 3.0.0
 Requires:  %{?scl_prefix}rubygem(oauth)
 Requires:  %{?scl_prefix_ror}rubygem(i18n) >= 0.5.0
 Requires:  %{?scl_prefix_ror}rubygem(activesupport) >= 3.0.10
@@ -42,11 +41,9 @@ This package contains documentation for rubygem-%{gem_name}
 
 %prep
 %setup -n %{pkg_name}-%{version} -q -c -T
-mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} "}
-gem install --local --install-dir .%{gem_dir} \
-            --force %{SOURCE0} --no-rdoc --no-ri
-%{?scl:"}
+%{?scl:scl enable %{scl} - <<EOF}
+%gem_install -n %{SOURCE0}
+%{?scl:EOF}
 
 %build
 
@@ -71,6 +68,20 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Tue Apr 25 2017 Justin Sherrill <jsherril@redhat.com> 2.0.0-1
+- Update rest client requirement for runcible (jsherril@redhat.com)
+- Upgrade to runcible 2.0 (jsherril@redhat.com)
+
+* Wed Mar 29 2017 Eric D. Helms <ericdhelms@gmail.com> 1.11.0-1
+- Update rubygem-runcible to 1.11.0 (ericdhelms@gmail.com)
+
+* Thu Mar 23 2017 Justin Sherrill <jsherril@redhat.com> 1.10.0-1
+- Runcible 1.10.0 (jsherril@redhat.com)
+- Use gem_install macro (ericdhelms@gmail.com)
+
+* Wed Mar 01 2017 Eric D Helms <ericdhelms@gmail.com> 1.9.3-1
+- rubygem-runcible 1.9.3 (jsherril@redhat.com)
+
 * Wed Feb 22 2017 Eric D Helms <ericdhelms@gmail.com> 1.9.2-1
 - runcible 1.9.2 (jsherril@redhat.com)
 
