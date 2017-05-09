@@ -45,7 +45,9 @@ def restore_databases
     `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
   else
     `service postgresql start`
+    `runuser - postgres -c "createuser foreman"`
     `runuser - postgres -c "dropdb foreman"`
+    `runuser - postgres -c "createuser candlepin"`
     `runuser - postgres -c "dropdb candlepin"`
     `runuser - postgres -c "psql -f #{DIR}/pg_globals.dump postgres 2>/dev/null"`
     `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/foreman.dump"`
