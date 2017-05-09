@@ -8,7 +8,7 @@
 
 Summary: Katello command plugin for the Hammer CLI
 Name:    %{?scl_prefix}rubygem-%{gem_name}
-Version: 0.10.0
+Version: 0.3.0
 Release: 1%{?dist}
 Group:   Development/Languages
 License: GPLv3
@@ -48,9 +48,11 @@ BuildArch: noarch
 Documentation for %{pkg_name}
 
 %prep
-%setup -n %{pkg_name}-%{version} -q -c -T
-%{?scl:scl enable %{scl} - <<EOF}
-%gem_install -n %{SOURCE0}
+%setup -q -c -T -n %{pkg_name}-%{version}
+mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} - << \EOF}
+gem install --local --install-dir .%{gem_dir} \
+            --force %{SOURCE0}
 %{?scl:EOF}
 
 %install
@@ -74,10 +76,6 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
-* Thu Mar 30 2017 Eric D. Helms <ericdhelms@gmail.com> 0.10.0-1
-- Update hammer_cli_katello to 0.10.0 (akofink@redhat.com)
-- Use gem_install macro (ericdhelms@gmail.com)
-
 * Wed Dec 21 2016 Justin Sherrill <jsherril@redhat.com> 0.3.0-1
 - Build hammer_cli_katello 0.3.0 (jsherril@redhat.com)
 

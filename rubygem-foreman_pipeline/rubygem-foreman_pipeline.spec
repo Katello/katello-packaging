@@ -59,10 +59,12 @@ Summary:    Documentation for rubygem-%{gem_name}
 This package contains documentation for rubygem-%{gem_name}.
 
 %prep
-%setup -n %{pkg_name}-%{version} -q -c -T
-%{?scl:scl enable %{scl} - <<EOF}
-%gem_install -n %{SOURCE0}
-%{?scl:EOF}
+%setup -q -c -T -n %{pkg_name}-%{version}
+mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} "}
+gem install --local --install-dir .%{gem_dir} \
+            --force %{SOURCE0} --no-rdoc --no-ri
+%{?scl:"}
 
 %build
 
@@ -93,7 +95,6 @@ cp -a .%{gem_dir}/* \
 %exclude %{gem_cache}
 
 %files doc
-%doc %{gem_docdir}
 %doc %{gem_instdir}/README.md
 %doc %{gem_instdir}/LICENSE
 

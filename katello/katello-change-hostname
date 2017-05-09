@@ -50,13 +50,6 @@ def yesno
   end
 end
 
-def hammer_ping_success
-  hammer_ping = `hammer ping`
-  success = $?.success?
-  service_failed = hammer_ping.include? "FAIL"
-  success && !service_failed
-end
-
 options = {}
 options[:program] = DEFAULT_PROGRAM
 options[:scenario] = DEFAULT_SCENARIO
@@ -104,35 +97,29 @@ opt_parser.parse!
 proxy = "Foreman Proxy"
 plural_proxy = "Foreman Proxies"
 
-STDOUT.print("This script will modify your system. You will need to re-register any #{ plural_proxy } and " \
+STDOUT.print("This will modify your system. You will need to re-register any #{ plural_proxy } and " \
              "#{options[:scenario].capitalize} clients after script completion. #{ plural_proxy } " \
              "will have to be reinstalled. If you are using custom certificates, you will have to run the " \
              "#{options[:program]}-installer again with custom certificate options after this script completes." \
              " Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with " \
-             "changing your hostname? \n [y/n]:")
+             "changing your hostname? [y/n]:")
 response = yesno
 unless response
   STDOUT.puts "Hostname change aborted, no changes have been made to your system"
-  exit(false)
+  exit
 end
 
 unless options[:username] && options[:password]
   STDOUT.puts "Username and/or Password options are missing!"
   puts opt_parser
-  exit(false)
+  exit
 end
 
 if ARGV[0] && ARGV.count >= 1
   new_hostname = ARGV[0]
 else
   puts opt_parser
-  exit(false)
-end
-
-STDOUT.puts "\nChecking overall health of server"
-unless hammer_ping_success
-  STDOUT.puts "There is a problem with the server, please check 'hammer ping'"
-  exit(false)
+  exit
 end
 
 # Get the hostname from your system
@@ -179,8 +166,6 @@ end
 STDOUT.puts "stopping services"
 `katello-service stop`
 
-public_dir = "/var/www/html/pub"
-public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
 STDOUT.puts "deleting old certs"
 `
 rm -rf #{scenario_answers["certs"]["pki_dir"]}{,.bak}
@@ -202,11 +187,8 @@ rm -f /etc/tomcat/keystore
 rm -f /etc/pki/katello/keystore
 cp -r #{ssl_build_dir} #{ssl_backup_dir}
 rm -rf #{ssl_build_dir}
-mkdir #{public_backup_dir}
-mv #{public_dir}/*.rpm #{public_backup_dir}
 `
 STDOUT.puts "backed up #{ssl_build_dir} to #{ssl_backup_dir}"
-STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
 STDOUT.puts "updating hostname in /etc/hosts"
 `sed -i -e 's/#{old_hostname}/#{new_hostname}/g' /etc/hosts`
 
@@ -227,13 +209,6 @@ installer_output = `#{installer}`
 installer_success = $?.success?
 STDOUT.puts installer_output
 
-STDOUT.puts "Regenerating ueber certs"
-`foreman-rake katello:regenerate_ueber_certs`
-
-STDOUT.puts "Restarting puppet services"
-`/sbin/service puppet restart`
-`/sbin/service puppetserver restart`
-
 if installer_success
   STDOUT.puts "
   Hostname change complete!
@@ -249,8 +224,6 @@ if installer_success
 
   Short hostnames have not been updated, please update those manually.
   "
-  exit(true)
 else
   STDOUT.puts "Something went wrong with the #{options[:scenario].capitalize} installer! Please check the above output and the corresponding logs"
-  exit(false)
 end
