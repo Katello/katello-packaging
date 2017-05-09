@@ -3,6 +3,7 @@
 require 'optparse'
 require 'fileutils'
 require 'date'
+require "yaml"
 
 @options = {}
 @dir = nil
@@ -114,6 +115,21 @@ def compress_files
   Process.wait(mongo)
 end
 
+def generate_metadata
+  os_version = `cat /etc/redhat-release`.chomp
+  plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
+  plugins = []
+  plugin_list.each do |line|
+    plugin = line.split
+    plugins << "#{plugin[2].chop}-#{plugin[3].chop}"
+  end
+  rpms = `rpm -qa`.split("\n")
+  system_facts = {os_version: os_version, plugin_list: plugins, rpms: rpms}
+  File.open('metadata.yml', 'w') do |metadata_file|
+    metadata_file.puts system_facts.to_yaml
+  end
+end
+
 if @dir.nil?
   puts "**** ERROR: Please specify an export directory ****"
   puts optparse
@@ -150,14 +166,8 @@ else
   ]
 
   puts "Generating metadata ... "
-  metadata = File.new 'metadata', 'w'
-  metadata.puts `cat /etc/redhat-release`
-  metadata.puts "Plugin list: "
-  plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
-  plugin_list.each do |line|
-    plugin = line.split
-    metadata.puts "  #{plugin[2]} #{plugin[3]}".chop
-  end
+  generate_metadata
+  puts "Done."
 
   FileUtils.cp Dir.glob("#{@options[:incremental]}/.*.snar"), @dir if @options[:incremental]
 
