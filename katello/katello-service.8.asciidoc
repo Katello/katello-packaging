@@ -40,7 +40,6 @@ OPTIONS
 *--only* SERVICE::
     Perform action on specified services only
 
-
 SEE ALSO
 --------
 
