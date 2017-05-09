@@ -13,11 +13,11 @@ then
   exit 1
 fi
 
-# foreman-debug will truncate any file beyond fixed size limit,
+# foreman-debug will truncate any file beyond 5k lines
 # for larger files we need to copy the entire file.
 copy_files() {
   for FILE in $*; do
-    printv "Copying entire file: $FILE"
+    echo "Copying entire file: $FILE"
     if [ \( -f "$FILE" -o -h "$FILE" \) -a \( -r "$FILE" -a -s "$FILE" \) ]; then
       printv " - $FILE"
       SUBDIR=$(dirname $FILE)
@@ -26,6 +26,8 @@ copy_files() {
     fi
   done
 }
+
+
 
 # Installer
 add_files /var/log/foreman-installer/*
@@ -36,7 +38,6 @@ add_cmd "find /etc/pki -ls | sort -k 11" "katello_pki_dir"
 # Katello
 add_files /etc/pulp/server/plugins.d/*
 add_files /etc/foreman/plugins/katello.yaml
-add_files /var/log/httpd/katello-reverse-proxy_access_ssl.log*
 
 # Splice
 add_files /var/log/splice/*
@@ -62,7 +63,7 @@ add_files /var/log/rhsm/*
 # Pulp
 add_files /etc/pulp/*.conf
 add_files /etc/httpd/conf.d/pulp.conf
-add_files /etc/pulp/server/plugins.conf.d/*
+add_files /etc/pulp/server/plugins.conf.d/nodes/distributor/*
 add_files /var/log/httpd/pulp-http{s,}_access_ssl.log*
 add_files /var/log/httpd/pulp-http{s,}_error_ssl.log*
 add_files /etc/default/pulp*
@@ -85,6 +86,15 @@ add_cmd "qpid-stat --ssl-certificate=/etc/pki/katello/qpid_client_striped.crt -b
 # Gofer
 add_files /etc/gofer
 add_files /var/log/gofer
+
+#foreman-tasks export
+if hash foreman-rake 2>/dev/null; then
+  echo "Exporting tasks, this may take a few minutes."
+  tasks_filename=`foreman-rake foreman_tasks:export_tasks 2> /tmp/tasks_export.log | tail -n 1 | awk '{print $2}'`
+  copy_files $tasks_filename
+  add_files /tmp/tasks_export.log
+  rm -f $tasks_filename /tmp/tasks_export.log
+fi
 
 # FreeIPA (*)
 if [ $NOGENERIC -eq 0 ]; then
@@ -127,19 +137,11 @@ add_cmd "rpm -qa | grep qpid" "qpid-rpm-qa"
 add_cmd "mongo pulp_database --eval \"db.reserved_resources.find().pretty().shellPrint()\"" "mongo-reserved_resources"
 add_cmd "mongo pulp_database --eval \"db.task_status.find().pretty().shellPrint()\"" "mongo-task_status"
 
-TEMP_DIR=`mktemp -d`
-cleanup() {
-  rm $TEMP_DIR/pulp_running_tasks.js
-  rmdir $TEMP_DIR
-}
-trap "cleanup" SIGHUP SIGINT SIGTERM EXIT
+echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" > /tmp/pulp_running_tasks.js
 
-echo "db.task_status.find({state:{\$ne: \"finished\"}}).pretty().shellPrint()" > $TEMP_DIR/pulp_running_tasks.js
-
-add_cmd "mongo pulp_database $TEMP_DIR/pulp_running_tasks.js" "pulp-running_tasks"
+add_cmd "mongo pulp_database /tmp/pulp_running_tasks.js" "pulp-running_tasks"
 
 add_cmd "hammer ping" "hammer-ping"
-add_cmd "katello-service status" "katello_service_status"
 
 # Legend:
 # * - already collected by sosreport tool (skip when -g option was provided)

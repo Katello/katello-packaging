@@ -38,10 +38,12 @@ Documentation for %{name}
 
 
 %prep
-%setup -n %{pkg_name}-%{version} -q -c -T
-%{?scl:scl enable %{scl} - <<EOF}
-%gem_install -n %{SOURCE0}
-%{?scl:EOF}
+%setup -q -c -T
+mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} "}
+gem install --local --install-dir .%{gem_dir} \
+            --force %{SOURCE0} --no-ri --no-rdoc
+%{?scl:"}
 
 %install
 mkdir -p %{buildroot}%{gem_dir}
@@ -58,7 +60,6 @@ cp -pa .%{gem_dir}/* \
 %exclude %{gem_instdir}/.*
 
 %files doc
-%doc %{gem_docdir}
 %doc %{gem_instdir}/README.md
 
 %changelog

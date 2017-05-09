@@ -3,7 +3,7 @@
 
 %global gem_name katello
 # %%global prever .rc1
-%global mainver 3.5.0
+%global mainver 3.4.0
 %global release 1.nightly
 
 %global foreman_dir /usr/share/foreman
@@ -33,17 +33,17 @@ Requires: katello-selinux
 Requires: foreman >= 1.11.0
 Requires: foreman-postgresql
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
-Requires: %{?scl_prefix}rubygem(bastion) >= 5.0.0
-Requires: %{?scl_prefix}rubygem(bastion) < 6.0.0
+Requires: %{?scl_prefix}rubygem(bastion) >= 4.0.0
+Requires: %{?scl_prefix}rubygem(bastion) < 5.0.0
 Requires: %{?scl_prefix}rubygem(oauth)
 Requires: %{?scl_prefix}rubygem(rest-client)
 Requires: %{?scl_prefix}rubygem(rabl)
 Requires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 Requires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
-Requires: %{?scl_prefix}rubygem(foreman-tasks) < 1.0.0
+Requires: %{?scl_prefix}rubygem(foreman-tasks) < 0.9.0
 Requires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
-Requires: %{?scl_prefix}rubygem(runcible) >= 2.0.0
+Requires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 Requires: %{?scl_prefix}rubygem(anemone)
 Requires: %{?scl_prefix}rubygem(jquery-ui-rails)
 Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
@@ -57,13 +57,13 @@ BuildRequires: foreman-assets
 BuildRequires: foreman-plugin >= 1.11.0
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
-BuildRequires: %{?scl_prefix}rubygem(bastion) >= 5.0.0
-BuildRequires: %{?scl_prefix}rubygem(bastion) < 6.0.0
+BuildRequires: %{?scl_prefix}rubygem(bastion) >= 4.0.0
+BuildRequires: %{?scl_prefix}rubygem(bastion) < 5.0.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
-BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 1.0.0
+BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 0.9.0
 BuildRequires: %{?scl_prefix}rubygem(gettext_i18n_rails)
 BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
-BuildRequires: %{?scl_prefix}rubygem(runcible) >= 2.0.0
+BuildRequires: %{?scl_prefix}rubygem(runcible) >= 1.3.0
 BuildRequires: %{?scl_prefix}rubygem(anemone)
 BuildRequires: %{?scl_prefix}rubygem(jquery-ui-rails)
 BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
@@ -109,10 +109,12 @@ Summary:    Katello Ostree Plugin
 This package provides the ostree plugin for rubygem-%{gem_name}.
 
 %prep
-%setup -n %{pkg_name}-%{version} -q -c -T
-%{?scl:scl enable %{scl} - <<EOF}
-%gem_install -n %{SOURCE0}
-%{?scl:EOF}
+%setup -q -c -T -n %{pkg_name}-%{version}
+mkdir -p .%{gem_dir}
+%{?scl:scl enable %{scl} "}
+gem install --local --install-dir .%{gem_dir} \
+            --force %{SOURCE0} --no-rdoc --no-ri
+%{?scl:"}
 
 %build
 
@@ -147,7 +149,6 @@ cp -a .%{gem_dir}/* \
 %doc %{gem_instdir}/LICENSE.txt
 
 %files doc
-%doc %{gem_docdir}
 %doc %{gem_instdir}/README.md
 
 %files -n %{katello_ostree}
