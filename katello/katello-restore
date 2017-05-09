@@ -1,24 +1,35 @@
 #!/usr/bin/env ruby
 
+require 'socket'
 require 'optparse'
 require 'fileutils'
 require 'date'
 
-STANDARD_BACKUP_FILES = ['config_files.tar.gz', 'pulp_data.tar']
+STANDARD_BACKUP_FILES = ['config_files.tar.gz', 'pulp_data.tar*']
 ONLINE_BACKUP_FILES = ['mongo_dump', 'candlepin.dump', 'foreman.dump', 'pg_globals.dump']
 OFFLINE_BACKUP_FILES = ['mongo_data.tar.gz', 'pgsql_data.tar.gz']
+FOREMAN_PROXY_CONTENT_BACKUP_FILES = ['mongo_data.tar.gz']
+FOREMAN_PROXY_CONTENT_ONLINE_BACKUP_FILES = ['mongo_dump']
+FOREMAN_PROXY_CONTENT = "foreman-proxy-content" # keep this variable easy to change for backporting
 
 confirmed = false
+@disable_system_checks = false
+@foreman_proxy_content = !`rpm -qa | grep foreman-proxy-content`.empty?
+@skip_register = false
 
-optparse = OptionParser.new do |opts|
+@optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-restore /path/to/dir [options]\n eg: $ katello-restore /tmp/backup/katello-backup-2016-09-30T00:00:00+00:00"
 
   opts.on("-y", "--assumeyes", "Answer yes for all questions") do
     confirmed = true
   end
+
+  opts.on("-d","--disable-system-checks","runs the installer with --disable-system-checks") do
+    @disable_system_checks = true
+  end
 end
 
-optparse.parse!
+@optparse.parse!
 DIR = ARGV.pop.dup
 DIR.chop! if DIR.end_with?("/")
 
@@ -31,39 +42,114 @@ end
 def reset_katello
   puts "Resetting Katello"
   `tar --selinux --overwrite --listed-incremental=/dev/null -xzf config_files.tar.gz -C /`
-  `foreman-installer --scenario katello --reset`
+  installer = "yes | foreman-installer -v --reset"
+  if @foreman_proxy_content
+    installer << " --scenario #{FOREMAN_PROXY_CONTENT} --foreman-proxy-register-in-foreman false"
+  else
+    installer << " --scenario katello"
+  end
+  installer << " --disable-system-checks" if @disable_system_checks
+  puts installer
+  installer_output = `#{installer}`
+  puts installer_output
+
   puts "Done.\n"
 end
 
+def restore_psql_dumps
+  puts "Restoring postgres dump files"
+  `katello-service start --only postgresql`
+  `runuser - postgres -c "dropdb foreman"`
+  `runuser - postgres -c "dropdb candlepin"`
+  `runuser - postgres -c "psql -f #{DIR}/pg_globals.dump postgres 2>/dev/null"`
+  `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/foreman.dump"`
+  `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/candlepin.dump"`
+  `katello-service stop --only postgresql`
+  puts "Done."
+end
+
+def migrate_pulp
+  puts "Migrating pulp databases"
+  necessary_services = "mongod,qpidd"
+  pulp_services = "pulp,celerybeat,pulp_workers,pulp_resource_manager"
+  `katello-service start --only #{necessary_services}`
+  `katello-service stop --only #{pulp_services}`
+  `sudo -u apache pulp-manage-db`
+  puts "Done."
+end
+
+def restore_mongo_dump
+  puts "Restoring mongo dump"
+  `katello-service start --only mongod`
+  `echo 'db.dropDatabase();' | mongo pulp_database`
+  `mongorestore --host localhost mongo_dump/pulp_database/`
+  `katello-service stop --only mongod`
+  puts "Done."
+end
+
+def valid_logical_backup
+  base_files_present =  @mongo_dump_exists && @mongo_data_exists
+  if @foreman_proxy_content
+    base_files_present
+  else
+    base_files_present && @pgsql_data_exists && @candlepin_dump_exists && @foreman_dump_exists
+  end
+end
+
+def valid_online_backup
+  @candlepin_dump_exists && @foreman_dump_exists && @mongo_dump_exists &&
+  !(@mongo_data_exists || @pgsql_data_exists)
+end
+
+def valid_fpc_online_backup
+  @mongo_dump_exists &&
+  !(@mongo_data_exists || @pgsql_data_exists || @candlepin_dump_exists || @foreman_dump_exists)
+end
+
+def valid_standard_backup
+  @mongo_data_exists && @pgsql_data_exists &&
+  !(@candlepin_dump_exists || @foreman_dump_exists || @mongo_dump_exists)
+end
+
+def valid_fpc_standard_backup
+  @mongo_data_exists &&
+  !(@pgsql_data_exists || @candlepin_dump_exists || @foreman_dump_exists || @mongo_dump_exists)
+end
+
+def backup_invalid_message
+  puts "There are too many files in the backup directory, please check only the " \
+       "required files are present."
+  display_backup_options
+  exit(-1)
+end
+
 def restore_databases
-  if File.exist?('pulp_data.tar')
+  puts "Logical backup detected, using the standard backup files to restore" if valid_logical_backup
+  if @pulp_data_exists
     puts "Restoring Pulp data"
     `tar --selinux --overwrite --listed-incremental=/dev/null -xf pulp_data.tar -C /`
   end
-  if File.exist?('mongo_data.tar.gz')
+  if @mongo_data_exists
     `tar --selinux --overwrite --listed-incremental=/dev/null -xzf mongo_data.tar.gz -C /`
-    `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
-  else
-    `service postgresql start`
-    `runuser - postgres -c "dropdb foreman"`
-    `runuser - postgres -c "dropdb candlepin"`
-    `runuser - postgres -c "psql -f #{DIR}/pg_globals.dump postgres 2>/dev/null"`
-    `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/foreman.dump"`
-    `runuser - postgres -c "pg_restore -C -d postgres #{DIR}/candlepin.dump"`
-    `service postgresql stop`
-
-    `service mongod start`
-    `echo 'db.dropDatabase();' | mongo pulp_database`
-    `mongorestore --host localhost mongo_dump/pulp_database/`
-    `service mongod stop`
   end
+  if @pgsql_data_exists
+    `tar --selinux --overwrite --listed-incremental=/dev/null -xzf pgsql_data.tar.gz -C /`
+  end
+  if !@mongo_data_exists && !@pgsql_data_exists && !valid_logical_backup
+    if @foreman_dump_exists && @candlepin_dump_exists
+      restore_psql_dumps
+    end
+    if @mongo_dump_exists
+      restore_mongo_dump
+    end
+  end
+  migrate_pulp
   puts "Done.\n"
 end
 
 def restore
   puts "#{DIR}"
-  puts "#{DIR}"
-  FileUtils.chown(nil, 'postgres', DIR)
+  FileUtils.chown(nil, 'postgres', DIR) unless @foreman_proxy_content
   Dir.chdir(DIR)
 
   set_file_security
@@ -75,15 +161,66 @@ def restore
 
   restore_databases
 
-  puts "Restarting all Katello processes"
+  puts "Ensuring all Katello processes are started"
   `katello-service start`
   puts "Done.\n"
 end
 
+def display_backup_options
+  puts "---- The given directory does not contain the required files or has too many files"
+  puts "---- All backup directories contain: #{STANDARD_BACKUP_FILES.join(", ")}"
+  if @foreman_proxy_content
+    puts "---- A #{FOREMAN_PROXY_CONTENT.gsub(/-/, " ")} backup directory contains: #{FOREMAN_PROXY_CONTENT_BACKUP_FILES.join(", ")}"
+    puts "---- A #{FOREMAN_PROXY_CONTENT.gsub(/-/, " ")} backup directory contains: #{FOREMAN_PROXY_CONTENT_ONLINE_BACKUP_FILES.join(", ")}"
+  else
+    puts "---- An online backup directory contains: #{ONLINE_BACKUP_FILES.join(", ")}"
+    puts "---- An offline backup directory contains: #{OFFLINE_BACKUP_FILES.join(", ")}"
+  end
+  puts "---- A logical backup directory contains: #{ONLINE_BACKUP_FILES.join(", ")}, #{OFFLINE_BACKUP_FILES.join(", ")}"
+  puts "---- *pulp_data.tar is optional"
+  puts "---- Please choose a valid backup directory"
+  puts @optparse
+  exit(-1)
+end
+
+def hostname_check
+  # make sure that the system hostname is the same as the backup
+  backup_hostname = `tar zxf #{DIR}/config_files.tar.gz etc/httpd/conf/httpd.conf --to-stdout | grep "ServerName" | awk {'print $2'} | tr -d '"'`.chomp
+  hostname = Socket.gethostname.chomp
+  backup_hostname == hostname
+end
+
 def backup_valid?
-  files = Dir.entries(DIR)
-  (ONLINE_BACKUP_FILES + ['config_files.tar.gz'] - files).empty? \
-    || (OFFLINE_BACKUP_FILES + ['config_files.tar.gz'] - files).empty?
+  @mongo_data_exists = File.exist?("#{DIR}/mongo_data.tar.gz")
+  @pgsql_data_exists = File.exist?("#{DIR}/pgsql_data.tar.gz")
+  @pulp_data_exists = File.exist?("#{DIR}/pulp_data.tar")
+  @foreman_dump_exists = File.exist?("#{DIR}/foreman.dump")
+  @candlepin_dump_exists = File.exist?("#{DIR}/candlepin.dump")
+  @mongo_dump_exists = Dir.exists?("#{DIR}/mongo_dump")
+  @config_exists = File.exist?("#{DIR}/config_files.tar.gz")
+
+  unless @config_exists
+    puts "Cannot find the required config_file.tar.gz file in #{DIR}"
+    exit(-1)
+  end
+
+  unless hostname_check
+    puts "The hostname in the backup does not match the hostname of the system"
+    exit(-1)
+  end
+
+  return true if valid_logical_backup
+
+  if @foreman_proxy_content
+    unless valid_fpc_standard_backup || valid_fpc_online_backup
+      backup_invalid_message
+    end
+  else
+    unless valid_standard_backup || valid_online_backup
+      backup_invalid_message
+    end
+  end
+  true
 end
 
 def confirm
@@ -105,17 +242,10 @@ if !DIR.nil? && File.directory?(DIR)
   if backup_valid?
     confirmed ? restore : confirm
   else
-    puts "**** Given directory does not contain necessary files ****"
-    puts "**** All backup directories contain: #{STANDARD_BACKUP_FILES.join(", ")} ****"
-    puts "**** An online backup directory contains: #{ONLINE_BACKUP_FILES.join(", ")} ****"
-    puts "**** An offline backup directory contains: #{OFFLINE_BACKUP_FILES.join(", ")} ****"
-    puts "**** Please choose a valid backup directory ****"
-    puts optparse
-    exit(-1)
+    display_backup_options
   end
 else
   puts "**** Given directory is not valid ****"
-  puts optparse
+  puts @optparse
   exit(-1)
 end
-

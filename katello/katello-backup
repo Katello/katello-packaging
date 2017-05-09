@@ -5,38 +5,19 @@ require 'fileutils'
 require 'date'
 require 'yaml'
 require 'find'
+require 'json'
 
 EXCLUDED="--exclude goferd,foreman-proxy,squid,smart_proxy_dynflow_core,qdrouterd,qpidd"
 DATABASES = ['pulp', 'pgsql', 'mongodb']
-CONFIGS = [
-  '/etc/candlepin',
-  '/etc/foreman',
-  '/etc/foreman-proxy',
-  '/etc/hammer',
-  '/etc/httpd',
-  '/etc/foreman-installer',
-  '/etc/pki/katello',
-  '/etc/pki/katello-certs-tools',
-  '/etc/pki/pulp',
-  '/etc/pulp',
-  '/etc/puppet',
-  '/etc/puppetlabs',
-  '/etc/qpid',
-  '/etc/qpid-dispatch',
-  '/etc/sysconfig/tomcat*',
-  '/etc/tomcat*',
-  '/root/ssl-build',
-  '/var/lib/candlepin',
-  '/var/www/html/pub',
-  '/opt/puppetlabs/puppet/cache/foreman_cache_data',
-  '/opt/puppetlabs/puppet/ssl',
-  '/var/lib/puppet/foreman_cache_data',
-  '/var/lib/puppet/ssl'
-]
 
 @options = {}
 @dir = nil
 @databases = DATABASES.dup
+@is_foreman_proxy_content = !`rpm -qa | grep foreman-proxy-content`.empty?
+
+# keep as variables for easy backporting
+FOREMAN_PROXY_CONTENT = "foreman-proxy-content"
+FOREMAN_PROXY = "foreman proxy"
 
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
@@ -75,6 +56,11 @@ optparse = OptionParser.new do |opts|
     @options[:snapshot_size] = size
   end
 
+  opts.on("--features FEATURES", Array, "#{FOREMAN_PROXY.capitalize} features to include in the backup, please specify a list with commas. " \
+          "Valid features are tftp, dns, dhcp, openscap, and all.") do |features|
+    @options[:features] = features.map { |f| f.to_s.downcase }
+  end
+
   opts.parse!
 
   if ARGV.length == 0
@@ -85,6 +71,67 @@ optparse = OptionParser.new do |opts|
   end
 
   @dir = ARGV[0].dup
+end
+
+@databases.delete 'pgsql' if @is_foreman_proxy_content
+
+def specified_features
+  @options[:features] || []
+end
+
+def feature_included?(feature)
+  specified_features.include?(feature) || specified_features.include?("all")
+end
+
+def configure_configs
+  base_configs = [
+    "/etc/foreman-proxy",
+    "/etc/httpd",
+    "/etc/foreman-installer",
+    "/etc/pki/katello",
+    "/etc/pki/katello-certs-tools",
+    "/etc/pki/pulp",
+    "/etc/pulp",
+    "/etc/puppet",
+    "/etc/qpid",
+    "/etc/qpid-dispatch",
+    "/root/ssl-build",
+    "/var/www/html/pub",
+    "/etc/squid",
+    "/etc/puppetlabs",
+    '/opt/puppetlabs/puppet/cache/foreman_cache_data',
+    '/opt/puppetlabs/puppet/ssl/',
+    '/var/lib/puppet/foreman_cache_data',
+    '/var/lib/puppet/ssl'
+  ]
+
+  katello_configs = [
+    "/etc/candlepin",
+    "/etc/foreman",
+    "/etc/hammer",
+    "/etc/sysconfig/tomcat*",
+    "/etc/tomcat*",
+    "/var/lib/candlepin",
+  ]
+
+  if @is_foreman_proxy_content
+    fpc_certs_tar = `cat /etc/foreman-installer/scenarios.d/#{FOREMAN_PROXY_CONTENT}-answers.yaml | grep certs_tar | awk '{print $2}'`.chomp
+    unless File.exist?(fpc_certs_tar) == true
+       puts "#{FOREMAN_PROXY} certs tar file is not present on the system in path #{fpc_certs_tar} please move the file back to that location or generate a new one on the main server."
+       exit(-1)
+    end
+    backup_configs = base_configs.push(fpc_certs_tar)
+  else
+    backup_configs = base_configs + katello_configs
+  end
+
+  feature_configs = []
+  feature_configs.push("/var/lib/tftpboot") if feature_included?("tftp")
+  feature_configs += ["/var/named/", "/etc/named*"] if feature_included?("dns")
+  feature_configs += ["/var/lib/dhcpd", "/etc/dhcp"] if feature_included?("dhcp")
+  feature_configs.push("/usr/share/xml/scap") if feature_included?("openscap")
+
+  backup_configs + feature_configs
 end
 
 def run_cmd(command, exit_codes=[0])
@@ -100,7 +147,7 @@ def create_directories(directory)
   @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
   puts "Creating backup folder #{@dir}"
   FileUtils.mkdir_p @dir
-  FileUtils.chown_R nil, 'postgres', directory
+  FileUtils.chown_R nil, 'postgres', directory if @databases.include? "pgsql"
   FileUtils.chmod_R 0770, directory
 end
 
@@ -224,15 +271,31 @@ def offline_backup(database, dir_path = nil)
   end
 end
 
+def compress_files
+  psql = spawn('gzip', 'pgsql_data.tar') if @databases.include? "pgsql"
+  mongo = spawn('gzip', 'mongo_data.tar')
+  Process.wait(psql) if @databases.include? "pgsql"
+  Process.wait(mongo)
+end
+
+def plugin_list
+  if @is_foreman_proxy_content
+    JSON.parse(`curl -k https://$(hostname):9090/features`)
+  else
+    plugins = []
+    plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
+    plugin_list.each do |line|
+      plugin = line.split
+      plugins << "#{plugin[2].chop}-#{plugin[3].chop}"
+    end
+    plugins
+  end
+end
+
 def generate_metadata
   puts "Generating metadata ... "
   os_version = `cat /etc/redhat-release`.chomp
-  plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
-  plugins = []
-  plugin_list.each do |line|
-    plugin = line.split
-    plugins << "#{plugin[2].chop}-#{plugin[3].chop}"
-  end
+  plugins = plugin_list
   rpms = `rpm -qa`.split("\n")
   system_facts = {os_version: os_version, plugin_list: plugins, rpms: rpms}
   File.open('metadata.yml', 'w') do |metadata_file|
@@ -251,23 +314,19 @@ def backup_config_files
   puts "Done."
 end
 
-def compress_files
-  psql = spawn('gzip', File.join(@dir, 'pgsql_data.tar'))
-  mongo = spawn('gzip', File.join(@dir, 'mongo_data.tar'))
-  Process.wait(psql)
-  Process.wait(mongo)
-end
-
 if @dir.nil?
   puts "**** ERROR: Please specify an export directory ****"
   puts optparse
   exit(-1)
-else
-  puts "Starting backup: #{Time.now}"
-  create_directories(@dir.dup)
-  FileUtils.cd @dir
+end
+
+puts "Starting backup: #{Time.now}"
+create_directories(@dir.dup)
+CONFIGS = configure_configs
+
+Dir.chdir(@dir) do
   generate_metadata
-  FileUtils.cp Dir.glob(File.join(@options[:incremental], '.*.snar')), @dir if @options[:incremental]
+  FileUtils.cp(Dir.glob(File.join(@options[:incremental], '.*.snar')), @dir) if @options[:incremental]
   backup_config_files
 
   if @options[:logical_backup]
@@ -284,17 +343,14 @@ else
       online_backup(database)
     end
   else
-    FileUtils.cd("/")
     `katello-service stop #{EXCLUDED}`
     @databases.each do |database|
       offline_backup(database)
     end
     `katello-service start #{EXCLUDED}`
-    FileUtils.cd @dir
     compress_files
   end
-
-  puts "Done with backup: #{Time.now}"
-  puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
 end
 
+puts "Done with backup: #{Time.now}"
+puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
