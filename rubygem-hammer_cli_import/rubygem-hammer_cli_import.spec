@@ -45,11 +45,9 @@ BuildArch: noarch
 Documentation for %{pkg_name}
 
 %prep
-%setup -q -c -T -n %{pkg_name}-%{version}
-mkdir -p .%{gem_dir}
-%{?scl:scl enable %{scl} - << \EOF}
-gem install --local --install-dir .%{gem_dir} \
-            --force %{SOURCE0}
+%setup -n %{pkg_name}-%{version} -q -c -T
+%{?scl:scl enable %{scl} - <<EOF}
+%gem_install -n %{SOURCE0}
 %{?scl:EOF}
 
 %install

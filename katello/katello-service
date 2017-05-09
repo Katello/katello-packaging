@@ -19,6 +19,7 @@ SERVICES = {
   'foreman-proxy'            => 20,
   'smart_proxy_dynflow_core' => 20,
   'httpd'                    => 30,
+  'puppetserver'             => 30,
   'foreman-tasks'            => 30,
   'goferd'                   => 30
 }
@@ -34,10 +35,6 @@ OptionParser.new do |opts|
 
   opts.on("--only [SERVICES]", Array, "A comma-separated list of services to include") do |only|
     @options[:only] = only
-  end
-
-  opts.on("-v", "--verbose", "To be used with status, to increase verbosity") do |v|
-    @options[:verbose] = v
   end
 
   opts.parse!
@@ -77,32 +74,35 @@ def list_services
   puts `chkconfig --list 2>&1 | grep '#{regex}'`
 end
 
-def status_services(action)
-  if `which systemctl 2>&1` && $?.success? && !(@options.include?(:verbose))
-    regex = services_by_priority.map { |service| "^[^a-z_-]*#{service}.service" }.join('\|')
-    puts `systemctl list-units --all \*.service | grep -e '#{regex}' -e '^ *UNIT'`
-  else
-    services_by_priority.each do |service|
-      puts "#{COMMAND} #{service} #{action}"
-      puts `#{COMMAND} #{service} #{action}`
-    end
-  end
-end
-
 def manage_services(action)
   failures = []
+  `logger -t #{$0} -p daemon.info '*** #{action} initiated ***'`
 
   services_by_priority(action == 'stop').each do |service|
     if service_exists?(service)
-      puts `#{COMMAND} #{service} #{action}`
+      case action
+      when 'enable', 'disable'
+        if `which systemctl 2>&1` && $?.success?
+          puts "systemctl #{action} #{service}.service"
+          puts `systemctl #{action} #{service}.service`
+        else
+          puts "chkconfig #{service} on"
+          puts `chkconfig #{service} on`
+        end
+      else
+        puts "#{COMMAND} #{service} #{action}"
+        puts `#{COMMAND} #{service} #{action}`
+      end
       failures << service unless $?.success?
     end
   end
 
   if failures.empty?
     puts "Success!"
+    `logger -t #{$0} -p daemon.info '*** #{action} finished successfuly ***'`
   else
     puts "Some services failed to #{action}: #{failures.join(',')}"
+    `logger -t #{$0} -p daemon.warning '*** #{action} failed: #{failures.join(',')} ***'`
     exit 1
   end
 end
@@ -112,8 +112,6 @@ when 'list'
   list_services
 when 'restart'
   %w(stop start).each { |action| manage_services action }
-when 'status'
-  status_services @options[:action]
 else
   manage_services @options[:action]
 end

@@ -7,6 +7,8 @@ require 'date'
 @options = {}
 @dir = nil
 
+EXCLUDED="--exclude goferd,foreman-proxy,squid,smart_proxy_dynflow_core,qdrouterd,qpidd"
+
 optparse = OptionParser.new do |opts|
   opts.banner = "Usage: katello-backup /path/to/dir [options]\n eg: $ katello-backup /tmp/katello-backup"
 
@@ -15,6 +17,7 @@ optparse = OptionParser.new do |opts|
   end
 
   opts.on("--incremental [PREVIOUS_BACKUP_DIR]", String, "Backup changes since previous backup") do |dir_path|
+    opts.abort("Please specify the previous backup directory.") unless dir_path
     if File.directory?(dir_path)
       dir_path.chop! if dir_path.end_with? "/"
       @options[:incremental] = dir_path
@@ -25,6 +28,10 @@ optparse = OptionParser.new do |opts|
 
   opts.on("--online-backup", "Keep services online during backup") do |online|
     @options[:online] = online
+  end
+
+  opts.on("--logical-db-backup", "Also dump full database schema during offline backup") do |logical|
+    @options[:logical_backup] = logical
   end
 
   opts.parse!
@@ -39,14 +46,23 @@ optparse = OptionParser.new do |opts|
   @dir = ARGV[0].dup
 end
 
+def run_cmd(command, exit_codes=[0])
+  `#{command}`
+  unless exit_codes.include?($?.exitstatus)
+    STDERR.puts "Failed '#{command}'"
+    exit(-1)
+  end
+end
+
 def backup_db_online
-  puts "Backing up postgres db... "
-  `runuser - postgres -c "pg_dump -Fc foreman > #{@dir}/foreman.dump"`
-  `runuser - postgres -c "pg_dump -Fc candlepin > #{@dir}/candlepin.dump"`
+  puts "Backing up postgres online schema... "
+  run_cmd("runuser - postgres -c 'pg_dumpall -g > #{@dir}/pg_globals.dump'")
+  run_cmd("runuser - postgres -c 'pg_dump -Fc foreman > #{@dir}/foreman.dump'")
+  run_cmd("runuser - postgres -c 'pg_dump -Fc candlepin > #{@dir}/candlepin.dump'")
   puts "Done."
 
-  puts "Backing up mongo db... "
-  `mongodump --host localhost --out mongo_dump`
+  puts "Backing up mongo online schema... "
+  run_cmd('mongodump --host localhost --out mongo_dump')
   puts "Done."
 end
 
@@ -56,7 +72,7 @@ def backup_pulp_online
  
   until matching
     checksum1 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
-    `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+    create_pulp_data_tar
     checksum2 = `find /var/lib/pulp -printf '%T@\n' | md5sum`
     matching = (checksum1 == checksum2)
   end
@@ -65,23 +81,29 @@ end
 
 def backup_db_offline
   puts "Backing up postgres db... "
-  `tar --selinux --create --file=pgsql_data.tar --listed-incremental=.postgres.snar /var/lib/pgsql/data/`
+  run_cmd('tar --selinux --create --file=pgsql_data.tar --listed-incremental=.postgres.snar /var/lib/pgsql/data/')
   puts "Done."
 
   puts "Backing up mongo db... "
-  `tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/`
+  run_cmd('tar --selinux --create --file=mongo_data.tar --listed-incremental=.mongo.snar --exclude=mongod.lock /var/lib/mongodb/')
   puts "Done."
 end
 
 def backup_pulp_offline
   puts "Backing up Pulp data... "
-  `tar --selinux --create --file=pulp_data.tar --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/`
+  create_pulp_data_tar
   puts "Done."
 end
 
+def create_pulp_data_tar
+  run_cmd('tar --selinux --create --file=pulp_data.tar --exclude=/var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/')
+end
+
 def compress_files
-  `gzip pgsql_data.tar`
-  `gzip mongo_data.tar`
+  psql = spawn('gzip', 'pgsql_data.tar')
+  mongo = spawn('gzip', 'mongo_data.tar')
+  Process.wait(psql)
+  Process.wait(mongo)
 end
 
 if @dir.nil?
@@ -90,9 +112,8 @@ if @dir.nil?
   exit(-1)
 else
   @dir << "/" unless @dir.end_with? "/"
-  @dir << "katello-backup-" + DateTime.now.to_s
-  @time = Time.now
-  puts "Starting backup: #{@time}"
+  @dir << "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
+  puts "Starting backup: #{Time.now}"
   FileUtils.mkdir_p(@dir)
   puts "Creating backup folder #{@dir}"
   FileUtils.chown(nil, 'postgres', @dir)
@@ -119,6 +140,8 @@ else
     '/root/ssl-build',
     '/var/lib/candlepin',
     '/var/www/html/pub',
+    '/opt/puppetlabs/puppet/cache/foreman_cache_data',
+    '/opt/puppetlabs/puppet/ssl/',
     '/var/lib/puppet/foreman_cache_data',
     '/var/lib/puppet/ssl'
   ]
@@ -134,7 +157,7 @@ else
   end
 
   puts "Backing up config files... "
-  `tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null`
+  run_cmd("tar --selinux --create --gzip --file=config_files.tar.gz --listed-incremental=.config.snar #{CONFIGS.join(' ')} 2>/dev/null", [0,2])
   puts "Done."
 
   `shopt -s dotglob ; cp #{@options[:incremental]}/*.snar .` if @options[:incremental]
@@ -143,15 +166,17 @@ else
     backup_db_online
     backup_pulp_online unless @options[:config_only]
   else
-    `katello-service stop`
+    if @options[:logical_backup]
+        backup_db_online
+    end
+    `katello-service stop #{EXCLUDED}`
     backup_db_offline
     backup_pulp_offline unless @options[:config_only]
-    `katello-service start`
+    `katello-service start #{EXCLUDED}`
     compress_files
   end
 
-  @time = Time.now
-  puts "Done with backup: #{@time}"
+  puts "Done with backup: #{Time.now}"
   puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
 end
 
