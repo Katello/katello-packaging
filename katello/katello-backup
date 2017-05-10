@@ -54,6 +54,14 @@ def run_cmd(command, exit_codes=[0])
   end
 end
 
+def create_directories(directory)
+  @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
+  puts "Creating backup folder #{@dir}"
+  FileUtils.mkdir_p @dir
+  FileUtils.chown_R nil, 'postgres', directory
+  FileUtils.chmod_R 0770, directory
+end
+
 def backup_db_online
   puts "Backing up postgres online schema... "
   run_cmd("runuser - postgres -c 'pg_dumpall -g > #{@dir}/pg_globals.dump'")
@@ -111,13 +119,8 @@ if @dir.nil?
   puts optparse
   exit(-1)
 else
-  @dir << "/" unless @dir.end_with? "/"
-  @dir << "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
   puts "Starting backup: #{Time.now}"
-  FileUtils.mkdir_p(@dir)
-  puts "Creating backup folder #{@dir}"
-  FileUtils.chown(nil, 'postgres', @dir)
-  FileUtils.chmod 0770, @dir
+  create_directories(@dir.dup)
   FileUtils.cd @dir
 
   CONFIGS=[
