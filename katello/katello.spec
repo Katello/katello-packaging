@@ -175,6 +175,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed May 17 2017 Justin Sherrill <jsherril@redhat.com> 3.3.2-1
+- 3.3.2 release (jsherril@redhat.com)
+
 * Thu Mar 09 2017 Eric D Helms <ericdhelms@gmail.com> 3.3.1-1
 - Release Katello 3.3.1 (ericdhelms@gmail.com)
 
