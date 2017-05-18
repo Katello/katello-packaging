@@ -78,6 +78,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed May 17 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-2
+- Release 3.4.0 (ericdhelms@gmail.com)
+
 * Fri Apr 07 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc1
 - Prep 3.4 RC1 (ericdhelms@gmail.com)
 - Update katello-repos.spec so that repo files are config files
