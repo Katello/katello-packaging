@@ -154,6 +154,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Wed May 17 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0.1-2
+- Release 3.4.0 (ericdhelms@gmail.com)
+
 * Thu Apr 27 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-0.2.rc2
 - Add RC2 (ericdhelms@gmail.com)
 
