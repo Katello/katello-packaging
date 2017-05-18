@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 2.9.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -19,7 +19,13 @@ BuildRequires: python2-devel
 %endif
 BuildRequires: python-setuptools
 BuildRequires: rpm-python
+
+%if 0%{?rhel} == 5
+Requires: gofer >= 2.5
+%else
 Requires: gofer >= 2.7.6
+%endif
+
 Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
