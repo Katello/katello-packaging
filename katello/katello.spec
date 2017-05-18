@@ -178,6 +178,22 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Wed May 17 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-2
+- Release 3.4.0 (ericdhelms@gmail.com)
+- fixes #19446 - fixes incremental backup performing full backup
+  (cfouant@redhat.com)
+- fixes #19453 - applies postgres group owner to whole backup path
+  (cfouant@redhat.com)
+- Fixes #19498 - call logger with -p daemon.info in katello-service
+  (evgeni@golov.de)
+- Fixes #19263 - dont try and rm a mounted directory (seanokeeffe797@gmail.com)
+- Fixes #19227 - katello-change-hostname health check This will check services
+  before running the hostname change. A `hammer ping` doesn't return a failing
+  exit code if a service is failing, so this makes use of grepping FAIL
+  (jomitsch@redhat.com)
+- Fixes #19154, #19155 katello-backup and katello-remove Puppet 4 fixes
+  (seanokeeffe797@gmail.com)
+
 * Thu Apr 27 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-1.rc2
 - Add RC2 (ericdhelms@gmail.com)
 - Fixes #17060 - Addition to katello-debug.sh (ahumbe@redhat.com)
