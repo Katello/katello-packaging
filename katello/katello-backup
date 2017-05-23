@@ -14,7 +14,6 @@ DATABASES = ['pulp', 'pgsql', 'mongodb']
 @options = {}
 @dir = nil
 @databases = DATABASES.dup
-@is_foreman_proxy_content = !`rpm -qa | grep foreman-proxy-content`.empty?
 
 # keep as variables for easy backporting
 FOREMAN_PROXY_CONTENT = "foreman-proxy-content"
@@ -82,7 +81,23 @@ optparse = OptionParser.new do |opts|
   @dir = ARGV[0].dup
 end
 
-@databases.delete 'pgsql' if @is_foreman_proxy_content
+def run_cmd(command, exit_codes=[0])
+  result = `#{command}`
+  unless exit_codes.include?($?.exitstatus)
+    STDERR.puts "Failed '#{command}' with exit code #{$?.exitstatus}"
+    cleanup($?.exitstatus)
+  end
+  result
+end
+
+def cleanup(exitstatus=-1)
+  puts "Cleaning up backup folder and starting any stopped services... "
+  FileUtils.cd("/")
+  FileUtils.rm_rf @dir unless @options[:no_subdir]
+  `katello-service start #{EXCLUDED}` unless @options[:online]
+  puts "Done."
+  exit(exitstatus)
+end
 
 def specified_features
   @options[:features] || []
@@ -124,10 +139,10 @@ def configure_configs
   ]
 
   if @is_foreman_proxy_content
-    fpc_certs_tar = `cat /etc/foreman-installer/scenarios.d/#{FOREMAN_PROXY_CONTENT}-answers.yaml | grep certs_tar | awk '{print $2}'`.chomp
-    unless File.exist?(fpc_certs_tar) == true
-       puts "#{FOREMAN_PROXY} certs tar file is not present on the system in path #{fpc_certs_tar} please move the file back to that location or generate a new one on the main server."
-       exit(-1)
+    fpc_certs_tar = run_cmd("cat /etc/foreman-installer/scenarios.d/#{FOREMAN_PROXY_CONTENT}-answers.yaml | grep certs_tar | awk '{print $2}'").chomp
+    unless File.exist?(fpc_certs_tar)
+      puts "#{FOREMAN_PROXY} certs tar file is not present on the system in path #{fpc_certs_tar} please move the file back to that location or generate a new one on the main server."
+      cleanup
     end
     backup_configs = base_configs.push(fpc_certs_tar)
   else
@@ -141,15 +156,6 @@ def configure_configs
   feature_configs.push("/usr/share/xml/scap") if feature_included?("openscap")
 
   backup_configs + feature_configs
-end
-
-def run_cmd(command, exit_codes=[0])
-  result = `#{command}`
-  unless exit_codes.include?($?.exitstatus)
-    STDERR.puts "Failed '#{command}'"
-    exit(-1)
-  end
-  result
 end
 
 def confirm
@@ -256,9 +262,9 @@ def online_backup(database)
       puts "Backing up Pulp data... "
       matching = false
       until matching
-        checksum1 = `find . -printf '%T@\n' | md5sum`
+        checksum1 = run_cmd("find . -printf '%T@\n' | md5sum")
         create_pulp_data_tar
-        checksum2 = `find . -printf '%T@\n' | md5sum`
+        checksum2 = run_cmd("find . -printf '%T@\n' | md5sum")
         matching = (checksum1 == checksum2)
       end
     end
@@ -311,10 +317,10 @@ end
 
 def plugin_list
   if @is_foreman_proxy_content
-    JSON.parse(`curl -k https://$(hostname):9090/features`)
+    JSON.parse(run_cmd("curl -k https://$(hostname):9090/features"))
   else
     plugins = []
-    plugin_list = `foreman-rake plugin:list | grep 'Foreman plugin: '`.lines
+    plugin_list = run_cmd("foreman-rake plugin:list | grep 'Foreman plugin: '", [0,1]).lines
     plugin_list.each do |line|
       plugin = line.split
       plugins << "#{plugin[2].chop}-#{plugin[3].chop}"
@@ -325,9 +331,9 @@ end
 
 def generate_metadata
   puts "Generating metadata ... "
-  os_version = `cat /etc/redhat-release`.chomp
+  os_version = run_cmd("cat /etc/redhat-release").chomp
   plugins = plugin_list
-  rpms = `rpm -qa`.split("\n")
+  rpms = run_cmd("rpm -qa").split("\n")
   system_facts = {os_version: os_version, plugin_list: plugins, rpms: rpms}
   File.open('metadata.yml', 'w') do |metadata_file|
     metadata_file.puts system_facts.to_yaml
@@ -341,7 +347,7 @@ end
 
 def backup_config_files
   puts "Backing up config files... "
-  run_cmd("tar --selinux --create --gzip --file=#{File.join(@dir, 'config_files.tar.gz')} --listed-incremental=#{File.join(@dir, '.config.snar')} #{CONFIGS.join(' ')} 2>/dev/null", [0,2])
+  run_cmd("tar --selinux --create --gzip --file=#{File.join(@dir, 'config_files.tar.gz')} --listed-incremental=#{File.join(@dir, '.config.snar')} #{configure_configs.join(' ')} 2>/dev/null", [0,2])
   puts "Done."
 end
 
@@ -352,8 +358,9 @@ if @dir.nil?
 end
 
 puts "Starting backup: #{Time.now}"
+@is_foreman_proxy_content = !run_cmd("rpm -qa | grep foreman-proxy-content", [0,1]).empty?
+@databases.delete 'pgsql' if @is_foreman_proxy_content
 create_directories(@dir.dup)
-CONFIGS = configure_configs
 
 Dir.chdir(@dir) do
   generate_metadata
@@ -380,11 +387,11 @@ Dir.chdir(@dir) do
     end
   else
     confirm unless @options[:confirm]
-    `katello-service stop #{EXCLUDED}`
+    run_cmd("katello-service stop #{EXCLUDED}")
     @databases.each do |database|
       offline_backup(database)
     end
-    `katello-service start #{EXCLUDED}`
+    run_cmd("katello-service start #{EXCLUDED}")
     compress_files
   end
 end
