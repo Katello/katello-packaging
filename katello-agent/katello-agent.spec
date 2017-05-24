@@ -143,6 +143,10 @@ A subscription-manager plugin to add an additional fact 'network.fqdn' if not pr
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Wed May 24 2017 Justin Sherrill <jsherril@redhat.com> 2.9.1-2
+- Fixes #19256 - allow older goferd on el5 (jsherril@redhat.com)
+- Fixes #19038 - Start goferd on install (ericdhelms@gmail.com)
+
 * Wed Jan 25 2017 Justin Sherrill <jsherril@redhat.com> 2.9.1-1
 - Refs #18174 - Run katello-tracer-upload after reboot
   (seanokeeffe797@gmail.com)
