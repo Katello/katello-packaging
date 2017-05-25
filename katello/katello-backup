@@ -105,7 +105,7 @@ def backup_pulp_offline
 end
 
 def create_pulp_data_tar
-  run_cmd('tar --selinux --create --file=pulp_data.tar --exclude=/var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/ /var/www/pub/')
+  run_cmd('tar --selinux --create --file=pulp_data.tar --exclude=/var/lib/pulp/katello-export --listed-incremental=.pulp.snar /var/lib/pulp/')
 end
 
 def compress_files
