@@ -83,6 +83,9 @@ cp -pa .%{gem_dir}/* \
 exit 0
 
 %changelog
+* Fri May 26 2017 Eric D. Helms <ericdhelms@gmail.com> 0.1.1-1
+- Update foreman_virt_who_configure to 0.1.1 (mhulan@redhat.com)
+
 * Thu May 18 2017 Justin Sherrill <jsherril@redhat.com> 0.1.0-1
 - Update foreman_virt_who_configure to 0.1.0 (mhulan@redhat.com)
 
