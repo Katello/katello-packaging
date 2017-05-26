@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.4.0
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -178,6 +178,16 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri May 26 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-3
+- Fixes #19499 - Convert metadata file to yml format This also adds a package
+  list to the metadata file, which will be helpful to users or scripts in
+  determining versions (jomitsch@redhat.com)
+
+* Fri May 26 2017 Eric D. Helms <ericdhelms@gmail.com>
+- Fixes #19499 - Convert metadata file to yml format This also adds a package
+  list to the metadata file, which will be helpful to users or scripts in
+  determining versions (jomitsch@redhat.com)
+
 * Wed May 17 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-2
 - Release 3.4.0 (ericdhelms@gmail.com)
 - fixes #19446 - fixes incremental backup performing full backup
