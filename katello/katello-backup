@@ -61,6 +61,10 @@ optparse = OptionParser.new do |opts|
     @options[:features] = features.map { |f| f.to_s.downcase }
   end
 
+  opts.on("--preserve-directory", "Do not create a time-stamped subdirectory") do |no_subdir|
+    @options[:no_subdir] = no_subdir
+  end
+
   opts.parse!
 
   if ARGV.length == 0
@@ -144,7 +148,7 @@ def run_cmd(command, exit_codes=[0])
 end
 
 def create_directories(directory)
-  @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S')
+  @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S') unless @options[:no_subdir]
   puts "Creating backup folder #{@dir}"
   FileUtils.mkdir_p @dir
   FileUtils.chown_R nil, 'postgres', directory if @databases.include? "pgsql"
@@ -272,8 +276,8 @@ def offline_backup(database, dir_path = nil)
 end
 
 def compress_files
-  psql = spawn('gzip', 'pgsql_data.tar') if @databases.include? "pgsql"
-  mongo = spawn('gzip', 'mongo_data.tar')
+  psql = spawn('gzip', 'pgsql_data.tar', '-f') if @databases.include? "pgsql"
+  mongo = spawn('gzip', 'mongo_data.tar', '-f')
   Process.wait(psql) if @databases.include? "pgsql"
   Process.wait(mongo)
 end
@@ -326,7 +330,11 @@ CONFIGS = configure_configs
 
 Dir.chdir(@dir) do
   generate_metadata
-  FileUtils.cp(Dir.glob(File.join(@options[:incremental], '.*.snar')), @dir) if @options[:incremental]
+  if @options[:incremental]
+    FileUtils.cp Dir.glob(File.join(@options[:incremental], '.*.snar')), @dir
+  elsif @options[:no_subdir]
+    FileUtils.rm Dir.glob(File.join(@dir, '.*.snar'))
+  end
   backup_config_files
 
   if @options[:logical_backup]
