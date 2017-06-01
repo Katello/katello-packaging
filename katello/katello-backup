@@ -6,6 +6,7 @@ require 'date'
 require 'yaml'
 require 'find'
 require 'json'
+require 'highline/import'
 
 EXCLUDED="--exclude goferd,foreman-proxy,squid,smart_proxy_dynflow_core,qdrouterd,qpidd"
 DATABASES = ['pulp', 'pgsql', 'mongodb']
@@ -63,6 +64,10 @@ optparse = OptionParser.new do |opts|
 
   opts.on("--preserve-directory", "Do not create a time-stamped subdirectory") do |no_subdir|
     @options[:no_subdir] = no_subdir
+  end
+
+  opts.on("-y", "--assumeyes", "Bypass interaction by answering yes") do |confirm|
+    @options[:confirm] = confirm
   end
 
   opts.parse!
@@ -147,6 +152,27 @@ def run_cmd(command, exit_codes=[0])
   result
 end
 
+def confirm
+  unless agree("WARNING: This script will stop your services. Do you want to proceed(y/n)? ")
+    puts "**** cancelled ****"
+    FileUtils.rm_rf @dir
+    exit(-1)
+  end
+end
+
+def warning
+  unless agree("*** WARNING: The online backup flag is intended for making a copy of the data\n" \
+               "*** for debugging purposes only. The backup routine can not ensure 100% consistency while the\n" \
+               "*** backup is taking place as there is a chance there may be data mismatch between\n" \
+               "*** Mongo and Postgres databases while the services are live. If you wish to utilize the --online-backup\n" \
+               "*** flag for production use you need to ensure that there are no modifications occurring during\n" \
+               "*** your backup run.\n\nDo you want to proceed(y/n)? ")
+    puts "**** cancelled ****"
+    FileUtils.rm_rf @dir
+    exit(-1)
+  end
+end
+
 def create_directories(directory)
   @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S') unless @options[:no_subdir]
   puts "Creating backup folder #{@dir}"
@@ -159,6 +185,7 @@ def snapshot_backup
   @mountdir = @options[:snapshot_mount] || "/var/snap"
   @snapsize = @options[:snapshot_size] || "2G"
   FileUtils.mkdir_p @mountdir
+  confirm unless @options[:confirm]
   run_cmd("katello-service stop #{EXCLUDED}")
   create_and_mount_snapshots
   run_cmd("katello-service start #{EXCLUDED}")
@@ -347,10 +374,12 @@ Dir.chdir(@dir) do
     snapshot_backup
     compress_files
   elsif @options[:online]
+    warning unless @options[:confirm]
     @databases.each do |database|
       online_backup(database)
     end
   else
+    confirm unless @options[:confirm]
     `katello-service stop #{EXCLUDED}`
     @databases.each do |database|
       offline_backup(database)
