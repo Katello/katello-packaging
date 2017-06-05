@@ -24,7 +24,7 @@ Summary:        Client bootstrap utility for Foreman and Katello
 Group:          System Environment/Base
 License:        LGPLv2
 URL:            http://www.katello.org
-Source0:        https://codeload.github.com/Katello/%{name}/tar.gz/%{version}
+Source0:        https://codeload.github.com/Katello/%{name}/tar.gz/%{version}#/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
