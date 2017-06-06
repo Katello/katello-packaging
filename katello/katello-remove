@@ -145,10 +145,12 @@ def remove
   `katello-service stop`
 
   puts "Removing RPMs"
+  packages = []
   RPMS.each do | rpm |
-    packages =  `rpm -qa | grep "#{rpm}"`
-    packages.lines.each { | package | `yum erase -y "#{ package.strip }" > /dev/null 2>&1` }
+    rpmpackages = `rpm -qa | grep "#{rpm}"`
+    packages += rpmpackages.lines.map(&:chomp)
   end
+  `yum erase -y #{packages.join(" ")} > /dev/null 2>&1`
 
   puts "Cleaning up configuration files"
   FileUtils.rm_rf CONFIG_FILES
