@@ -65,9 +65,9 @@ end
 
 def backup_db_online
   puts "Backing up postgres online schema... "
-  run_cmd("runuser - postgres -c 'pg_dumpall -g > #{@dir}/pg_globals.dump'")
-  run_cmd("runuser - postgres -c 'pg_dump -Fc foreman > #{@dir}/foreman.dump'")
-  run_cmd("runuser - postgres -c 'pg_dump -Fc candlepin > #{@dir}/candlepin.dump'")
+  run_cmd("/usr/sbin/runuser - postgres -c 'pg_dumpall -g > #{@dir}/pg_globals.dump'")
+  run_cmd("/usr/sbin/runuser - postgres -c 'pg_dump -Fc foreman > #{@dir}/foreman.dump'")
+  run_cmd("/usr/sbin/runuser - postgres -c 'pg_dump -Fc candlepin > #{@dir}/candlepin.dump'")
   puts "Done."
 
   puts "Backing up mongo online schema... "
