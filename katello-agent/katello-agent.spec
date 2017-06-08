@@ -94,13 +94,21 @@ cp extra/katello-agent-send.cron %{buildroot}%{_sysconfdir}/cron.d/%{name}
 rm -rf %{buildroot}
 
 %post
-chkconfig goferd on
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
-  /bin/systemctl start goferd > /dev/null 2>&1 || :
+  systemctl enable goferd
+  if [systemctl status goferd] then
+    touch /tmp/katello-agent-restart
+  else
+    /bin/systemctl start goferd > /dev/null 2>&1 || :
+  fi
 %else
-  /sbin/service goferd start > /dev/null 2>&1 || :
+  /sbin/chkconfig goferd on
+  if [service goferd status] then
+    touch /tmp/katello-agent-restart
+  else
+    /sbin/service goferd start > /dev/null 2>&1 || :
+  fi
 %endif
-touch /tmp/katello-agent-restart
 exit 0
 
 %posttrans
