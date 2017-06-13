@@ -178,6 +178,10 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Jun 13 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.1-1
+- Release Katello 3.4.1 (ericdhelms@gmail.com)
+- fixes #19673 - removes /var/www/pub from pulp_data.tar (cfouant@redhat.com)
+
 * Fri May 26 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0-3
 - Fixes #19499 - Convert metadata file to yml format This also adds a package
   list to the metadata file, which will be helpful to users or scripts in
