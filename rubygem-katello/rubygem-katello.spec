@@ -152,6 +152,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Tue Jun 13 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.1-1
+- Release rubygem-katello 3.4.1 (ericdhelms@gmail.com)
+
 * Fri May 26 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.0.2-2
 - Remove old katello rubygem (ericdhelms@gmail.com)
 - Refs #18874: jquery-ui-rails is no longer required (ericdhelms@gmail.com)
