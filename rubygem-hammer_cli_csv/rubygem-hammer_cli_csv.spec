@@ -69,6 +69,10 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/config
 
 %changelog
+* Tue Jun 13 2017 Eric D. Helms <ericdhelms@gmail.com> 2.3.0-1
+- Fixes #19972 - Update hammer_cli_csv to 2.3.0 (akofink@redhat.com)
+- Use gem_install macro (ericdhelms@gmail.com)
+
 * Wed Jan 04 2017 Eric D Helms <ericdhelms@gmail.com> 2.2.1-1
 - Update hammer_cli_csv to 2.2.1 (thomasmckay@redhat.com)
 
