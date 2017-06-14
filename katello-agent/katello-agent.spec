@@ -1,6 +1,6 @@
 Name: katello-agent
 Version: 3.0.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: The Katello Agent
 Group:   Development/Languages
 License: LGPLv2
@@ -146,6 +146,9 @@ A subscription-manager plugin to add an additional fact 'network.fqdn' if not pr
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Wed Jun 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.0-2
+- Make /var/cache/katello-agent available on all OS (ericdhelms@gmail.com)
+
 * Wed Jun 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.0-1
 - update katello-agent to include new plugin (jsherril@redhat.com)
 
