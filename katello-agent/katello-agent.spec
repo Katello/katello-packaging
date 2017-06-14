@@ -82,13 +82,13 @@ mkdir -p %{buildroot}%{_datadir}/rhsm-plugins/
 cp etc/rhsm/pluginconf.d/fqdn.FactsPlugin.conf %{buildroot}%{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
 cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 
+# cache directory
+mkdir -p %{buildroot}/var/cache/katello-agent/
+
 %if 0%{?fedora} > 18 || 0%{?rhel} > 6
 cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
-
-# cache directory
-mkdir -p %{buildroot}/var/cache/katello-agent/
 
 # crontab
 mkdir -p %{buildroot}%{_sysconfdir}/cron.d/
