@@ -144,6 +144,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Thu Jun 15 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.1.2-1
+- Bump katello-installer to 3.4.1.2 (ericdhelms@gmail.com)
+
 * Wed Jun 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.1.1-1
 - Update katello-installer to 3.4.1.1 (ericdhelms@gmail.com)
 
