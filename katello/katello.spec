@@ -25,6 +25,7 @@ Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
 Source10:   katello-clean-empty-puppet-environments
 Source11:   katello-change-hostname
+Source12:   katello-repository-publish-check 
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -80,8 +81,10 @@ mkdir -p %{buildroot}/%{_mandir}/man8
 
 #copy cron scripts to be scheduled
 install -d -m0755 %{buildroot}%{_sysconfdir}/cron.weekly
+install -d -m0755 %{buildroot}%{_sysconfdir}/cron.daily
 install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-orphans
 install -m 755 %{SOURCE10} %{buildroot}%{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
+install -m 755 %{SOURCE12} %{buildroot}%{_sysconfdir}/cron.daily/katello-repository-publish-check
 
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
@@ -132,6 +135,7 @@ Common runtime components of %{name}
 %{_bindir}/katello-change-hostname
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
+%config(missingok) %{_sysconfdir}/cron.daily/katello-repository-publish-check
 
 # ------ Debug ----------------
 %package debug
