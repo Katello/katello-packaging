@@ -71,6 +71,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Mon Jun 26 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.3-1
+- Update hammer_cli_foreman_virt_who_configure to 0.0.3 (tstrachota@redhat.com)
+
 * Wed Jun 07 2017 Eric D. Helms <ericdhelms@gmail.com> 0.0.2-1
 - new package built with tito
 
