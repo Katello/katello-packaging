@@ -1,7 +1,7 @@
-Name: katello-agent
+Name: katello-host-tools
 Version: 3.0.0
-Release: 2%{?dist}
-Summary: The Katello Agent
+Release: 3%{?dist}
+Summary: A set of commands and yum plugins that support a Katello host 
 Group:   Development/Languages
 License: LGPLv2
 URL:     https://github.com/Katello/katello-agent
@@ -10,7 +10,14 @@ Source0: https://codeload.github.com/Katello/katello-agent/tar.gz/%{version}#/%{
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 
-Conflicts: pulp-consumer-client
+Requires: subscription-manager
+Requires: %{name}-fact-plugin
+
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+Requires: python2-tracer >= 0.6.12
+Requires: python-rhsm
+Requires: crontabs
+%endif
 
 %if 0%{?sles_version}
 BuildRequires: python-devel >= 2.6
@@ -19,6 +26,16 @@ BuildRequires: python2-devel
 %endif
 BuildRequires: python-setuptools
 BuildRequires: rpm-python
+
+%description
+A set of commands and yum plugins that support a Katello host including faster package profile uploading and bound repository reporting.  This is required for errata and package applicability reporting.
+
+%package -n katello-agent
+BuildArch:  noarch
+Summary:    The Katello Agent
+Group:      Development/Languages
+
+Conflicts: pulp-consumer-client
 
 %if 0%{?rhel} == 5
 Requires: gofer >= 2.5
@@ -30,7 +47,8 @@ Requires: python-gofer-proton >= 2.5
 Requires: python-pulp-agent-lib >= 2.6
 Requires: pulp-rpm-handlers >= 2.6
 Requires: subscription-manager
-Requires: %{name}-fact-plugin
+Requires: katello-host-tools
+
 %if 0%{?rhel} == 6
 Requires: yum-plugin-security
 %endif
@@ -39,18 +57,23 @@ Requires: yum-plugin-security
 Requires: yum-security
 %endif
 
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
-Requires: python2-tracer >= 0.6.12
-Requires: python-rhsm
-Requires: crontabs
-%endif
-
-%description
+%description -n katello-agent
 Provides plugin for gofer, which allows communicating with Katello server
 and execute scheduled actions.
 
+%package fact-plugin
+BuildArch:  noarch
+Summary:    Adds an fqdn fact plugin for subscription-manager
+Group:      Development/Languages
+
+Requires:   subscription-manager
+Obsoletes:  katello-agent-fact-plugin <= 3.0.0
+
+%description fact-plugin
+A subscription-manager plugin to add an additional fact 'network.fqdn' if not present
+
 %prep
-%setup -q
+%setup -q -n katello-agent-%{version}
 
 %build
 pushd src
@@ -98,26 +121,37 @@ cp extra/katello-agent-send.cron %{buildroot}%{_sysconfdir}/cron.d/%{name}
 %clean
 rm -rf %{buildroot}
 
-%post
+%post -n katello-agent
+chkconfig goferd on
+%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+  /bin/systemctl start goferd > /dev/null 2>&1 || :
+%else
+  /sbin/service goferd start > /dev/null 2>&1 || :
+%endif
+
 touch /tmp/katello-agent-restart
 exit 0
 
 %posttrans
-katello-package-upload
-
+katello-package-upload 2> /dev/null
+katello-enabled-repos-upload 2> /dev/null
 exit 0
 
-%postun
+%postun -n katello-agent
 touch /tmp/katello-agent-restart
 exit 0
 
-%files
+%files -n katello-agent
 %defattr(-,root,root,-)
 %config %{_sysconfdir}/gofer/plugins/katelloplugin.conf
 %{_prefix}/lib/gofer/plugins/katelloplugin.*
+
+%doc LICENSE
+
+%files
+%defattr(-,root,root,-)
 %{_sysconfdir}/yum/pluginconf.d/package_upload.conf
 %{_sysconfdir}/yum/pluginconf.d/enabled_repos_upload.conf
-
 /var/cache/katello-agent/
 %attr(750, root, root) %{_sbindir}/katello-package-upload
 %attr(750, root, root) %{_sbindir}/katello-enabled-repos-upload
@@ -128,18 +162,6 @@ exit 0
 %attr(750, root, root) %{_sbindir}/katello-tracer-upload
 %config(noreplace) %attr(0644, root, root) %{_sysconfdir}/cron.d/%{name}
 %endif
-
-%doc LICENSE
-
-%package fact-plugin
-BuildArch:  noarch
-Summary:    Adds an fqdn fact plugin for subscription-manager
-Group:   Development/Languages
-
-Requires:   subscription-manager
-
-%description fact-plugin
-A subscription-manager plugin to add an additional fact 'network.fqdn' if not present
 
 %files fact-plugin
 %config %{_sysconfdir}/rhsm/pluginconf.d/fqdn.FactsPlugin.conf
