@@ -168,6 +168,8 @@ exit 0
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Thu Jun 29 2017 Justin Sherrill <jsherril@redhat.com> 3.0.0-3
+- rename base package to katello-host-tools
 * Wed Jun 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.0-2
 - Make /var/cache/katello-agent available on all OS (ericdhelms@gmail.com)
 
