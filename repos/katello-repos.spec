@@ -78,6 +78,15 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Wed Jul 05 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.nightly
+- Bump specs to 3.5.0 (ericdhelms@gmail.com)
+- Update katello-repos.spec so that repo files are config files
+  (Klaas-@users.noreply.github.com)
+- Bumping nightly builds to 3.4.0 (jsherril@redhat.com)
+- Updated for fedora 24 (jomitsch@redhat.com)
+- Katello version bump to 3.3.0 (jomitsch@redhat.com)
+- allow for easier repo version setting (jsherril@redhat.com)
+
 * Thu Jul 21 2016 Justin Sherrill <jsherril@redhat.com> 3.2.0-2.nightly
 - Refs #13017 - include qpid-copr for client repos (jsherril@redhat.com)
 
