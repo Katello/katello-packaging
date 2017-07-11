@@ -67,6 +67,10 @@ opt_parser = OptionParser.new do |opt|
     end
   end
 
+  opts.on("-y", "--assumeyes", "Answer yes for all questions") do |confirm|
+    @options[:confirm] = confirm
+  end
+
   if @foreman_proxy_content
     opt.on("-c",
            "--certs-tar CERTS_TAR",
@@ -199,8 +203,12 @@ def precheck(response)
   end
 end
 
-STDOUT.print(warning_message)
-response = yesno
+if @options[:confirm]
+  response = true
+else
+  STDOUT.print(warning_message)
+  response = yesno
+end
 precheck(response)
 
 if @foreman_proxy_content
