@@ -67,7 +67,7 @@ opt_parser = OptionParser.new do |opt|
     end
   end
 
-  opts.on("-y", "--assumeyes", "Answer yes for all questions") do |confirm|
+  opt.on("-y", "--assumeyes", "Answer yes for all questions") do |confirm|
     @options[:confirm] = confirm
   end
 
