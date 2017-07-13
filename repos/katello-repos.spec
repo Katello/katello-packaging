@@ -15,11 +15,7 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 
 BuildRequires: sed
-BuildRequires: ruby
 BuildRequires: python
-%if 0%{?fedora} > 23
-BuildRequires: rubygems
-%endif
 
 %description
 Defines yum repositories for Katello and its sub projects, Candlepin and Pulp.
@@ -59,7 +55,7 @@ install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/yum.repos.d/
 
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
-REPO_VERSION=$(echo "puts '%{release}' =~ /nightly/ ? 'nightly' : '%{version}'.split('.')[0..1].join('.')" | ruby)
+REPO_VERSION=$(python -c "print 'nightly' if 'nightly' in '%{release}' else '.'.join('%{release}'.split('.', 2)[:2])")
 REPO_NAME=$(python -c  "print '${REPO_VERSION}'.title()")
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
