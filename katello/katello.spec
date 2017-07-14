@@ -178,6 +178,9 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Jul 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.3-1
+- Bump katello to 3.4.3 (ericdhelms@gmail.com)
+
 * Mon Jun 26 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.2-1
 - Release katello 3.4.2 (ericdhelms@gmail.com)
 - fixes #18329 - adds LVM snapshots to backup (cfouant@redhat.com)
