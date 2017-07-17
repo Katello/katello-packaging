@@ -78,12 +78,12 @@ end
 def restore_psql_dumps
   puts "Restoring postgres dump files"
   run_cmd("katello-service start --only postgresql")
-  run_cmd('runuser - postgres -c "dropdb foreman"')
-  run_cmd('runuser - postgres -c "dropdb candlepin"')
-  run_cmd('runuser - postgres -c "psql -f #{File.join(@dir, "pg_globals.dump")} postgres 2>/dev/null"')
-  run_cmd('runuser - postgres -c "pg_restore -C -d postgres #{File.join(@dir, "foreman.dump")}"')
-  run_cmd('runuser - postgres -c "pg_restore -C -d postgres #{File.join(@dir, "candlepin.dump")}"')
-  run_cmd('katello-service stop --only postgresql')
+  run_cmd("runuser - postgres -c 'dropdb foreman'")
+  run_cmd("runuser - postgres -c 'dropdb candlepin'")
+  run_cmd("runuser - postgres -c 'psql -f #{File.join(@dir, "pg_globals.dump")} postgres 2>/dev/null'")
+  run_cmd("runuser - postgres -c 'pg_restore -C -d postgres #{File.join(@dir, "foreman.dump")}'")
+  run_cmd("runuser - postgres -c 'pg_restore -C -d postgres #{File.join(@dir, "candlepin.dump")}'")
+  run_cmd("katello-service stop --only postgresql")
   puts "Done."
 end
 
