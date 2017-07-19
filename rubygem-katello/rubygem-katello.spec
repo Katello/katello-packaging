@@ -151,6 +151,9 @@ cp -a .%{gem_dir}/* \
 %files -n %{katello_ostree}
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
+%post -n %{katello_ostree}
+%{scl_rake} apipie:cache RAILS_ENV=production cache_part=resources --trace
+
 %changelog
 * Wed Jul 29 2015 Eric D. Helms <ericdhelms@gmail.com> 2.4.0-1.nightly
 - new package built with tito
