@@ -145,34 +145,6 @@ def get_fpc_answers
   " --foreman-proxy-register-in-foreman #{register_in_foreman} --foreman-proxy-content-certs-tar #{certs_tar}"
 end
 
-def succesful_hostname_change_message
-  STDOUT.puts "**** Hostname change complete! **** \n" \
-               "You will need to re-register any #{@options[:program]} clients that are registered to this server. " \
-               "When re-registering clients, you will have to reinstall the bootstrap RPM. \n"
-
-  if @foreman_proxy_content
-    STDOUT.print "IMPORTANT: You will have to update the Name and URL of the Smart Proxy in #{@options[:program].capitalize} to the new hostname.\n"
-  else
-    STDOUT.print "
-    For #{@plural_proxy}, you will need to regenerate the certs on the #{@options[:scenario].capitalize} server and reinstall the #{@proxy}
-    If you want to use custom certificates, re-run the #{@options[:program]}-installer with custom certificate options
-    Short hostnames have not been updated, please update those manually.\n"
-  end
-  STDOUT.print ""
-  exit(true)
-end
-
-def warning_message
-  STDOUT.print("***WARNING*** This script will modify your system. " \
-               "You will need to re-register any #{@options[:program]} clients registered to this system after script completion.")
-  unless @foreman_proxy_content
-    STDOUT.print(" #{ @plural_proxy } will have to be re-registered and reinstalled. If you are using custom certificates, you " \
-                 "will have to run the #{@options[:program]}-installer again with custom certificate options after this script completes.")
-  end
-  STDOUT.print(" Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with " \
-               "changing your hostname? \n [y/n]:")
-end
-
 def precheck(response)
   unless response
     fail_with_message("Hostname change aborted, no changes have been made to your system")
@@ -194,6 +166,53 @@ def precheck(response)
   end
 end
 
+def successful_hostname_change_message
+# the following multi-line string isn't indented because the indents are taken literally.
+successful_message = %(
+If you want to use custom certificates, re-run the #{@options[:program]}-installer with custom certificate options.
+
+You will have to install the new bootstrap rpm and reregister all clients and #{@plural_proxy} with subscription-manager 
+(update organization and environment arguments appropriately):
+
+  yum remove -y katello-ca-consumer*
+  rpm -Uvh http://#{@new_hostname}/pub/katello-ca-consumer-latest.noarch.rpm
+  subscription-manager register --org="Default_Organization" --environment="Library" --force
+
+Then reattach subscriptions to the client(s) and run: 
+
+  subscription-manager refresh
+  yum repolist
+
+
+On all #{@plural_proxy}, you will need to re-run the foreman-installer with this command:
+
+foreman-installer --foreman-proxy-content-parent-fqdn #{@new_hostname} \\
+                  --foreman-proxy-foreman-base-url  https://#{@new_hostname} \\
+                  --foreman-proxy-trusted-hosts #{@new_hostname}
+
+Short hostnames have not been updated, please update those manually.\n
+)
+  STDOUT.puts "**** Hostname change complete! **** \nIMPORTANT:"
+  if @foreman_proxy_content
+    STDOUT.print "You will have to update the Name and URL of the Smart Proxy in #{@options[:program].capitalize} to the new hostname.\n"
+  else
+    STDOUT.print successful_message
+  end
+  STDOUT.print ""
+  exit(true)
+end
+
+def warning_message
+  STDOUT.print("***WARNING*** This script will modify your system. " \
+               "You will need to re-register any #{@options[:program]} clients registered to this system after script completion.")
+  unless @foreman_proxy_content
+    STDOUT.print(" #{ @plural_proxy } will have to be re-registered and reinstalled. If you are using custom certificates, you " \
+                 "will have to run the #{@options[:program]}-installer again with custom certificate options after this script completes.")
+  end
+  STDOUT.print(" Have you taken the necessary precautions (backups, snapshots, etc...) and want to proceed with " \
+               "changing your hostname? \n [y/n]:")
+end
+
 if @options[:confirm]
   response = true
 else
@@ -211,8 +230,6 @@ end
 old_hostname = get_hostname
 
 scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
-ssl_build_dir = scenario_answers["certs"]["ssl_build_dir"]
-ssl_backup_dir = "#{ssl_build_dir}-#{timestamp}-#{old_hostname}"
 
 unless @foreman_proxy_content
   STDOUT.puts "Updating default #{@proxy}"
@@ -242,17 +259,12 @@ public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
 STDOUT.puts "deleting old certs"
 
 `
-rm -rf #{scenario_answers["certs"]["pki_dir"]}{,.bak}
 rm -rf /etc/pki/katello-certs-tools{,.bak}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_ca"]}
 rm -rf #{scenario_answers["foreman_proxy"]["ssl_cert"]}
 rm -rf #{scenario_answers["foreman_proxy"]["ssl_key"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_ca"]}
 rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_cert"]}
 rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_key"]}
 rm -rf /etc/pki/katello/nssdb
-cp -r #{ssl_build_dir} #{ssl_backup_dir}
-rm -rf #{ssl_build_dir}
 mkdir #{public_backup_dir}
 mv #{public_dir}/*.rpm #{public_backup_dir}
 `
@@ -263,14 +275,11 @@ unless @foreman_proxy_content
   rm -f /etc/tomcat/keystore
   rm -rf /etc/foreman/old-certs
   rm -f /etc/pki/katello/keystore
-  rm -rf #{scenario_answers["foreman"]["client_ssl_ca"]}
   rm -rf #{scenario_answers["foreman"]["client_ssl_cert"]}
   rm -rf #{scenario_answers["foreman"]["client_ssl_key"]}
-  rm -rf #{scenario_answers["foreman_proxy"]["ssldir"]}
   `
 end
 
-STDOUT.puts "backed up #{ssl_build_dir} to #{ssl_backup_dir}"
 STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
 STDOUT.puts "updating hostname in /etc/hosts"
 `sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hosts`
@@ -287,7 +296,7 @@ installer = "#{@options[:program]}-installer --scenario #{@options[:scenario]} -
 if @foreman_proxy_content
   installer << fpc_installer_args
 else
-  installer << " --certs-regenerate-ca=true --certs-regenerate=true --foreman-proxy-register-in-foreman true"
+  installer << " --certs-regenerate=true --foreman-proxy-register-in-foreman true"
 end
 installer << " --disable-system-checks" if @options[:system_check]
 
@@ -296,17 +305,12 @@ installer_output = `#{installer}`
 installer_success = $?.success?
 STDOUT.puts installer_output
 
-unless @foreman_proxy_content
-  STDOUT.puts "Regenerating ueber certs"
-  `foreman-rake katello:regenerate_ueber_certs`
-end
-
 STDOUT.puts "Restarting puppet services"
 `/sbin/service puppet restart`
 `katello-service restart --only puppetserver`
 
 if installer_success
-  succesful_hostname_change_message
+  successful_hostname_change_message
 else
   fail_with_message("Something went wrong with the #{@options[:scenario].capitalize} installer! Please check the above output and the corresponding logs")
 end
