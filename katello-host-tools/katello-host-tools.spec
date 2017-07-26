@@ -19,6 +19,10 @@ Requires: python-rhsm
 Requires: crontabs
 %endif
 
+%if 0%{?rhel} == 5
+Requires: python-simplejson
+%endif
+
 %if 0%{?sles_version}
 BuildRequires: python-devel >= 2.6
 %else
