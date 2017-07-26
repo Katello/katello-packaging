@@ -161,6 +161,10 @@ Provides a federation of katello services
 
 %files -n foreman-proxy-content
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
+%{_sbindir}/katello-backup
+%{_sbindir}/katello-restore
+%{_sbindir}/katello-change-hostname
+%{_sbindir}/katello-remove
 
 # ------ Service ----------------
 %package service
