@@ -58,11 +58,10 @@ Requires: createrepo >= 0.9.9-18%{?dist}
 Requires: squid
 Requires: mod_xsendfile
 
-Requires(post): candlepin
-Requires: candlepin-selinux
+Requires(post): candlepin >= 2.0
+Requires: candlepin-selinux >= 2.0
 Requires: java-openjdk >= 1:1.7.0
 Requires: java-openjdk < 1:1.8.0.45
-Requires: lsof
 Requires: postgresql
 Requires: postgresql-server
 
