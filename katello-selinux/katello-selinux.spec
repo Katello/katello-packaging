@@ -127,6 +127,9 @@ fi
 %{_mandir}/man8/%{name}-relabel.8.gz
 
 %changelog
+* Thu Jul 27 2017 Justin Sherrill <jsherril@redhat.com> 3.0.3-1
+- Upgrade katello-selinux to 3.0.3 (akofink@redhat.com)
+
 * Wed Dec 21 2016 Justin Sherrill <jsherril@redhat.com> 3.0.2-1
 - build katello-selinux 3.0.2 (jsherril@redhat.com)
 
