@@ -89,13 +89,13 @@ install -m 755 %{SOURCE12} %{buildroot}%{_sysconfdir}/cron.daily/katello-reposit
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
-install -Dp -m0755 %{SOURCE11} %{buildroot}%{_bindir}/katello-change-hostname
-install -Dp -m0755 %{SOURCE9} %{buildroot}%{_bindir}/qpid-core-dump
-install -Dp -m0755 %{SOURCE7} %{buildroot}%{_bindir}/katello-backup
-install -Dp -m0755 %{SOURCE6} %{buildroot}%{_bindir}/katello-restore
-install -Dp -m0755 %{SOURCE4} %{buildroot}%{_bindir}/katello-service
+install -Dp -m0755 %{SOURCE11} %{buildroot}%{_sbindir}/katello-change-hostname
+install -Dp -m0755 %{SOURCE9} %{buildroot}%{_sbindir}/qpid-core-dump
+install -Dp -m0755 %{SOURCE7} %{buildroot}%{_sbindir}/katello-backup
+install -Dp -m0755 %{SOURCE6} %{buildroot}%{_sbindir}/katello-restore
+install -Dp -m0755 %{SOURCE4} %{buildroot}%{_sbindir}/katello-service
 install -Dp -m0755 %{SOURCE5} %{buildroot}%{_sbindir}/service-wait
-install -Dp -m0755 %{SOURCE2} %{buildroot}%{_bindir}/katello-remove
+install -Dp -m0755 %{SOURCE2} %{buildroot}%{_sbindir}/katello-remove
 install -Dp -m0755 %{SOURCE1} %{buildroot}/usr/share/foreman/script/foreman-debug.d/katello-debug.sh
 
 # install tab completion scripts
@@ -128,11 +128,11 @@ Requires:       %{name}-service
 Common runtime components of %{name}
 
 %files common
-%{_bindir}/katello-remove
-%{_bindir}/katello-backup
-%{_bindir}/katello-restore
-%{_bindir}/qpid-core-dump
-%{_bindir}/katello-change-hostname
+%{_sbindir}/katello-remove
+%{_sbindir}/katello-backup
+%{_sbindir}/katello-restore
+%{_sbindir}/qpid-core-dump
+%{_sbindir}/katello-change-hostname
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 %config(missingok) %{_sysconfdir}/cron.daily/katello-repository-publish-check
@@ -177,7 +177,7 @@ Useful utilities for managing Katello services
 
 %files service
 %{_sbindir}/service-wait
-%{_bindir}/katello-service
+%{_sbindir}/katello-service
 %{_mandir}/man8/katello-service.8*
 %{_sysconfdir}/bash_completion.d/katello-service
 
