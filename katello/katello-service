@@ -50,9 +50,8 @@ OptionParser.new do |opts|
 end
 
 def service_exists?(service)
-  upstart = File.exist?("/etc/init.d/#{service}")
-  systemd = `systemctl cat #{service} 2>&1` && $?.success?
-  upstart || systemd
+  systemd = `systemctl is-enabled #{service} 2>&1`.strip
+  systemd == 'enabled' || systemd == 'disabled'
 end
 
 def services_by_priority(descending = false)
