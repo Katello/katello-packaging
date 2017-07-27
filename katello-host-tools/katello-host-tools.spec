@@ -1,6 +1,6 @@
 Name: katello-host-tools
-Version: 3.0.0
-Release: 3%{?dist}
+Version: 3.0.1
+Release: 1%{?dist}
 Summary: A set of commands and yum plugins that support a Katello host 
 Group:   Development/Languages
 License: LGPLv2
@@ -172,6 +172,9 @@ exit 0
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Thu Jul 27 2017 Evgeni Golov <egolov@redhat.com> - 3.0.1-1
+- use Python2.4 compatible syntax in enabled_repos_upload
+
 * Thu Jun 29 2017 Justin Sherrill <jsherril@redhat.com> 3.0.0-3
 - rename base package to katello-host-tools
 * Wed Jun 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.0-2
