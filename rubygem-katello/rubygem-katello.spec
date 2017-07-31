@@ -3,7 +3,7 @@
 
 %global gem_name katello
 #global prever .rc2
-%global mainver 3.4.2
+%global mainver 3.4.4
 %global release 1
 
 %global foreman_dir /usr/share/foreman
