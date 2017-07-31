@@ -94,21 +94,12 @@ def hammer_ping_success
   success && !service_failed
 end
 
-def is_rhel_version?(version)
-  `cat /etc/redhat-release`[/(\d+\.)/].include?(version)
-end
-
 def timestamp
   Time.now.strftime("%Y%m%d%H%M")
 end
 
 def get_hostname
-  if is_rhel_version?("6")
-    hostname = `hostname`
-  else
-    hostname = Socket.gethostname
-  end
-  hostname.chomp
+  Socket.gethostname.chomp
 end
 
 def yesno
@@ -230,20 +221,10 @@ unless @foreman_proxy_content
   `hammer -u #{@options[:username]} -p #{@options[:password]} capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null`
 end
 
-if is_rhel_version?("6")
-  STDOUT.puts "updating hostname in /etc/sysconfig/network"
-  STDOUT.puts("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/sysconfig/network")
-  `sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/sysconfig/network`
-  STDOUT.puts "setting hostname"
-  `hostname #{@new_hostname}`
-elsif is_rhel_version?("7")
-  STDOUT.puts "updating hostname in /etc/hostname"
-  `sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname`
-  STDOUT.puts "setting hostname"
-  `hostnamectl set-hostname #{@new_hostname}`
-else
-  fail_with_message("couldn't find RHEL version: #{RHEL_VERSION} - exiting, no changes have been made to your system")
-end
+STDOUT.puts "updating hostname in /etc/hostname"
+`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname`
+STDOUT.puts "setting hostname"
+`hostnamectl set-hostname #{@new_hostname}`
 
 # override environment variable (won't be updated until bash login)
 ENV['HOSTNAME'] = @new_hostname
