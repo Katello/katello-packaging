@@ -6,7 +6,7 @@
 
 Name:       katello
 Version:    3.4.4
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    A package for managing application life-cycle for Linux systems
 BuildArch:  noarch
 
@@ -185,6 +185,28 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Mon Jul 31 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.4-2
+- Bump katello to 3.4.4 (ericdhelms@gmail.com)
+- Fixes #20382 - Require candlepin 2.0 (jsherril@redhat.com)
+- Fixes #20420,#20421 - add backup/restore/hostname-change to proxy
+  (jomitsch@redhat.com)
+- Fixes #20431 - ignore services in the static state, remove upstart
+  (ericdhelms@gmail.com)
+- Fixes #19281 - Move katello commands to sbin (jomitsch@redhat.com)
+- fixes #19638 - clean up/restore services if backup fails (cfouant@redhat.com)
+- Fixes #20322 - string interpolation issue in katello-restore
+  (jomitsch@redhat.com)
+- Refs #20277 - Fixing small typo in hostname change (jomitsch@redhat.com)
+- Fixes #20277 - Adds -y flag to katello-hostname-change (jomitsch@redhat.com)
+- fixes #18328, #20268 - adds interactivity & bypassing warnings
+  (cfouant@redhat.com)
+- fixes #19622 - adds error if backup directory missing (cfouant@redhat.com)
+- fixes #19743, #18358 - allows user to bypass subdir creation
+  (cfouant@redhat.com)
+- Fixes #17036 - Adding katello scripts for a foreman-proxy
+  (jomitsch@redhat.com)
+- Fixes #20020 - add cron job to check repo publish (jsherril@redhat.com)
+
 * Fri Jul 14 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.3-1
 - Bump katello to 3.4.3 (ericdhelms@gmail.com)
 
