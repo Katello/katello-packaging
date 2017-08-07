@@ -68,6 +68,9 @@ mkdir -p %{buildroot}%{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
 
 %changelog
+* Mon Aug 07 2017 Justin Sherrill <jsherril@redhat.com> 2.1.0-1
+- runcible 2.1.0 build (jsherril@redhat.com)
+
 * Tue Apr 25 2017 Justin Sherrill <jsherril@redhat.com> 2.0.0-1
 - Update rest client requirement for runcible (jsherril@redhat.com)
 - Upgrade to runcible 2.0 (jsherril@redhat.com)
