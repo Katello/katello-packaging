@@ -45,7 +45,7 @@ then
 fi
 
 foreman-installer --scenario katello --migrations-only > /dev/null
-foreman-installer --scenario capsule --migrations-only > /dev/null
+foreman-installer --scenario foreman-proxy-content --migrations-only > /dev/null
 
 %files -n foreman-installer-katello
 %{_datadir}/foreman-installer-katello/bin
