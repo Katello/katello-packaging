@@ -25,7 +25,7 @@ Source8:    katello-service-bash_completion.sh
 Source9:    qpid-core-dump
 Source10:   katello-clean-empty-puppet-environments
 Source11:   katello-change-hostname
-Source12:   katello-repository-publish-check 
+Source12:   katello-repository-publish-check
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -119,7 +119,6 @@ Requires:       %{?scl_prefix}rubygem-katello
 Requires:       %{?scl_prefix}rubygem-hammer_cli
 Requires:       %{?scl_prefix}rubygem-hammer_cli_foreman
 Requires:       %{?scl_prefix}rubygem-hammer_cli_katello
-Requires:       %{?scl_prefix}rubygem-hammer_cli_import
 Requires:       %{name}-debug
 Requires:       %{name}-service
 
