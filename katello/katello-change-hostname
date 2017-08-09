@@ -125,6 +125,22 @@ def fail_with_message(message, opt_parser=nil)
   exit(false)
 end
 
+def move_file(original, backup, reverse=false)
+  STDOUT.puts("original " + original)
+  STDOUT.puts("backup " + backup)
+  base_original = File.dirname(original)
+  base_backup = File.dirname(backup)
+  original_filename = File.basename(original)
+  backup_filename = File.basename(backup)
+  if reverse
+    `mv #{base_backup}/#{backup_filename} #{base_original}`
+  else
+    STDOUT.puts("mv #{base_original}/#{backup_filename} #{base_backup}")
+    `mv #{base_original}/#{original_filename} #{base_backup}`
+  end
+  true
+end
+
 def check_for_certs_tar
   STDOUT.puts "Checking for certs tarball"
   if @options[:certs_tar]
@@ -173,6 +189,89 @@ def warning_message
                "changing your hostname? \n [y/n]:")
 end
 
+def installer_command
+  installer = "#{@options[:program]}-installer --scenario #{@options[:scenario]} -v"
+  if @foreman_proxy_content
+    installer << get_fpc_answers
+  else
+    installer << " --certs-regenerate-ca=true --certs-regenerate=true --foreman-proxy-register-in-foreman true"
+  end
+  installer << " --disable-system-checks" if @options[:system_check]
+end
+
+def move_certs(tmp_backup, scenario_answers, reverse = false)
+  # This method enables us to easily rollback any moving around of files
+  STDOUT.puts "Backing up old certs"
+  ssl_build_dir = scenario_answers["certs"]["ssl_build_dir"]
+
+  move_file("#{scenario_answers["certs"]["pki_dir"]}{,.bak}", "#{tmp_backup}/pki_dir", reverse)
+  move_file("/etc/pki/katello-certs-tools{,.bak}", "#{tmp_backup}/pki_dir", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["ssl_ca"]}", "#{tmp_backup}/ssl_ca", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["ssl_cert"]}", "#{tmp_backup}/ssl_cert", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["ssl_key"]}", "#{tmp_backup}/ssl_key", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["foreman_ssl_ca"]}", "#{tmp_backup}/foreman_ssl_ca", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["foreman_ssl_cert"]}", "#{tmp_backup}/foreman_ssl_cert", reverse)
+  move_file("#{scenario_answers["foreman_proxy"]["foreman_ssl_key"]}", "#{tmp_backup}/foreman_ssl_key", reverse)
+  move_file("/etc/pki/katello/nssdb", "#{tmp_backup}/foreman_ssl_key", reverse)
+  move_file("#{ssl_build_dir}", "#{tmp_backup}/ssl_build_dir", reverse)
+  move_file("/var/www/html/pub/*.rpm", "#{tmp_backup}/public_rpms", reverse)
+  move_file("/etc/foreman-installer/scenarios.d/last_scenario.yaml", "#{tmp_backup}/last_scenario", reverse)
+
+  unless @foreman_proxy_content
+    move_file("/etc/candlepin/certs/amqp{,.bak}", "#{tmp_backup}/amqp", reverse)
+    move_file("/etc/tomcat/keystore", "#{tmp_backup}/tomcat_keystore", reverse)
+    move_file("/etc/foreman/old-certs", "#{tmp_backup}/old-certs", reverse)
+    move_file("/etc/pki/katello/keystore", "#{tmp_backup}/keystore", reverse)
+    move_file("#{scenario_answers["foreman"]["client_ssl_ca"]}", "#{tmp_backup}/client_ssl_ca", reverse)
+    move_file("#{scenario_answers["foreman"]["client_ssl_cert"]}", "#{tmp_backup}/client_ssl_cert", reverse)
+    move_file("#{scenario_answers["foreman"]["client_ssl_key"]}", "#{tmp_backup}/client_ssl_key", reverse)
+    move_file("#{scenario_answers["foreman_proxy"]["ssldir"]}", "#{tmp_backup}/foreman_proxy/ssldir", reverse)
+  end
+  STDOUT.puts "Important files and directories are backed up in #{tmp_backup}"
+end
+
+def installer_dry_run
+  installer_precheck = installer_command + " -n"
+  STDOUT.puts("Performing a dry run of the installer with: \n #{installer_precheck}")
+  installer_output = `#{installer_precheck}`
+  installer_success = $?.success?
+
+  unless installer_success
+    STDOUT.puts("#{installer_output}\nDry run of the installer failed! No changes have  been made to your system. Failed output is above.")
+  end
+  installer_success
+end
+
+def update_default_proxy(old_hostname, new_hostname)
+  STDOUT.puts "Updating default #{@proxy}"
+  default_capsule_id = `hammer -u #{@options[:username]} -p #{@options[:password]} capsule list | grep #{old_hostname} | awk '{ print $1 }'`[0]
+  # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
+  `hammer -u #{@options[:username]} -p #{@options[:password]} capsule update --id #{default_capsule_id} --url https://#{new_hostname}:9090 --new-name #{new_hostname} 2> /dev/null`
+end
+
+def change_system_hostname(old_hostname, new_hostname)
+  STDOUT.puts "updating hostname in /etc/hosts"
+  `sed -i -e 's/#{old_hostname}/#{new_hostname}/g' /etc/hosts`
+
+  STDOUT.puts "updating hostname in foreman installer scenarios"
+    `sed -i -e 's/#{old_hostname}/#{new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml`
+
+  STDOUT.puts "updating hostname in /etc/hostname"
+  `sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname`
+  STDOUT.puts "setting hostname"
+  `hostnamectl set-hostname #{@new_hostname}`
+
+  # override environment variable (won't be updated until bash login)
+  ENV['HOSTNAME'] = new_hostname
+
+  STDOUT.puts "checking if hostname was changed"
+  STDOUT.puts "get hname " + get_hostname
+  STDOUT.puts "new hostname " + new_hostname
+  if get_hostname != new_hostname
+    fail_with_message("The new hostname was not changed successfully, exiting script")
+  end
+end
+
 def precheck(response)
   unless response
     fail_with_message("Hostname change aborted, no changes have been made to your system")
@@ -187,7 +286,6 @@ def precheck(response)
   else
     fail_with_message("Please specify a hostname.", opt_parser)
   end
-
   STDOUT.puts "\nChecking overall health of server"
   unless hammer_ping_success
     fail_with_message("There is a problem with the server, please check 'hammer ping'")
@@ -204,93 +302,36 @@ precheck(response)
 
 if @foreman_proxy_content
   check_for_certs_tar
-  fpc_installer_args = get_fpc_answers
 end
 
 # Get the hostname from your system
 old_hostname = get_hostname
 
-scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
-ssl_build_dir = scenario_answers["certs"]["ssl_build_dir"]
-ssl_backup_dir = "#{ssl_build_dir}-#{timestamp}-#{old_hostname}"
-
 unless @foreman_proxy_content
-  STDOUT.puts "Updating default #{@proxy}"
-  default_capsule_id = `hammer -u #{@options[:username]} -p #{@options[:password]} capsule list | grep #{old_hostname} | awk '{ print $1 }'`[0]
-  # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
-  `hammer -u #{@options[:username]} -p #{@options[:password]} capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null`
-end
-
-STDOUT.puts "updating hostname in /etc/hostname"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname`
-STDOUT.puts "setting hostname"
-`hostnamectl set-hostname #{@new_hostname}`
-
-# override environment variable (won't be updated until bash login)
-ENV['HOSTNAME'] = @new_hostname
-
-STDOUT.puts "checking if hostname was changed"
-if get_hostname != @new_hostname
-  fail_with_message("The new hostname was not changed successfully, exiting script")
+  update_default_proxy(old_hostname, @new_hostname)
 end
 
 STDOUT.puts "stopping services"
 `katello-service stop`
 
-public_dir = "/var/www/html/pub"
-public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
-STDOUT.puts "deleting old certs"
+scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
+tmp_backup = "/tmp/#{old_hostname}-#{timestamp}"
+`mkdir #{tmp_backup}`
+move_certs(tmp_backup, scenario_answers)
+change_system_hostname(old_hostname, @new_hostname)
 
-`
-rm -rf #{scenario_answers["certs"]["pki_dir"]}{,.bak}
-rm -rf /etc/pki/katello-certs-tools{,.bak}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_ca"]}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_cert"]}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_key"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_ca"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_cert"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_key"]}
-rm -rf /etc/pki/katello/nssdb
-cp -r #{ssl_build_dir} #{ssl_backup_dir}
-rm -rf #{ssl_build_dir}
-mkdir #{public_backup_dir}
-mv #{public_dir}/*.rpm #{public_backup_dir}
-`
-
-unless @foreman_proxy_content
-  `
-  rm -rf /etc/candlepin/certs/amqp{,.bak}
-  rm -f /etc/tomcat/keystore
-  rm -rf /etc/foreman/old-certs
-  rm -f /etc/pki/katello/keystore
-  rm -rf #{scenario_answers["foreman"]["client_ssl_ca"]}
-  rm -rf #{scenario_answers["foreman"]["client_ssl_cert"]}
-  rm -rf #{scenario_answers["foreman"]["client_ssl_key"]}
-  rm -rf #{scenario_answers["foreman_proxy"]["ssldir"]}
-  `
+# A dry run of the installer is performed to check for potential errors.
+# If it fails, we revert everything and exit out of the script
+unless installer_dry_run
+  STDOUT.puts("Potential issues were found on a noop installer run, cleaning up")
+  move_certs(tmp_backup, scenario_answers, true)
+  change_system_hostname(@new_hostname, old_hostname)
+  update_default_proxy(@new_hostname, old_hostname)
+  fail_with_message("All changes to your system have been reverted, aborting script")
 end
-
-STDOUT.puts "backed up #{ssl_build_dir} to #{ssl_backup_dir}"
-STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
-STDOUT.puts "updating hostname in /etc/hosts"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hosts`
-
-STDOUT.puts "updating hostname in foreman installer scenarios"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml`
-
-STDOUT.puts "removing last_scenario.yml file"
-`rm -rf /etc/foreman-installer/scenarios.d/last_scenario.yaml`
 
 STDOUT.puts "re-running the installer"
-
-installer = "#{@options[:program]}-installer --scenario #{@options[:scenario]} -v"
-if @foreman_proxy_content
-  installer << fpc_installer_args
-else
-  installer << " --certs-regenerate-ca=true --certs-regenerate=true --foreman-proxy-register-in-foreman true"
-end
-installer << " --disable-system-checks" if @options[:system_check]
-
+installer = installer_command
 STDOUT.puts installer
 installer_output = `#{installer}`
 installer_success = $?.success?
