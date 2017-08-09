@@ -43,4 +43,4 @@ OPTIONS
 SEE ALSO
 --------
 
-*service*(8) *chkconfig*(8) *systemctl*(8)
+*service*(8) *systemctl*(8)
