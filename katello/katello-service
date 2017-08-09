@@ -64,13 +64,8 @@ def services_by_priority(descending = false)
 end
 
 def list_services
-  if `which systemctl 2>&1` && $?.success?
-    regex = services_by_priority.map { |service| "^#{service}.service" }.join('\|')
-    puts `systemctl list-unit-files | grep '#{regex}'`
-  end
-
-  regex = services_by_priority.map { |service| "^#{service} " }.join('\|')
-  puts `chkconfig --list 2>&1 | grep '#{regex}'`
+  regex = services_by_priority.map { |service| "^#{service}.service" }.join('\|')
+  puts `systemctl list-unit-files | grep '#{regex}'`
 end
 
 def manage_services(action)
@@ -81,13 +76,8 @@ def manage_services(action)
     if service_exists?(service)
       case action
       when 'enable', 'disable'
-        if `which systemctl 2>&1` && $?.success?
-          puts "systemctl #{action} #{service}.service"
-          puts `systemctl #{action} #{service}.service`
-        else
-          puts "chkconfig #{service} on"
-          puts `chkconfig #{service} on`
-        end
+        puts "systemctl #{action} #{service}.service"
+        puts `systemctl #{action} #{service}.service`
       else
         puts "#{COMMAND} #{service} #{action}"
         puts `#{COMMAND} #{service} #{action}`
