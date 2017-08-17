@@ -212,7 +212,7 @@ def backup_valid?
   @pg_globals_exist = File.exist?(File.join(@dir, 'pg_globals.dump'))
 
   unless @config_exists
-    puts "Cannot find the required config_file.tar.gz file in #{@dir}"
+    puts "Cannot find the required config_files.tar.gz file in #{@dir}"
     exit(-1)
   end
 
