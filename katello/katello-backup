@@ -68,17 +68,21 @@ optparse = OptionParser.new do |opts|
   opts.on("-y", "--assumeyes", "Bypass interaction by answering yes") do |confirm|
     @options[:confirm] = confirm
   end
+end
 
-  opts.parse!
-
+begin optparse.parse! ARGV
   if ARGV.length == 0
-    opts.abort("**** ERROR: Please specify an export directory ****")
+    optparse.abort("**** ERROR: Please specify an export directory ****")
   elsif ARGV.length != 1
-    puts opts
+    puts optparse
     exit(-1)
   end
 
   @dir = ARGV[0].dup
+rescue OptionParser::ParseError => e
+  puts e
+  puts optparse
+  exit -1
 end
 
 def run_cmd(command, exit_codes=[0])
@@ -398,3 +402,4 @@ end
 
 puts "Done with backup: #{Time.now}"
 puts "**** BACKUP Complete, contents can be found in: #{@dir} ****"
+
