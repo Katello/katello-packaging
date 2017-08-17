@@ -218,7 +218,7 @@ def backup_valid?
   @config_exists = File.exist?(File.join(@dir, 'config_files.tar.gz'))
 
   unless @config_exists
-    puts "Cannot find the required config_file.tar.gz file in #{@dir}"
+    puts "Cannot find the required config_files.tar.gz file in #{@dir}"
     exit(-1)
   end
 
