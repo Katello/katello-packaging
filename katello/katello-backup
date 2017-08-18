@@ -187,8 +187,10 @@ def create_directories(directory)
   @dir = File.join directory, "katello-backup-" + DateTime.now.strftime('%Y%m%d%H%M%S') unless @options[:no_subdir]
   puts "Creating backup folder #{@dir}"
   FileUtils.mkdir_p @dir
-  FileUtils.chown_R nil, 'postgres', directory if @databases.include? "pgsql"
-  FileUtils.chmod_R 0770, directory
+  unless @options[:no_subdir]
+    FileUtils.chown_R nil, 'postgres', @dir if @databases.include? "pgsql"
+    FileUtils.chmod_R 0770, @dir
+  end
 end
 
 def snapshot_backup
@@ -355,6 +357,15 @@ def backup_config_files
   puts "Done."
 end
 
+def validate_directory
+  unless system("sudo -u postgres test -w #{@dir}")
+    puts "****cancelled****"
+    puts "Postgres user needs write access to the backup directory"
+    puts "Please select a directory, such as /tmp or /var/tmp which allows Postgres write access"
+    cleanup
+  end
+end
+
 if @dir.nil?
   puts "**** ERROR: Please specify an export directory ****"
   puts optparse
@@ -365,6 +376,7 @@ puts "Starting backup: #{Time.now}"
 @is_foreman_proxy_content = !run_cmd("rpm -qa | grep foreman-proxy-content", [0,1]).empty?
 @databases.delete 'pgsql' if @is_foreman_proxy_content
 create_directories(@dir.dup)
+validate_directory
 
 Dir.chdir(@dir) do
   generate_metadata
