@@ -1,7 +1,7 @@
 Name: katello-host-tools
-Version: 3.0.1
+Version: 3.0.2
 Release: 1%{?dist}
-Summary: A set of commands and yum plugins that support a Katello host 
+Summary: A set of commands and yum plugins that support a Katello host
 Group:   Development/Languages
 License: LGPLv2
 URL:     https://github.com/Katello/katello-agent
