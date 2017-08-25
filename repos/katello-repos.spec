@@ -1,6 +1,8 @@
+%global prever .rc1
+
 Name:           katello-repos
 Version:        3.5.0
-Release:        1.nightly%{?dist}
+Release:        1%{?prever}%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
