@@ -10,7 +10,11 @@ ONLINE_BACKUP_FILES = ['mongo_dump', 'candlepin.dump', 'foreman.dump', 'pg_globa
 OFFLINE_BACKUP_FILES = ['mongo_data.tar.gz', 'pgsql_data.tar.gz']
 FOREMAN_PROXY_CONTENT_BACKUP_FILES = ['mongo_data.tar.gz']
 FOREMAN_PROXY_CONTENT_ONLINE_BACKUP_FILES = ['mongo_dump']
-FOREMAN_PROXY_CONTENT = "foreman-proxy-content" # keep this variable easy to change for backporting
+
+# keep these variables easy to change for backporting
+FOREMAN_PROXY_CONTENT = "foreman-proxy-content"
+PROGRAM = "foreman"
+SCENARIO = "katello"
 
 confirmed = false
 @disable_system_checks = false
@@ -61,11 +65,11 @@ end
 def reset_katello
   puts "Resetting Katello"
   run_cmd("tar --selinux --overwrite --listed-incremental=/dev/null -xzf config_files.tar.gz -C /")
-  installer = "yes | foreman-installer -v --reset"
+  installer = "yes | #{PROGRAM}-installer -v --reset"
   if @foreman_proxy_content
     installer << " --scenario #{FOREMAN_PROXY_CONTENT} --foreman-proxy-register-in-foreman false"
   else
-    installer << " --scenario katello"
+    installer << " --scenario #{SCENARIO}"
   end
   installer << " --disable-system-checks" if @disable_system_checks
   puts installer
