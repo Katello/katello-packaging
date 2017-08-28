@@ -172,6 +172,9 @@ exit 0
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Mon Aug 28 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.2-1
+- Release katello-host-tools 3.0.2 (ericdhelms@gmail.com)
+
 * Thu Jul 27 2017 Evgeni Golov <egolov@redhat.com> - 3.0.1-1
 - use Python2.4 compatible syntax in enabled_repos_upload
 
