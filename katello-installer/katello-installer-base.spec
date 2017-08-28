@@ -5,7 +5,7 @@
 #global prever .rc2
 
 Name:    katello-installer-base
-Version: 3.4.4
+Version: 3.4.5
 Release: 1%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
