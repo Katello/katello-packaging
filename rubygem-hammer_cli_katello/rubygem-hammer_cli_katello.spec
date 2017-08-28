@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Mon Aug 28 2017 Eric D. Helms <ericdhelms@gmail.com> 0.11.0-1
+- Update hammer_cli_katello to 0.11.0 (akofink@redhat.com)
+
 * Thu Mar 30 2017 Eric D. Helms <ericdhelms@gmail.com> 0.10.0-1
 - Update hammer_cli_katello to 0.10.0 (akofink@redhat.com)
 - Use gem_install macro (ericdhelms@gmail.com)
