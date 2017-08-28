@@ -135,7 +135,7 @@ def check_for_certs_tar
     end
   else
     fail_with_message("You must specify --certs-tar argument when on a #{@proxy}." \
-                      " These can be generated on the #{DEFAULT_PROGRAM} server using foreman-proxy-certs-generate and copied to this machine.")
+                      " These can be generated on the #{DEFAULT_PROGRAM} server using #{FOREMAN_PROXY_CONTENT}-certs-generate and copied to this machine.")
   end
 end
 
@@ -184,9 +184,9 @@ Then reattach subscriptions to the client(s) and run:
   yum repolist
 
 
-On all #{@plural_proxy}, you will need to re-run the foreman-installer with this command:
+On all #{@plural_proxy}, you will need to re-run the #{@options[:program]}-installer with this command:
 
-foreman-installer --foreman-proxy-content-parent-fqdn #{@new_hostname} \\
+#{@options[:program]}-installer --foreman-proxy-content-parent-fqdn #{@new_hostname} \\
                   --foreman-proxy-foreman-base-url  https://#{@new_hostname} \\
                   --foreman-proxy-trusted-hosts #{@new_hostname}
 
@@ -296,7 +296,7 @@ installer = "#{@options[:program]}-installer --scenario #{@options[:scenario]} -
 if @foreman_proxy_content
   installer << fpc_installer_args
 else
-  installer << " --certs-regenerate=true --foreman-proxy-register-in-foreman true"
+  installer << " --certs-regenerate=true --foreman-proxy-register-in-foreman=true"
 end
 installer << " --disable-system-checks" if @options[:system_check]
 
