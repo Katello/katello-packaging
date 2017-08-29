@@ -144,6 +144,10 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Tue Aug 29 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.5-1
+- Release katello-installer 3.4.5 (ericdhelms@gmail.com)
+- Fixes #18818 - capsule now called foreman-proxy-content
+
 * Mon Jul 31 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.4-1
 - Bump katello-installer to 3.4.4 (ericdhelms@gmail.com)
 
