@@ -14,11 +14,11 @@ fetch_strategy = custom.ForemanSourceStrategy
 
 [katello-nightly-rhel5]
 disttag = .el5
-whitelist = katello-repos katello-agent
+whitelist = katello-repos katello-host-tools
 
 [katello-nightly-rhel6]
 disttag = .el6
-whitelist = katello-repos katello-agent
+whitelist = katello-repos katello-host-tools
 
 [katello-nightly-rhel7]
 disttag = .el7
@@ -38,11 +38,11 @@ whitelist = rubygem-jenkins_api_client
 
 [katello-nightly-fedora24]
 disttag = .fc24
-whitelist = katello-repos katello-agent
+whitelist = katello-repos katello-host-tools
 
 [katello-nightly-fedora25]
 disttag = .fc25
-whitelist = katello-repos katello-agent
+whitelist = katello-repos katello-host-tools
 
 [requirements]
 tito=0.5.6
