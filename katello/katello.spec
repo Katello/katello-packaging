@@ -185,6 +185,16 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Tue Aug 29 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.5-1
+- Release katello 3.4.5 (ericdhelms@gmail.com)
+- Fixes #20633 - kbackup error message displays incorrect file
+  (jomitsch@redhat.com)
+- fixes #20635 - cleans up error message handling for invalid args
+  (cfouant@redhat.com)
+- Fixes #20632 - require pg_globals for katello-restore (jomitsch@redhat.com)
+- Fixes #20440 - Don't delete the CA in katello-change-hostname
+  (jomitsch@redhat.com)
+
 * Mon Jul 31 2017 Eric D. Helms <ericdhelms@gmail.com> 3.4.4-2
 - Bump katello to 3.4.4 (ericdhelms@gmail.com)
 - Fixes #20382 - Require candlepin 2.0 (jsherril@redhat.com)
