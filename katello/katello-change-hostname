@@ -160,6 +160,15 @@ def precheck(response)
     fail_with_message("Please specify a hostname.", opt_parser)
   end
 
+  STDOUT.puts "\nChecking hostname validity"
+  # This regex is an approximation of a hostname, it will handle most invalid hostnames and typos.
+  # Taken from https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch08s15.html
+  hostname_regex = /^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/
+  unless hostname_regex === @new_hostname
+    fail_with_message("#{@new_hostname} is not a valid fully qualified domain name, please use a valid FQDN and try again. " \
+                      "No changes have been made to your system.");
+  end
+
   STDOUT.puts "\nChecking overall health of server"
   unless hammer_ping_success
     fail_with_message("There is a problem with the server, please check 'hammer ping'")
