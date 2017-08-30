@@ -91,7 +91,7 @@ after_start() {
 before_stop() {
   case "$SERVICE" in
     tomcat6|tomcat)
-      # RHBZ 789288 - wait until service port is avaiable
+      # RHBZ 789288 - wait until service port is available
       for i in {1..$WAIT_MAX}; do netstat -ln | grep -q ":$TOMCAT_SERV_PORT\s" && break; sleep 1; done
       ;;
   esac
