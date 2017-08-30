@@ -126,41 +126,11 @@ after_disable() {
 }
 
 case "$COMMAND" in
-  start)
-    before_start
-    /sbin/service "$SERVICE" "$COMMAND"
+  start|stop|restart|status|enable|disable)
+    before_$COMMAND
+    /bin/systemctl $COMMAND "$SERVICE"
     RETVAL=$?
-    after_start
-    ;;
-  stop)
-    before_stop
-    /sbin/service "$SERVICE" "$COMMAND"
-    RETVAL=$?
-    after_stop
-    ;;
-  restart)
-    before_start
-    /sbin/service "$SERVICE" "$COMMAND"
-    RETVAL=$?
-    after_start
-    ;;
-  status)
-    before_status
-    /sbin/service "$SERVICE" "$COMMAND"
-    RETVAL=$?
-    after_status
-    ;;
-  enable)
-    before_enable
-    /usr/sbin/chkconfig "$SERVICE" on
-    RETVAL=$?
-    after_enable
-    ;;
-  disable)
-    before_disable
-    /usr/sbin/chkconfig "$SERVICE" off
-    RETVAL=$?
-    after_disable
+    after_$COMMAND
     ;;
   test-wait)
     echo -n "Starting $SERVICE... "
