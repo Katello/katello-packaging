@@ -174,6 +174,7 @@ Requires:       wget
 Requires:       curl
 Requires:       ruby
 Requires:       net-tools
+Requires:       /bin/systemctl
 
 %description service
 Useful utilities for managing Katello services
