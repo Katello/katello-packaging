@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require "socket"
 require "optparse"
@@ -171,14 +171,14 @@ def successful_hostname_change_message
 successful_message = %(
 If you want to use custom certificates, re-run the #{@options[:program]}-installer with custom certificate options.
 
-You will have to install the new bootstrap rpm and reregister all clients and #{@plural_proxy} with subscription-manager 
+You will have to install the new bootstrap rpm and reregister all clients and #{@plural_proxy} with subscription-manager
 (update organization and environment arguments appropriately):
 
   yum remove -y katello-ca-consumer*
   rpm -Uvh http://#{@new_hostname}/pub/katello-ca-consumer-latest.noarch.rpm
   subscription-manager register --org="Default_Organization" --environment="Library" --force
 
-Then reattach subscriptions to the client(s) and run: 
+Then reattach subscriptions to the client(s) and run:
 
   subscription-manager refresh
   yum repolist
