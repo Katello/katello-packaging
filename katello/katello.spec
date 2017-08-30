@@ -173,6 +173,7 @@ Group: Applications/System
 Requires:       wget
 Requires:       curl
 Requires:       ruby
+Requires:       net-tools
 
 %description service
 Useful utilities for managing Katello services
