@@ -84,6 +84,9 @@ cp -pa .%{gem_dir}/* \
 exit 0
 
 %changelog
+* Wed Aug 30 2017 Eric D. Helms <ericdhelms@gmail.com> 1.0.1-1
+- new package built with tito
+
 * Wed Aug 16 2017 Matthias Dellweg <dellweg@atix.de> 1.0.1-1
 - specfile from gem2spec
 - fix asset compilation
