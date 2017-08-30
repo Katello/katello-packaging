@@ -37,7 +37,7 @@ DEFAULT_PROGRAM =  get_default_program
 @options[:system_check] = false
 @foreman_proxy_content = @options[:scenario] == FOREMAN_PROXY_CONTENT
 
-opt_parser = OptionParser.new do |opt|
+@opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: katello-change-hostname HOSTNAME [OPTIONS]"
   opt.separator  ""
   opt.separator  "Example:"
@@ -80,11 +80,11 @@ opt_parser = OptionParser.new do |opt|
   end
 
   opt.on("-h","--help","help") do
-    puts opt_parser
+    puts @opt_parser
     exit
   end
 end
-opt_parser.parse!
+@opt_parser.parse!
 
 def hammer_ping_success
   return true if @foreman_proxy_content
@@ -145,19 +145,15 @@ def get_fpc_answers
   " --foreman-proxy-register-in-foreman #{register_in_foreman} --foreman-proxy-content-certs-tar #{certs_tar}"
 end
 
-def precheck(response)
-  unless response
-    fail_with_message("Hostname change aborted, no changes have been made to your system")
-  end
-
+def precheck
   unless @options[:username] && @options[:password]
-    fail_with_message("Username and/or Password options are missing!", opt_parser)
+    fail_with_message("Username and/or Password options are missing!", @opt_parser)
   end
 
   if ARGV[0] && ARGV.count >= 1
     @new_hostname = ARGV[0]
   else
-    fail_with_message("Please specify a hostname.", opt_parser)
+    fail_with_message("Please specify a hostname.", @opt_parser)
   end
 
   STDOUT.puts "\nChecking hostname validity"
@@ -172,6 +168,17 @@ def precheck(response)
   STDOUT.puts "\nChecking overall health of server"
   unless hammer_ping_success
     fail_with_message("There is a problem with the server, please check 'hammer ping'")
+  end
+
+  if @options[:confirm]
+    response = true
+  else
+    STDOUT.print(warning_message)
+    response = yesno
+  end
+
+  unless response
+    fail_with_message("Hostname change aborted, no changes have been made to your system")
   end
 end
 
@@ -222,13 +229,7 @@ def warning_message
                "changing your hostname? \n [y/n]:")
 end
 
-if @options[:confirm]
-  response = true
-else
-  STDOUT.print(warning_message)
-  response = yesno
-end
-precheck(response)
+precheck
 
 if @foreman_proxy_content
   check_for_certs_tar
@@ -241,7 +242,7 @@ old_hostname = get_hostname
 scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
 
 unless @foreman_proxy_content
-  STDOUT.puts "Updating default #{@proxy}"
+  STDOUT.puts "\nUpdating default #{@proxy}"
   default_capsule_id = `hammer -u #{@options[:username]} -p #{@options[:password]} capsule list | grep #{old_hostname} | awk '{ print $1 }'`[0]
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
   `hammer -u #{@options[:username]} -p #{@options[:password]} capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null`
