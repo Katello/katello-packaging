@@ -13,7 +13,7 @@ BuildArch: noarch
 Requires: subscription-manager
 Requires: %{name}-fact-plugin
 
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+%if 0%{?fedora} > 24 || 0%{?rhel} > 6
 Requires: python2-tracer >= 0.6.12
 Requires: python-rhsm
 Requires: crontabs
@@ -112,7 +112,7 @@ cp src/rhsm-plugins/fqdn.py %{buildroot}%{_datadir}/rhsm-plugins/fqdn.py
 # cache directory
 mkdir -p %{buildroot}/var/cache/katello-agent/
 
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+%if 0%{?fedora} > 24 || 0%{?rhel} > 6
 cp src/yum-plugins/tracer_upload.py %{buildroot}/%{_prefix}/lib/yum-plugins
 cp etc/yum/pluginconf.d/tracer_upload.conf %{buildroot}/%{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 cp bin/katello-tracer-upload %{buildroot}%{_sbindir}/katello-tracer-upload
@@ -161,7 +161,7 @@ exit 0
 %attr(750, root, root) %{_sbindir}/katello-enabled-repos-upload
 %{_prefix}/lib/yum-plugins
 
-%if 0%{?fedora} > 18 || 0%{?rhel} > 6
+%if 0%{?fedora} > 25 || 0%{?rhel} > 6
 %{_sysconfdir}/yum/pluginconf.d/tracer_upload.conf
 %attr(750, root, root) %{_sbindir}/katello-tracer-upload
 %config(noreplace) %attr(0644, root, root) %{_sysconfdir}/cron.d/%{name}
