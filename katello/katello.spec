@@ -29,6 +29,10 @@ Source10:   katello-clean-empty-puppet-environments
 Source11:   katello-change-hostname
 Source12:   katello-repository-publish-check
 Source13:   katello-change-hostname.8.asciidoc
+Source14:   restore.rb
+Source15:   backup.rb
+Source16:   hostname-change.rb
+Source17:   helper.rb
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -90,6 +94,13 @@ install -m 755 %{SOURCE3} %{buildroot}%{_sysconfdir}/cron.weekly/katello-remove-
 install -m 755 %{SOURCE10} %{buildroot}%{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 install -m 755 %{SOURCE12} %{buildroot}%{_sysconfdir}/cron.daily/katello-repository-publish-check
 
+# symlink script libraries
+mkdir -p %{buildroot}%{_datarootdir}/katello
+install -m 644 %{SOURCE14} %{buildroot}%{_datarootdir}/katello/restore.rb
+install -m 644 %{SOURCE15} %{buildroot}%{_datarootdir}/katello/backup.rb
+install -m 644 %{SOURCE16} %{buildroot}%{_datarootdir}/katello/hostname-change.rb
+install -m 644 %{SOURCE17} %{buildroot}%{_datarootdir}/katello/helper.rb
+
 # install important scripts
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_sbindir}
@@ -138,6 +149,10 @@ Common runtime components of %{name}
 %{_sbindir}/qpid-core-dump
 %{_sbindir}/katello-change-hostname
 %{_mandir}/man8/katello-change-hostname.8*
+%{_datarootdir}/katello/restore.rb
+%{_datarootdir}/katello/backup.rb
+%{_datarootdir}/katello/hostname-change.rb
+%{_datarootdir}/katello/helper.rb
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 %config(missingok) %{_sysconfdir}/cron.daily/katello-repository-publish-check
