@@ -26,6 +26,7 @@ Source9:    qpid-core-dump
 Source10:   katello-clean-empty-puppet-environments
 Source11:   katello-change-hostname
 Source12:   katello-repository-publish-check
+Source13:   katello-change-hostname.8.asciidoc
 
 BuildRequires: asciidoc
 BuildRequires: util-linux
@@ -73,7 +74,9 @@ Provides a package for managing application life-cycle for Linux systems.
 %build
 #man pages
 a2x -d manpage -f manpage %{SOURCE0}
+a2x -d manpage -f manpage %{SOURCE13}
 gzip -f9 %{_sourcedir}/katello-service.8
+gzip -f9 %{_sourcedir}/katello-change-hostname.8
 
 %install
 mkdir -p %{buildroot}/%{_mandir}/man8
@@ -103,6 +106,7 @@ install -m 644 %{SOURCE8} %{buildroot}/etc/bash_completion.d/katello-service
 
 # install man page
 install -m 644 %{_sourcedir}/katello-service.8.gz %{buildroot}/%{_mandir}/man8
+install -m 644 %{_sourcedir}/katello-change-hostname.8.gz %{buildroot}/%{_mandir}/man8
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -131,6 +135,7 @@ Common runtime components of %{name}
 %{_sbindir}/katello-restore
 %{_sbindir}/qpid-core-dump
 %{_sbindir}/katello-change-hostname
+%{_mandir}/man8/katello-change-hostname.8*
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-clean-empty-puppet-environments
 %config(missingok) %{_sysconfdir}/cron.weekly/katello-remove-orphans
 %config(missingok) %{_sysconfdir}/cron.daily/katello-repository-publish-check
