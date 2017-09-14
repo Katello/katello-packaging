@@ -8,8 +8,17 @@ require 'shellwords'
 
 raise 'Must run as root' unless Process.uid == 0
 
+def run_cmd(command, exit_codes=[0], message=nil)
+  result = `#{command}`
+  unless exit_codes.include?($?.exitstatus)
+    STDOUT.puts message if message
+    fail_with_message("Failed '#{command}' with exit code #{$?.exitstatus}")
+  end
+  result
+end
+
 def disable_system_check_option?
-  katello_installer_rpm = `rpm -qa | grep katello-installer`
+  katello_installer_rpm = run_cmd("rpm -qa | grep katello-installer")
   katello_installer_version = katello_installer_rpm[/(\d+\.)(\d+\.)(\d+)/]
   Gem::Version.new(katello_installer_version) >= Gem::Version.new("3.2.0")
 end
@@ -87,14 +96,6 @@ DEFAULT_PROGRAM =  get_default_program
 end
 @opt_parser.parse!
 
-def hammer_ping_success
-  return true if @foreman_proxy_content
-  hammer_ping = `hammer ping`
-  success = $?.success?
-  service_failed = hammer_ping.include? "FAIL"
-  success && !service_failed
-end
-
 def timestamp
   Time.now.strftime("%Y%m%d%H%M")
 end
@@ -166,13 +167,13 @@ def precheck
                       "No changes have been made to your system.");
   end
 
-  STDOUT.puts "\nChecking overall health of server"
-  unless hammer_ping_success
-    fail_with_message("There is a problem with the server, please check 'hammer ping'")
+  unless @foreman_proxy_content
+    STDOUT.puts "\nChecking overall health of server"
+    run_cmd("hammer ping", [0], "There is a problem with the server, please check 'hammer ping'")
   end
 
   STDOUT.puts "\nChecking credentials"
-  hammer_cmd("capsule list")
+  hammer_cmd("capsule list") unless @foreman_proxy_content
   unless $?.success?
     fail_with_message("There is a problem with the credentials, please retry")
   end
@@ -236,8 +237,8 @@ def warning_message
                "changing your hostname? \n [y/n]:")
 end
 
-def hammer_cmd(cmd)
-  `hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}`
+def hammer_cmd(cmd, exit_codes=[0])
+  run_cmd("hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}", exit_codes)
 end
 
 precheck
@@ -256,13 +257,14 @@ unless @foreman_proxy_content
   STDOUT.puts "\nUpdating default #{@proxy}"
   default_capsule_id = hammer_cmd("capsule list | grep #{old_hostname} | awk '{ print $1 }'").chomp
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
-  hammer_cmd("capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null")
+  # For the same reason, we accept exit code 65 here.
+  hammer_cmd("capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null", [0, 65])
 end
 
 STDOUT.puts "updating hostname in /etc/hostname"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname`
+run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname")
 STDOUT.puts "setting hostname"
-`hostnamectl set-hostname #{@new_hostname}`
+run_cmd("hostnamectl set-hostname #{@new_hostname}")
 
 # override environment variable (won't be updated until bash login)
 ENV['HOSTNAME'] = @new_hostname
@@ -273,43 +275,39 @@ if get_hostname != @new_hostname
 end
 
 STDOUT.puts "stopping services"
-`katello-service stop`
+run_cmd("katello-service stop")
 
 public_dir = "/var/www/html/pub"
 public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
 STDOUT.puts "deleting old certs"
 
-`
-rm -rf /etc/pki/katello-certs-tools{,.bak}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_cert"]}
-rm -rf #{scenario_answers["foreman_proxy"]["ssl_key"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_cert"]}
-rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_key"]}
-rm -rf /etc/pki/katello/nssdb
-mkdir #{public_backup_dir}
-mv #{public_dir}/*.rpm #{public_backup_dir}
-`
+run_cmd("rm -rf /etc/pki/katello-certs-tools{,.bak}")
+run_cmd("rm -rf #{scenario_answers["foreman_proxy"]["ssl_cert"]}")
+run_cmd("rm -rf #{scenario_answers["foreman_proxy"]["ssl_key"]}")
+run_cmd("rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_cert"]}")
+run_cmd("rm -rf #{scenario_answers["foreman_proxy"]["foreman_ssl_key"]}")
+run_cmd("rm -rf /etc/pki/katello/nssdb")
+run_cmd("mkdir #{public_backup_dir}")
+run_cmd("mv #{public_dir}/*.rpm #{public_backup_dir}")
 
 unless @foreman_proxy_content
-  `
-  rm -rf /etc/candlepin/certs/amqp{,.bak}
-  rm -f /etc/tomcat/keystore
-  rm -rf /etc/foreman/old-certs
-  rm -f /etc/pki/katello/keystore
-  rm -rf #{scenario_answers["foreman"]["client_ssl_cert"]}
-  rm -rf #{scenario_answers["foreman"]["client_ssl_key"]}
-  `
+  run_cmd("rm -rf /etc/candlepin/certs/amqp{,.bak}")
+  run_cmd("rm -f /etc/tomcat/keystore")
+  run_cmd("rm -rf /etc/foreman/old-certs")
+  run_cmd("rm -f /etc/pki/katello/keystore")
+  run_cmd("rm -rf #{scenario_answers["foreman"]["client_ssl_cert"]}")
+  run_cmd("rm -rf #{scenario_answers["foreman"]["client_ssl_key"]}")
 end
 
 STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
 STDOUT.puts "updating hostname in /etc/hosts"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hosts`
+run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hosts")
 
 STDOUT.puts "updating hostname in foreman installer scenarios"
-`sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml`
+run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml")
 
 STDOUT.puts "removing last_scenario.yml file"
-`rm -rf /etc/foreman-installer/scenarios.d/last_scenario.yaml`
+run_cmd("rm -rf /etc/foreman-installer/scenarios.d/last_scenario.yaml")
 
 STDOUT.puts "re-running the installer"
 
@@ -322,13 +320,13 @@ end
 installer << " --disable-system-checks" if @options[:system_check]
 
 STDOUT.puts installer
-installer_output = `#{installer}`
+installer_output = run_cmd("#{installer}")
 installer_success = $?.success?
 STDOUT.puts installer_output
 
 STDOUT.puts "Restarting puppet services"
-`/sbin/service puppet restart`
-`katello-service restart --only puppetserver`
+run_cmd("/sbin/service puppet restart")
+run_cmd("katello-service restart --only puppetserver")
 
 if installer_success
   successful_hostname_change_message
