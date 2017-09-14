@@ -4,6 +4,7 @@ require "socket"
 require "optparse"
 require "rubygems"
 require 'yaml'
+require 'shellwords'
 
 raise 'Must run as root' unless Process.uid == 0
 
@@ -229,6 +230,10 @@ def warning_message
                "changing your hostname? \n [y/n]:")
 end
 
+def hammer_cmd(cmd)
+  `hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}`
+end
+
 precheck
 
 if @foreman_proxy_content
@@ -243,9 +248,9 @@ scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options
 
 unless @foreman_proxy_content
   STDOUT.puts "\nUpdating default #{@proxy}"
-  default_capsule_id = `hammer -u #{@options[:username]} -p #{@options[:password]} capsule list | grep #{old_hostname} | awk '{ print $1 }'`[0]
+  default_capsule_id = hammer_cmd("capsule list | grep #{old_hostname} | awk '{ print $1 }'")[0]
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
-  `hammer -u #{@options[:username]} -p #{@options[:password]} capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null`
+  hammer_cmd("capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null")
 end
 
 STDOUT.puts "updating hostname in /etc/hostname"
