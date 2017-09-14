@@ -248,7 +248,7 @@ scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options
 
 unless @foreman_proxy_content
   STDOUT.puts "\nUpdating default #{@proxy}"
-  default_capsule_id = hammer_cmd("capsule list | grep #{old_hostname} | awk '{ print $1 }'")[0]
+  default_capsule_id = hammer_cmd("capsule list | grep #{old_hostname} | awk '{ print $1 }'").chomp
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
   hammer_cmd("capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null")
 end
