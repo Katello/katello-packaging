@@ -171,6 +171,12 @@ def precheck
     fail_with_message("There is a problem with the server, please check 'hammer ping'")
   end
 
+  STDOUT.puts "\nChecking credentials"
+  hammer_cmd("capsule list")
+  unless $?.success?
+    fail_with_message("There is a problem with the credentials, please retry")
+  end
+
   if @options[:confirm]
     response = true
   else
