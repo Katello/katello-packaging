@@ -29,8 +29,7 @@ module KatelloUtilities
     end
 
     def disable_system_check_option?
-      katello_installer_rpm = `rpm -qa | grep katello-installer`
-      katello_installer_version = katello_installer_rpm[/(\d+\.)(\d+\.)(\d+)/]
+      katello_installer_version = run_cmd("rpm -q --queryformat '%{RPMTAG_VERSION}' katello-installer-base")
       Gem::Version.new(katello_installer_version) >= Gem::Version.new("3.2.0")
     end
 
