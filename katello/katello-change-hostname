@@ -170,12 +170,8 @@ def precheck
   unless @foreman_proxy_content
     STDOUT.puts "\nChecking overall health of server"
     run_cmd("hammer ping", [0], "There is a problem with the server, please check 'hammer ping'")
-  end
-
-  STDOUT.puts "\nChecking credentials"
-  hammer_cmd("capsule list") unless @foreman_proxy_content
-  unless $?.success?
-    fail_with_message("There is a problem with the credentials, please retry")
+    STDOUT.puts "\nChecking credentials"
+    hammer_cmd("capsule list", [0], "There is a problem with the credentials, please retry")
   end
 
   if @options[:confirm]
@@ -237,8 +233,8 @@ def warning_message
                "changing your hostname? \n [y/n]:")
 end
 
-def hammer_cmd(cmd, exit_codes=[0])
-  run_cmd("hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}", exit_codes)
+def hammer_cmd(cmd, exit_codes=[0], message=nil)
+  run_cmd("hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}", exit_codes, message)
 end
 
 precheck
