@@ -11,6 +11,7 @@ raise 'Must run as root' unless Process.uid == 0
 def run_cmd(command, exit_codes=[0], message=nil)
   result = `#{command}`
   unless exit_codes.include?($?.exitstatus)
+    STDOUT.puts result
     STDOUT.puts message if message
     fail_with_message("Failed '#{command}' with exit code #{$?.exitstatus}")
   end
