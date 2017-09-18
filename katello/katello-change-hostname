@@ -6,6 +6,7 @@ require "rubygems"
 require 'yaml'
 require 'shellwords'
 require "json"
+require "uri"
 
 raise 'Must run as root' unless Process.uid == 0
 
@@ -263,6 +264,15 @@ unless @foreman_proxy_content
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
   # For the same reason, we accept exit code 65 here.
   hammer_cmd("capsule update --id #{proxy_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null", [0, 65])
+
+  STDOUT.puts "Updating installation media paths"
+  old_media = JSON.parse(hammer_cmd("--output json medium list --search #{@old_hostname}"))
+  old_media.each do |medium|
+    new_path = URI.parse(medium['Path'])
+    new_path.host = @new_hostname
+    new_path = new_path.to_s
+    hammer_cmd("medium update --id #{medium['Id']} --path #{new_path}")
+  end
 end
 
 STDOUT.puts "updating hostname in /etc/hostname"
