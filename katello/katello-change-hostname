@@ -5,6 +5,7 @@ require "optparse"
 require "rubygems"
 require 'yaml'
 require 'shellwords'
+require "json"
 
 raise 'Must run as root' unless Process.uid == 0
 
@@ -237,6 +238,13 @@ def hammer_cmd(cmd, exit_codes=[0], message=nil)
   run_cmd("hammer -u #{@options[:username].shellescape} -p #{@options[:password].shellescape} #{cmd}", exit_codes, message)
 end
 
+def get_default_proxy_id
+  output = hammer_cmd("--output json capsule info --name #{@old_hostname}",
+                      [0], "Couldn't find default #{@proxy} id")
+  proxy = JSON.parse(output)
+  proxy["Id"]
+end
+
 precheck
 
 if @foreman_proxy_content
@@ -245,20 +253,20 @@ if @foreman_proxy_content
 end
 
 # Get the hostname from your system
-old_hostname = get_hostname
+@old_hostname = get_hostname
 
 scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
 
 unless @foreman_proxy_content
   STDOUT.puts "\nUpdating default #{@proxy}"
-  default_capsule_id = hammer_cmd("capsule list | grep #{old_hostname} | awk '{ print $1 }'").chomp
+  proxy_id = get_default_proxy_id
   # Incorrect error message is piped to /dev/null, can be removed when http://projects.theforeman.org/issues/18186 is fixed
   # For the same reason, we accept exit code 65 here.
-  hammer_cmd("capsule update --id #{default_capsule_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null", [0, 65])
+  hammer_cmd("capsule update --id #{proxy_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null", [0, 65])
 end
 
 STDOUT.puts "updating hostname in /etc/hostname"
-run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hostname")
+run_cmd("sed -i -e 's/#{@old_hostname}/#{@new_hostname}/g' /etc/hostname")
 STDOUT.puts "setting hostname"
 run_cmd("hostnamectl set-hostname #{@new_hostname}")
 
@@ -274,7 +282,7 @@ STDOUT.puts "stopping services"
 run_cmd("katello-service stop")
 
 public_dir = "/var/www/html/pub"
-public_backup_dir = "#{public_dir}/#{old_hostname}-#{timestamp}.backup"
+public_backup_dir = "#{public_dir}/#{@old_hostname}-#{timestamp}.backup"
 STDOUT.puts "deleting old certs"
 
 run_cmd("rm -rf /etc/pki/katello-certs-tools{,.bak}")
@@ -297,10 +305,10 @@ end
 
 STDOUT.puts "backed up #{public_dir} to #{public_backup_dir}"
 STDOUT.puts "updating hostname in /etc/hosts"
-run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/hosts")
+run_cmd("sed -i -e 's/#{@old_hostname}/#{@new_hostname}/g' /etc/hosts")
 
 STDOUT.puts "updating hostname in foreman installer scenarios"
-run_cmd("sed -i -e 's/#{old_hostname}/#{@new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml")
+run_cmd("sed -i -e 's/#{@old_hostname}/#{@new_hostname}/g' /etc/foreman-installer/scenarios.d/*.yaml")
 
 STDOUT.puts "removing last_scenario.yml file"
 run_cmd("rm -rf /etc/foreman-installer/scenarios.d/last_scenario.yaml")
