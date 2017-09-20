@@ -16,6 +16,12 @@ module KatelloUtilities
       system("rpm -q foreman")
     end
 
+    def fail_with_message(message, opt_parser=nil)
+      STDOUT.puts message
+      puts opt_parser if opt_parser
+      exit(false)
+    end
+
     def run_cmd(command, exit_codes=[0], message=nil)
       result = `#{command}`
       unless exit_codes.include?($?.exitstatus)
@@ -33,12 +39,6 @@ module KatelloUtilities
 
     def timestamp
       DateTime.now.strftime('%Y%m%d%H%M%S')
-    end
-
-    def fail_with_message(message, opt_parser=nil)
-      STDOUT.puts message
-      puts opt_parser if opt_parser
-      exit(false)
     end
   end
 end
