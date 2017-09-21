@@ -266,7 +266,7 @@ unless @foreman_proxy_content
   hammer_cmd("capsule update --id #{proxy_id} --url https://#{@new_hostname}:9090 --new-name #{@new_hostname} 2> /dev/null", [0, 65])
 
   STDOUT.puts "Updating installation media paths"
-  old_media = JSON.parse(hammer_cmd("--output json medium list --search #{@old_hostname}"))
+  old_media = JSON.parse(hammer_cmd("--output json medium list --search 'path ~ //#{@old_hostname}/'"))
   old_media.each do |medium|
     new_path = URI.parse(medium['Path'])
     new_path.host = @new_hostname
