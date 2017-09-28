@@ -1,5 +1,5 @@
 Name: katello-host-tools
-Version: 3.0.2
+Version: 3.1.0
 Release: 1%{?dist}
 Summary: A set of commands and yum plugins that support a Katello host
 Group:   Development/Languages
