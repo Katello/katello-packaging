@@ -172,6 +172,9 @@ exit 0
 %{_datadir}/rhsm-plugins/fqdn.*
 
 %changelog
+* Thu Sep 28 2017 Justin Sherrill <jsherril@redhat.com> 3.1.0-1
+- katello-host-tools 3.1.0 (jsherril@redhat.com)
+
 * Mon Aug 28 2017 Eric D. Helms <ericdhelms@gmail.com> 3.0.2-1
 - Release katello-host-tools 3.0.2 (ericdhelms@gmail.com)
 
