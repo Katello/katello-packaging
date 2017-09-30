@@ -188,6 +188,106 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Sat Sep 30 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.rc1
+- Fixes #20837: Use systemctl rather than service/chkconfig
+  (ewoud@kohlvanwijngaarden.nl)
+- Refs #20837: Fix typo (ewoud@kohlvanwijngaarden.nl)
+- Refs #20837: Add net-tools dependency (ewoud@kohlvanwijngaarden.nl)
+- Fixes #20984 - k-c-h print command output on error (jomitsch@redhat.com)
+- Fixes #20987 - Update installation media in KCH (jomitsch@redhat.com)
+- Fixes #20983 - update method of getting default capsule (jomitsch@redhat.com)
+- Fixes #20944 - kch don't check hammer creds on a proxy (jomitsch@redhat.com)
+- Fixes #20925 - k-change-hostname should check exit codes
+  (jomitsch@redhat.com)
+- Fixes #20924 - check credentials before doing any changes (evgeni@golov.de)
+- Fixes #20921 - use String.chomp, not slice to remove newlines
+  (evgeni@golov.de)
+- Fixes #20919 - use Shellwords.escape to escape hammer user/pass
+  (evgeni@golov.de)
+- Fixes #20805 - kchange-hostname fix optparser error (jomitsch@redhat.com)
+- Fixes #20799 - add valid fqdn check for kchange-hostname
+  (jomitsch@redhat.com)
+- Add relver, remove nightly (akofink@redhat.com)
+- katello-service: drop support for chkconfig (evgeni@golov.de)
+- Fixes #20632 - require pg_globals for katello-restore (jomitsch@redhat.com)
+- Fixes #20633 - kbackup error message displays incorrect file
+  (jomitsch@redhat.com)
+- fixes #20635 - cleans up error message handling for invalid args
+  (cfouant@redhat.com)
+- Fixes #20440 - Don't delete the CA in katello-change-hostname
+  (jomitsch@redhat.com)
+- Remove hammer_cli_import as a required install (ericdhelms@gmail.com)
+- Fixes #20463 - Remove RHEL6 support for hostname change (jomitsch@redhat.com)
+- Fixes #20382 - Require candlepin 2.0 (jsherril@redhat.com)
+- Fixes #20420,#20421 - add backup/restore/hostname-change to proxy
+  (jomitsch@redhat.com)
+- Fixes #20431 - ignore services in the static state, remove upstart
+  (ericdhelms@gmail.com)
+- Fixes #19281 - Move katello commands to sbin (jomitsch@redhat.com)
+- fixes #19638 - clean up/restore services if backup fails (cfouant@redhat.com)
+- Fixes #20322 - string interpolation issue in katello-restore
+  (jomitsch@redhat.com)
+- Refs #20277 - Fixing small typo in hostname change (jomitsch@redhat.com)
+- Fixes #20277 - Adds -y flag to katello-hostname-change (jomitsch@redhat.com)
+- fixes #18328, #20268 - adds interactivity & bypassing warnings
+  (cfouant@redhat.com)
+- fixes #19622 - adds error if backup directory missing (cfouant@redhat.com)
+- fixes #19743, #18358 - allows user to bypass subdir creation
+  (cfouant@redhat.com)
+- Fixes #17036 - Adding katello scripts for a foreman-proxy
+  (jomitsch@redhat.com)
+- Fixes #20020 - add cron job to check repo publish (jsherril@redhat.com)
+- fixes #18329 - adds LVM snapshots to backup (cfouant@redhat.com)
+- Fixes #19941 - make katello-remove remove all RPMs in one go
+  (egolov@redhat.com)
+- fixes #19673 - removes /var/www/pub from pulp_data.tar (cfouant@redhat.com)
+- Fixes #19499 - Convert metadata file to yml format This also adds a package
+  list to the metadata file, which will be helpful to users or scripts in
+  determining versions (jomitsch@redhat.com)
+- fixes #19453 - applies postgres group owner to whole backup path
+  (cfouant@redhat.com)
+- Fixes #19498 - call logger with -p daemon.info in katello-service
+  (evgeni@golov.de)
+- fixes #19446 - fixes incremental backup performing full backup
+  (cfouant@redhat.com)
+- Fixes #19263 - dont try and rm a mounted directory (seanokeeffe797@gmail.com)
+- Fixes #17060 - Addition to katello-debug.sh (ahumbe@redhat.com)
+- Fixes #19227 - katello-change-hostname health check This will check services
+  before running the hostname change. A `hammer ping` doesn't return a failing
+  exit code if a service is failing, so this makes use of grepping FAIL
+  (jomitsch@redhat.com)
+- Fixes #19216 - include puppetserver in katello-service
+  (Klaas-@users.noreply.github.com)
+- Fixes #19238 - Hostname change script doesn't return exit code on error
+  (jomitsch@redhat.com)
+- Fixes #19126 - collect katello-reverse-proxy_access_ssl.log
+  (lzap+git@redhat.com)
+- Fixes #19154, #19155 katello-backup and katello-remove Puppet 4 fixes
+  (seanokeeffe797@gmail.com)
+- Bump specs to 3.5.0 (ericdhelms@gmail.com)
+- Fixes #19054 - Use a timestamp without special characters in kbackup These
+  special characters can cause issues for programs, the timestamp will now read
+  20170328172811, allowing the files to still be sorted by date.
+  (jomitsch@redhat.com)
+- Fixes #18335 - add pg_dumpall -g to online-backup (riehecky@fnal.gov)
+- Fixes #18333: run_cmd takes exit status args (riehecky@fnal.gov)
+- Fixes #18270 - Restart puppet services after hostname change
+  (jomitsch@redhat.com)
+- Fixes #19018 - katello-service sends logger messages (lzap+git@redhat.com)
+- Fixes #18965 - exclude unnecessary services (lzap+git@redhat.com)
+- Fixes #18333 katello-backup returns 0 exit code even when failing
+  (riehecky@fnal.gov)
+- Fixes #18571 - Address the use of known directories in collecting all debug
+  data. (bkearney@redhat.com)
+- Run the tar compression in parallel (riehecky@fnal.gov)
+- fixes #18925 - Add schema to full backup if dbfiles are corrupted
+  (riehecky@fnal.gov)
+- Fixes #18242 - Omit katello-export directory in katello-backup
+  (jomitsch@redhat.com)
+- Refs #18403 - Regenerate ueber certs after hostname change Depends on
+  https://github.com/Katello/katello/pull/6680 (jomitsch@redhat.com)
+- Added timestamps to restore process (riehecky@fnal.gov)
+
 * Thu Mar 09 2017 Eric D Helms <ericdhelms@gmail.com> 3.4.0-1.nightly
 - fixes #18756 - adds proper error message to katello-backup --incremental
   failure (cfouant@redhat.com)
