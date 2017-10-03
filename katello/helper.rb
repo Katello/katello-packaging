@@ -12,6 +12,10 @@ module KatelloUtilities
       "This utility can't run on a non-katello system."
     end
 
+    def foreman_rpm_installed?
+      system("rpm -q foreman")
+    end
+
     def run_cmd(command, exit_codes=[0], message=nil)
       result = `#{command}`
       unless exit_codes.include?($?.exitstatus)

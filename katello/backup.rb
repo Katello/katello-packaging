@@ -382,7 +382,7 @@ module KatelloUtilities
       end
 
       puts "Starting backup: #{Time.now}"
-      @is_foreman_proxy_content = !run_cmd("rpm -qa | grep foreman-proxy-content", [0,1]).empty?
+      @is_foreman_proxy_content = !foreman_rpm_installed?
       @databases.delete 'pgsql' if @is_foreman_proxy_content
       create_directories(@dir.dup)
       validate_directory
