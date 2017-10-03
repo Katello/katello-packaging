@@ -20,7 +20,7 @@ module KatelloUtilities
 
       @confirmed = false
       @disable_system_checks = false
-      @is_foreman_proxy_content = !`rpm -qa | grep foreman-proxy-content`.empty?
+      @is_foreman_proxy_content = !foreman_rpm_installed?
       @skip_register = false
 
       setup_opt_parser
