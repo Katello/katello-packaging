@@ -30,7 +30,7 @@ URL:     http://www.katello.org
 Source0: https://rubygems.org/downloads/%{gem_name}-%{version}%{?prever}.gem
 
 Requires: katello-selinux
-Requires: foreman >= 1.11.0
+Requires: foreman >= 1.16.0
 Requires: foreman-postgresql
 Requires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 Requires: %{?scl_prefix}rubygem(bastion) >= 5.0.0
