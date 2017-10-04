@@ -28,10 +28,21 @@ module KatelloUtilities
       setup_opt_parser
     end
 
+    # do not use run_cmd() inside this method, to avoid a recursive loop
+    # as run_cmd() calls cleanup, and they will infinitely trigger one another
+    # rather, use system() call provided by ruby
     def cleanup(exitstatus=-1)
       puts "Cleaning up backup folder and starting any stopped services... "
       FileUtils.cd("/")
       FileUtils.rm_rf @dir unless @options[:no_subdir]
+      if @options[:snapshot]
+        @databases.each do |database|
+          mount_location = File.join(@mountdir, database)
+          system("umount #{mount_location}") if File.readlines('/proc/mounts').grep(/#{database}--snap/).any?
+          snapshot_location = get_snapshot_location(database)
+          system("lvremove #{snapshot_location} -f") unless snapshot_location.empty?
+        end
+      end
       `katello-service start #{@excluded}` unless @options[:online]
       puts "Done."
       exit(exitstatus)
@@ -143,7 +154,6 @@ module KatelloUtilities
         puts "Creating #{database} snapshot"
         lv_info = get_lv_info(database)
         run_cmd("lvcreate -n#{database}-snap -L#{@snapsize} -s #{lv_info[0]}")
-
         mount_location = File.join(@mountdir, database)
         FileUtils.mkdir_p mount_location
         puts "Mounting #{database} snapshot on #{mount_location}"
@@ -191,7 +201,7 @@ module KatelloUtilities
 
         snapshot_location = get_snapshot_location(database)
         puts "Removing snapshot #{snapshot_location}"
-        run_cmd("lvremove -f #{snapshot_location}")
+        run_cmd("lvremove #{snapshot_location} -f")
       end
     end
 
