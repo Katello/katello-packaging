@@ -13,9 +13,7 @@ module KatelloUtilities
     end
 
     def foreman_rpm_installed?
-      # using backticks here so there is no output
-      `rpm -q foreman`
-      $?.success?
+      system("rpm -q foreman > /dev/null")
     end
 
     def disable_system_check_option?
