@@ -185,6 +185,10 @@ Provides a federation of katello services
 %{_sbindir}/katello-restore
 %{_sbindir}/katello-change-hostname
 %{_sbindir}/katello-remove
+%{_datarootdir}/katello/restore.rb
+%{_datarootdir}/katello/backup.rb
+%{_datarootdir}/katello/hostname-change.rb
+%{_datarootdir}/katello/helper.rb
 
 # ------ Service ----------------
 %package service
