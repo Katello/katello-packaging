@@ -13,7 +13,9 @@ module KatelloUtilities
     end
 
     def foreman_rpm_installed?
-      system("rpm -q foreman")
+      # using backticks here so there is no output
+      `rpm -q foreman`
+      $?.success?
     end
 
     def run_cmd(command, exit_codes=[0], message=nil)
