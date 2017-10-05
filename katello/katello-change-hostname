@@ -9,7 +9,14 @@ end
 
 require File.join(UTILS_PATH, 'hostname-change.rb')
 
-hostname_change = KatelloUtilities::HostnameChange.new("Foreman Proxy", "Foreman Proxies", "foreman-proxy-content")
+options = {
+ proxy: "Foreman Proxy",
+ plural_proxy: "Foreman Proxies",
+ proxy_hyphenated: "foreman-proxy-content",
+ command_prefix: "katello"
+}
+
+hostname_change = KatelloUtilities::HostnameChange.new(options)
 
 if hostname_change.accepted_scenarios.include? hostname_change.last_scenario
   hostname_change.run

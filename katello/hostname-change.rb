@@ -11,17 +11,18 @@ module KatelloUtilities
   class HostnameChange
     include ::KatelloUtilities::Helper
 
-    def initialize(proxy, plural_proxy, proxy_hyphenated, program=nil, scenario=nil, accepted_scenarios=nil)
+    def initialize(init_options)
       @default_program = self.get_default_program
-      @proxy = proxy
-      @plural_proxy = plural_proxy
-      @proxy_hyphenated = proxy_hyphenated
-      @accepted_scenarios = accepted_scenarios
-
+      @proxy = init_options.fetch(:proxy)
+      @plural_proxy = init_options.fetch(:plural_proxy)
+      @proxy_hyphenated = init_options.fetch(:proxy_hyphenated)
+      @command_prefix = init_options.fetch(:command_prefix)
+      @accepted_scenarios = init_options.fetch(:accepted_scenarios, nil)
       @last_scenario = self.last_scenario
+
       @options = {}
-      @options[:program] = program || @default_program
-      @options[:scenario] = scenario || @last_scenario
+      @options[:program] = init_options.fetch(:program, @default_program)
+      @options[:scenario] = init_options.fetch(:scenario, @last_scenario)
       @foreman_proxy_content = @options[:scenario] == @proxy_hyphenated
 
       setup_opt_parser
@@ -77,7 +78,7 @@ module KatelloUtilities
     def get_fpc_answers
       register_in_foreman = false
       certs_tar = @options[:certs_tar]
-      " --foreman-proxy-register-in-foreman #{register_in_foreman} --#{@proxy_hyphenated}-certs-tar #{certs_tar}"
+      " --foreman-proxy-register-in-foreman #{register_in_foreman} --foreman-proxy-content-certs-tar #{certs_tar}"
     end
 
     def precheck
@@ -179,10 +180,10 @@ module KatelloUtilities
 
     def setup_opt_parser
       @opt_parser = OptionParser.new do |opt|
-        opt.banner = "usage: katello-change-hostname hostname [options]"
+        opt.banner = "usage: #{@command_prefix}-change-hostname hostname [options]"
         opt.separator  ""
         opt.separator  "example:"
-        opt.separator  " katello-change-hostname foo.example.com -u admin -p changeme"
+        opt.separator  "#{@command_prefix}-change-hostname foo.example.com -u admin -p changeme"
         opt.separator  ""
         opt.separator  "options"
 
