@@ -12,6 +12,17 @@ module KatelloUtilities
       "This utility can't run on a non-katello system."
     end
 
+    def foreman_rpm_installed?
+      # using backticks here so there is no output
+      `rpm -q foreman`
+      $?.success?
+    end
+
+    def disable_system_check_option?
+      katello_installer_version = run_cmd("rpm -q --queryformat '%{RPMTAG_VERSION}' katello-installer-base")
+      Gem::Version.new(katello_installer_version) >= Gem::Version.new("3.2.0")
+    end
+
     def run_cmd(command, exit_codes=[0], message=nil)
       result = `#{command}`
       unless exit_codes.include?($?.exitstatus)
