@@ -22,15 +22,9 @@ module KatelloUtilities
       @options = {}
       @options[:program] = program || @default_program
       @options[:scenario] = scenario || @last_scenario
-      @options[:system_check] = false
       @foreman_proxy_content = @options[:scenario] == @proxy_hyphenated
 
       setup_opt_parser
-    end
-
-    def disable_system_check_option?
-      katello_installer_version = run_cmd("rpm -q --queryformat '%{RPMTAG_VERSION}' katello-installer-base")
-      Gem::Version.new(katello_installer_version) >= Gem::Version.new("3.2.0")
     end
 
     def get_default_program
@@ -208,12 +202,6 @@ module KatelloUtilities
           @options[:scenario] = scenario
         end
 
-        if self.disable_system_check_option?
-          opt.on("-d","--disable-system-checks","runs the installer with --disable-system-checks") do |system_check|
-            @options[:system_check] = true
-          end
-        end
-
         opt.on("-y", "--assumeyes", "answer yes for all questions") do |confirm|
           @options[:confirm] = confirm
         end
@@ -322,7 +310,10 @@ module KatelloUtilities
       else
         installer << " --certs-regenerate=true --foreman-proxy-register-in-foreman true"
       end
-      installer << " --disable-system-checks" if @options[:system_check]
+      # always disable system checks to avoid unnecessary errors. The installer should have
+      # already ran since this is to be run on an existing system and installer checks would
+      # have already been skipped
+      installer << " --disable-system-checks" if disable_system_check_option?
 
       STDOUT.puts installer
       installer_output = self.run_cmd("#{installer}")
