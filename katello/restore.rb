@@ -19,7 +19,6 @@ module KatelloUtilities
       @program = program
 
       @confirmed = false
-      @disable_system_checks = false
       @is_foreman_proxy_content = !foreman_rpm_installed?
       @skip_register = false
 
@@ -32,10 +31,6 @@ module KatelloUtilities
 
         opts.on("-y", "--assumeyes", "Answer yes for all questions") do
           @confirmed = true
-        end
-
-        opts.on("-d","--disable-system-checks","runs the installer with --disable-system-checks") do
-          @disable_system_checks = true
         end
       end
       @optparse
@@ -72,7 +67,11 @@ module KatelloUtilities
       else
         installer << " --scenario #{@program}"
       end
-      installer << " --disable-system-checks" if @disable_system_checks
+
+      # always disable system checks to avoid unnecessary errors. The installer should have
+      # already ran since this is to be run on an existing system and installer checks would
+      # have already been skipped
+      installer << " --disable-system-checks" if disable_system_check_option?
       puts installer
       installer_output = run_cmd(installer, [0,6])
       puts installer_output
