@@ -125,7 +125,7 @@ add_cmd "ps -efLm" "ps-elfm"
 add_cmd "rpm -qa | grep qpid" "qpid-rpm-qa"
 
 add_cmd "mongo pulp_database --eval \"db.reserved_resources.find().pretty().shellPrint()\"" "mongo-reserved_resources"
-add_cmd "mongo pulp_database --eval \"db.task_status.find().pretty().shellPrint()\"" "mongo-task_status"
+add_cmd "mongo pulp_database --eval \"DBQuery.shellBatchSize = ${FOREMAN_DEBUG_MONGOTASKS:-200};; db.task_status.find().sort({finish_time: -1}).pretty().shellPrint()\"" "mongo-task_status"
 
 TEMP_DIR=`mktemp -d`
 cleanup() {
