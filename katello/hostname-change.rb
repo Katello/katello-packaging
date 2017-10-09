@@ -235,7 +235,7 @@ module KatelloUtilities
       # Get the hostname from your system
       @old_hostname = self.get_hostname
 
-      scenario_answers = YAML.load_file("/etc/foreman-installer/scenarios.d/#{@options[:scenario]}-answers.yaml")
+      scenario_answers = load_scenario_answers(@options[:scenario])
 
       unless @foreman_proxy_content
         STDOUT.puts "\nUpdating default #{@proxy}"
