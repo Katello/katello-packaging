@@ -16,6 +16,10 @@ module KatelloUtilities
       system("rpm -q foreman > /dev/null")
     end
 
+    def load_scenario_answers(scenario)
+      YAML.load_file("/etc/foreman-installer/scenarios.d/#{scenario}-answers.yaml")
+    end
+
     def disable_system_check_option?
       katello_installer_version = run_cmd("rpm -q --queryformat '%{RPMTAG_VERSION}' katello-installer-base")
       Gem::Version.new(katello_installer_version) >= Gem::Version.new("3.2.0")

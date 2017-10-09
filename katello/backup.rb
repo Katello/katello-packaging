@@ -19,6 +19,7 @@ module KatelloUtilities
       @dir = nil
       @databases = @databases.dup
       @accepted_scenarios = accepted_scenarios
+      @last_scenario = self.last_scenario
 
       # keep as variables for easy backporting
       @foreman_proxy_content = foreman_proxy_content
@@ -78,6 +79,8 @@ module KatelloUtilities
         '/var/lib/puppet/ssl'
       ]
 
+      scenario_answers = load_scenario_answers(@last_scenario)
+
       katello_configs = [
         "/etc/candlepin",
         "/etc/foreman",
@@ -85,6 +88,10 @@ module KatelloUtilities
         "/etc/sysconfig/tomcat*",
         "/etc/tomcat*",
         "/var/lib/candlepin",
+        scenario_answers["certs"]["server_cert"],
+        scenario_answers["certs"]["server_key"],
+        scenario_answers["certs"]["server_cert_req"],
+        scenario_answers["certs"]["server_ca_cert"]
       ]
 
       if @is_foreman_proxy_content
