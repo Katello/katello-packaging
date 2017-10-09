@@ -49,6 +49,9 @@ cp bootstrap.py %{buildroot}%{_var}/www/html/pub/bootstrap.py
 %{_var}/www/html/pub/bootstrap.py
 
 %changelog
+* Mon Oct 09 2017 Evgeni Golov 1.4.2-1
+- Release katello-client-bootstrap 1.4.2 (#550) (evgeni@golov.de)
+
 * Wed Aug 30 2017 Eric D. Helms <ericdhelms@gmail.com> 1.4.1-1
 - Release katello-client-bootstrap 1.4.1 (evgeni@golov.de)
 
