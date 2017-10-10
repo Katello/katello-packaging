@@ -45,5 +45,20 @@ module KatelloUtilities
     def pg_dump_command(config, dump_file)
       "PGPASSWORD='#{config[:password]}' pg_dump -U #{config[:username]} -h #{config[:host]} -p #{config[:port]} -Fc #{config[:database]} > #{dump_file}"
     end
+
+    def pg_sql_statement(config, statement)
+      pg_command(config, 'psql', '-t -c "' + statement + '"')
+    end
+
+    # WARNING: deletes all the data from a dabase. No warnings. No confirmations.
+    def empty_database!(config)
+      generate_delete_statements = pg_sql_statement(config, %q(
+        select string_agg('drop table if exists \"' || tablename || '\" cascade;', '')
+        from pg_tables
+        where schemaname = 'public';
+      ))
+      delete_statements = `#{generate_delete_statements}`
+      system(pg_sql_statement(config, delete_statements)) if delete_statements
+    end
   end
 end
