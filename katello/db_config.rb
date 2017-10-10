@@ -38,12 +38,16 @@ module KatelloUtilities
       remote_db?(foreman) || remote_db?(candlepin)
     end
 
+    def pg_command_base(config, command, args)
+      "PGPASSWORD='#{config[:password]}' #{command} -U #{config[:username]} -h #{config[:host]} -p #{config[:port]} #{args}"
+    end
+
     def pg_command(config, command, args)
-      "PGPASSWORD='#{config[:password]}' #{command} -U #{config[:username]} -h #{config[:host]} -p #{config[:port]} -d #{config[:database]} #{args}"
+      pg_command_base(config, command, "-d #{config[:database]} #{args}")
     end
 
     def pg_dump_command(config, dump_file)
-      "PGPASSWORD='#{config[:password]}' pg_dump -U #{config[:username]} -h #{config[:host]} -p #{config[:port]} -Fc #{config[:database]} > #{dump_file}"
+      pg_command_base(config, 'pg_dump', "-Fc #{config[:database]} > #{dump_file}")
     end
 
     def pg_sql_statement(config, statement)
