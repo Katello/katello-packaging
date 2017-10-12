@@ -21,8 +21,6 @@ module KatelloUtilities
           :database => answers['katello']['candlepin_db_name'] || 'candlepin',
           :host => answers['katello']['candlepin_db_host'] || 'localhost',
           :port => answers['katello']['candlepin_db_port'] || '5432',
-          :ssl => answers['katello']['candlepin_ssl'] || false,
-          :ssl_verify => answers['katello']['candlepin_ssl_verify'] || false
       }
     end
 
