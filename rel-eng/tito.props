@@ -12,15 +12,15 @@ tag_suffix = .fm1_16
 [builder]
 fetch_strategy = custom.ForemanSourceStrategy
 
-[katello-nightly-rhel5]
+[katello-3.5-rhel5]
 disttag = .el5
 whitelist = katello-repos katello-agent
 
-[katello-nightly-rhel6]
+[katello-3.5-rhel6]
 disttag = .el6
 whitelist = katello-repos katello-agent
 
-[katello-nightly-rhel7]
+[katello-3.5-rhel7]
 disttag = .el7
 scl = tfm
 blacklist = rubygem-jenkins_api_client
@@ -28,7 +28,7 @@ blacklist = rubygem-jenkins_api_client
   rubygem-terminal-table
   python-urllib3
 
-[katello-thirdparty-rhel7]
+[katello-thirdparty-3.5-rhel7]
 disttag = .el7
 scl = tfm
 whitelist = rubygem-jenkins_api_client
@@ -36,11 +36,11 @@ whitelist = rubygem-jenkins_api_client
   rubygem-terminal-table
   python-urllib3
 
-[katello-nightly-fedora24]
+[katello-3.5-fedora24]
 disttag = .fc24
 whitelist = katello-repos katello-agent
 
-[katello-nightly-fedora25]
+[katello-3.5-fedora25]
 disttag = .fc25
 whitelist = katello-repos katello-agent
 
