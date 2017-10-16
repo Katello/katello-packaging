@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # check if production install
-if __FILE__.start_with?('/sbin/')
+if __FILE__.start_with?('/sbin/') || __FILE__.start_with?('/usr/sbin/')
   UTILS_PATH='/usr/share/katello'
 else
   UTILS_PATH=File.expand_path('..', __FILE__)
