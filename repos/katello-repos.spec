@@ -2,7 +2,7 @@
 
 Name:           katello-repos
 Version:        3.5.0
-Release:        1%{?prever}%{?dist}
+Release:        2%{?prever}%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -76,6 +76,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Thu Oct 19 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-2.rc1
+- Repos have wrong version for releases (ericdhelms@gmail.com)
+
 * Sat Sep 30 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.rc1
 - Add relver, remove nightly (akofink@redhat.com)
 - Fixes #20298: Remove katello-repos' ruby build dependency
