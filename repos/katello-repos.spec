@@ -55,7 +55,7 @@ install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/yum.repos.d/
 
 install -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
-REPO_VERSION=$(python -c "print 'nightly' if 'nightly' in '%{release}' else '.'.join('%{release}'.split('.', 2)[:2])")
+REPO_VERSION=$(python -c "print 'nightly' if 'nightly' in '%{release}' else '.'.join('%{version}'.split('.', 2)[:2])")
 REPO_NAME=$(python -c  "print '${REPO_VERSION}'.title()")
 
 for repofile in %{buildroot}%{_sysconfdir}/yum.repos.d/*.repo; do
