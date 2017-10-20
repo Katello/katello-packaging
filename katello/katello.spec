@@ -212,6 +212,24 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri Oct 20 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.rc2
+- Bump to RC2 (akofink@redhat.com)
+- Fixes #21348 - check path includes sbin in katello-* scripts
+  (jomitsch@redhat.com)
+- fixes #21270 - custom certificates added to backup (cfouant@redhat.com)
+- Fixes #21029 - define fail_with_message before run_cmd (evgeni@golov.de)
+- Fixes #21221 - disable system checks in katello-* scripts
+  (jomitsch@redhat.com)
+- Fixes #20985 - improve how k-c-h detects the k-installer version
+  (evgeni@golov.de)
+- Refs #20821 - add utility helper files to fpc installs (jomitsch@redhat.com)
+- Fixes #20821 - Separate katello-* utilities into classes
+  (jomitsch@redhat.com)
+- fixes #20650 - validates postgres has write access to backup dir
+  (cfouant@redhat.com)
+- Fixes #20830 - add man page for katello-change-hostname (jomitsch@redhat.com)
+- Fixes #21056 - find old hostname only in host of media path (evgeni@golov.de)
+
 * Sat Sep 30 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.rc1
 - Fixes #20837: Use systemctl rather than service/chkconfig
   (ewoud@kohlvanwijngaarden.nl)
