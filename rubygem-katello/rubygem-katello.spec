@@ -152,6 +152,11 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Fri Oct 20 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-0.1.rc2
+- Bump bastion requires in katello (ericdhelms@gmail.com)
+- Bump to RC2 (akofink@redhat.com)
+- Update rubygem-katello spec to foreman 1.16 (akofink@redhat.com)
+
 * Sat Sep 30 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-0.1.rc1
 - Add katello-3.5.0.rc1 gem (akofink@redhat.com)
 - Add relver, remove nightly (akofink@redhat.com)
