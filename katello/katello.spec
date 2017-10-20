@@ -4,7 +4,7 @@
 %global homedir %{_datarootdir}/%{name}
 %global confdir common
 
-%global prever .rc1
+%global prever .rc2
 
 Name:       katello
 Version:    3.5.0

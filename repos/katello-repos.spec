@@ -1,4 +1,4 @@
-%global prever .rc1
+%global prever .rc2
 
 Name:           katello-repos
 Version:        3.5.0
