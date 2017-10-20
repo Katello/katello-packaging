@@ -76,6 +76,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Fri Oct 20 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-2.rc2
+- Bump to RC2 (akofink@redhat.com)
+
 * Thu Oct 19 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-2.rc1
 - Repos have wrong version for releases (ericdhelms@gmail.com)
 
