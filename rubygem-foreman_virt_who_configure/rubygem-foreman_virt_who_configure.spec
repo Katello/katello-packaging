@@ -6,7 +6,7 @@
 
 Name: %{?scl_prefix}rubygem-%{gem_name}
 Version: 0.1.8
-Release: 1%{?foremandist}%{?dist}
+Release: 2%{?foremandist}%{?dist}
 Summary: A plugin to make virt-who configuration easy
 Group: Applications/Systems
 License: GPLv3
@@ -55,7 +55,7 @@ cp -pa .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 %foreman_bundlerd_file
-%foreman_precompile_plugin -s
+%foreman_precompile_plugin -a -s
 
 %files
 %dir %{gem_instdir}
@@ -65,6 +65,8 @@ cp -pa .%{gem_dir}/* \
 %{gem_instdir}/db
 %{gem_libdir}
 %{gem_instdir}/locale
+%foreman_apipie_cache_foreman
+%foreman_apipie_cache_plugin
 %exclude %{gem_cache}
 %{gem_spec}
 %{foreman_bundlerd_plugin}
