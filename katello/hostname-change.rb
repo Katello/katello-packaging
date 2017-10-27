@@ -140,7 +140,7 @@ module KatelloUtilities
 
   On all #{@plural_proxy}, you will need to re-run the #{@options[:program]}-installer with this command:
 
-  #{@options[:program]}-installer --#{@proxy_hyphenated}-parent-fqdn #{@new_hostname} \\
+  #{@options[:program]}-installer --foreman-proxy-content-parent-fqdn #{@new_hostname} \\
                                   --foreman-proxy-foreman-base-url  https://#{@new_hostname} \\
                                   --foreman-proxy-trusted-hosts #{@new_hostname}
 
