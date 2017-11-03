@@ -33,6 +33,9 @@ add_files /etc/foreman-installer/*
 add_cmd "find /root/ssl-build -ls | sort -k 11" "katello_ssl_build_dir"
 add_cmd "find /etc/pki -ls | sort -k 11" "katello_pki_dir"
 
+# Installation and upgrade times
+add_cmd "egrep '(katello|satellite)' /var/log/yum.log" "yum_install_upgrade_log"
+
 # Katello
 add_files /etc/pulp/server/plugins.d/*
 add_files /etc/foreman/plugins/katello.yaml
@@ -49,10 +52,10 @@ add_files /var/log/candlepin/candlepin*.log*
 add_files /var/log/candlepin/cpdb*.log*
 add_files /var/log/candlepin/cpinit*.log*
 add_files /var/log/candlepin/error*.log*
-add_files /var/log/tomcat*/catalina*.log*
-add_files /var/log/tomcat*/host-manager*.log*
-add_files /var/log/tomcat*/localhost*.log*
-add_files /var/log/tomcat*/manager*.log*
+add_files /var/log/tomcat*/catalina*.{log,out}
+add_files /var/log/tomcat*/host-manager*.log
+add_files /var/log/tomcat*/localhost*.log
+add_files /var/log/tomcat*/manager*.log
 add_files /etc/candlepin/candlepin.conf
 add_files /etc/tomcat*/server.xml
 
