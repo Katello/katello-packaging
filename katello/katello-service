@@ -86,11 +86,13 @@ def manage_services(action)
     end
   end
 
+  SERVICES.keys.each do |se|
+    status = failures.include?(se) ? "FAIL" : " OK "
+    printf "Service %-40s [ %s ]\n", se, status
+  end
   if failures.empty?
-    puts "Success!"
     `logger -t #{$0} -p daemon.info '*** #{action} finished successfuly ***'`
   else
-    puts "Some services failed to #{action}: #{failures.join(',')}"
     `logger -t #{$0} -p daemon.warning '*** #{action} failed: #{failures.join(',')} ***'`
     exit 1
   end
