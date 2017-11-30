@@ -2,11 +2,9 @@
 %undefine scl_prefix
 %global scl_ruby /usr/bin/ruby
 
-%global prever .rc2
-
 Name:    katello-installer-base
 Version: 3.5.0
-Release: 1%{?prever}%{?dist}
+Release: 2%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
 License: GPLv3+ and ASL 2.0
@@ -16,8 +14,10 @@ Source0: https://fedorapeople.org/groups/katello/releases/source/tarball/katello
 BuildArch: noarch
 Obsoletes: katello-installer < 2.1.0
 
+Conflicts: puppet < 4
+
 Requires: foreman-installer >= 1.11.0
-Requires: %{?scl_prefix}puppet >= 3.4.0
+Requires: %{?scl_prefix}puppet >= 4
 Requires: katello-selinux
 Requires: openssl
 Requires: katello-certs-tools

@@ -1,8 +1,6 @@
-%global prever .rc2
-
 Name:           katello-repos
 Version:        3.5.0
-Release:        2%{?prever}%{?dist}
+Release:        3%{?prever}%{?dist}
 Summary:        Definition of yum repositories for Katello
 
 Group:          Applications/Internet
@@ -10,7 +8,7 @@ License:        GPLv2
 URL:            http://www.katello.org
 Source0:        katello.repo
 Source1:        katello-client.repo
-Source2:        RPM-GPG-KEY-katello-2015
+Source2:        RPM-GPG-KEY-katello-3.5
 Source3:        qpid-copr.repo
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
