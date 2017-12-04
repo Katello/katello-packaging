@@ -42,10 +42,10 @@ Requires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 Requires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
 Requires: %{?scl_prefix}rubygem(foreman-tasks) < 1.0.0
 Requires: %{?scl_prefix}rubygem(gettext_i18n_rails)
-Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
-Requires: %{?scl_prefix}rubygem(runcible) >= 2.0.0
+Requires: %{?scl_prefix}rubygem(apipie-rails) >= 0.5.4
+Requires: %{?scl_prefix}rubygem(runcible) >= 2.5.0
 Requires: %{?scl_prefix}rubygem(anemone)
-Requires: %{?scl_prefix}rubygem(deface) >= 1.0.0
+Requires: %{?scl_prefix}rubygem(deface) >= 1.0.2
 Requires: %{?scl_prefix}rubygem(deface) < 2.0.0
 Requires: %{?scl_prefix}rubygem(qpid_messaging)
 Requires: %{?scl_prefix_ruby}rubygem(json)
@@ -53,7 +53,7 @@ Requires: %{?scl_prefix_ruby}ruby(release)
 Requires: %{?scl_prefix_ruby}ruby(rubygems)
 
 BuildRequires: foreman-assets
-BuildRequires: foreman-plugin >= 1.11.0
+BuildRequires: foreman-plugin >= 1.16.0
 BuildRequires: %{?scl_prefix}rubygem(foreman_docker) >= 0.2.0
 BuildRequires: %{?scl_prefix}rubygem(angular-rails-templates) >= 0.0.4
 BuildRequires: %{?scl_prefix}rubygem(bastion) >= 6.0.0
@@ -61,10 +61,10 @@ BuildRequires: %{?scl_prefix}rubygem(bastion) < 7.0.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) >= 0.8.0
 BuildRequires: %{?scl_prefix}rubygem(foreman-tasks) < 1.0.0
 BuildRequires: %{?scl_prefix}rubygem(gettext_i18n_rails)
-BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.1.1
-BuildRequires: %{?scl_prefix}rubygem(runcible) >= 2.0.0
+BuildRequires: %{?scl_prefix}rubygem(apipie-rails) >= 0.5.4
+BuildRequires: %{?scl_prefix}rubygem(runcible) >= 2.5.0
 BuildRequires: %{?scl_prefix}rubygem(anemone)
-BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.0
+BuildRequires: %{?scl_prefix}rubygem(deface) >= 1.0.2
 BuildRequires: %{?scl_prefix}rubygem(deface) < 2.0.0
 BuildRequires: %{?scl_prefix}rubygem(qpid_messaging)
 BuildRequires: %{?scl_prefix_ror}rubygem(rails)
