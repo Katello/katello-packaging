@@ -144,6 +144,9 @@ ln -sf %{_datadir}/foreman-installer-katello/bin/katello-certs-check %{buildroot
 %doc README.*
 
 %changelog
+* Tue Dec 05 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-2
+- Bump Katello to 3.5.0 (akofink@redhat.com)
+
 * Fri Oct 20 2017 Eric D. Helms <ericdhelms@gmail.com> 3.5.0-1.rc2
 - Bump to RC2 (akofink@redhat.com)
 
