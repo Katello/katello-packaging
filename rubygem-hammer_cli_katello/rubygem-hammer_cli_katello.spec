@@ -74,6 +74,9 @@ cp -pa .%{gem_dir}/* \
 %doc %{gem_instdir}/test
 
 %changelog
+* Tue Dec 05 2017 Eric D. Helms <ericdhelms@gmail.com> 0.11.4-1
+- Bump Katello to 3.5.0 (akofink@redhat.com)
+
 * Thu Oct 19 2017 Eric D. Helms <ericdhelms@gmail.com> 0.11.3-1
 - Bump hammer-cli-katello to 0.11.3 (akofink@redhat.com)
 
