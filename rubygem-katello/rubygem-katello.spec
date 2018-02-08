@@ -151,6 +151,9 @@ cp -a .%{gem_dir}/* \
 %{gem_instdir}/lib/katello/repository_types/ostree.rb
 
 %changelog
+* Thu Feb 08 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.1.1-1
+- Bump rubygem-katello to 3.5.1.1 (akofink@redhat.com)
+
 * Fri Feb 02 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.1-1
 - Bump [rubygem]-katello to 3.5.1 (akofink@redhat.com)
 
