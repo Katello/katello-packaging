@@ -3,7 +3,7 @@
 %global scl_ruby /usr/bin/ruby
 
 Name:    katello-installer-base
-Version: 3.5.1
+Version: 3.5.1.1
 Release: 1%{?prever}%{?dist}
 Summary: Puppet-based installer for the Katello and Katello Capsule
 Group:   Applications/System
@@ -60,27 +60,6 @@ foreman-installer --scenario foreman-proxy-content --migrations-only > /dev/null
 %{_sbindir}/foreman-proxy-certs-generate
 %{_sbindir}/katello-certs-check
 
-%package -n foreman-installer-katello-devel
-Summary:   Installer scenario for Katello development setup from git
-Group:	   Applications/System
-Requires:  %{name} = %{version}-%{release}
-Requires:  foreman-installer-katello
-
-%description -n foreman-installer-katello-devel
-A set of tools for installation of a Katello development environment using
-Katello and Foreman from git.
-
-%posttrans -n foreman-installer-katello-devel
-mv /etc/katello-devel-installer/katello-devel-installer.yaml.rpmsave /etc/katello-devel-installer/katello-devel-installer.yaml >/dev/null 2>&1 || :
-mv /etc/katello-devel-installer/answers.katello-devel-installer.yaml.rpmsave /etc/katello-devel-installer/answers.katello-devel-installer.yaml >/dev/null 2>&1 || :
-foreman-installer --scenario katello-devel --migrations-only > /dev/null
-
-%files -n foreman-installer-katello-devel
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel-answers.yaml
-%config(noreplace) %attr(600, root, root) %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.yaml
-%dir %{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
-%{_sysconfdir}/foreman-installer/scenarios.d/katello-devel.migrations
-
 %description
 A set of tools for installation of Katello and Katello Capsule,
 including Foreman and Foreman Proxy.
@@ -94,7 +73,6 @@ sed -ri '1sX(/usr/bin/ruby|/usr/bin/env ruby)X%{scl_ruby}X' bin/*
 
 #configure the paths
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-answers.yaml config/katello.yaml bin/foreman-proxy-certs-generate
-sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/katello-devel.yaml
 sed -ri 'sX\./configX%{_sysconfdir}/foreman-installer/scenarios.dXg' config/foreman-proxy-content.yaml
 
 sed -ri 'sX  INSTALLER_DIR.*$X  INSTALLER_DIR = "%{_datadir}/katello-installer-base"Xg' bin/foreman-proxy-certs-generate
@@ -112,7 +90,6 @@ install -d -m0755 %{buildroot}%{_sysconfdir}/foreman-installer/scenarios.d
 
 install -d -m0755 %{buildroot}/%{_datadir}/katello-installer-base
 install -d -m0755 %{buildroot}/%{_datadir}/foreman-installer-katello/bin
-install -d -m0755 %{buildroot}/%{_datadir}/foreman-installer-katello-devel
 
 install -d -m0755 %{buildroot}/%{_sbindir}
 
@@ -122,13 +99,10 @@ cp -dpR bin/foreman-proxy-certs-generate %{buildroot}/%{_datadir}/foreman-instal
 cp -dpR bin/katello-certs-check %{buildroot}/%{_datadir}/foreman-installer-katello/bin/katello-certs-check
 
 cp -dpR config/katello-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/katello-devel-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/foreman-proxy-content-answers.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
 cp -dpR config/katello.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/katello.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/katello-devel.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
-cp -dpR config/katello-devel.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/foreman-proxy-content.yaml %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 cp -dpR config/foreman-proxy-content.migrations %{buildroot}/%{_sysconfdir}/foreman-installer/scenarios.d
 
