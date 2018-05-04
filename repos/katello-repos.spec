@@ -74,6 +74,9 @@ rm -rf %{buildroot}
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-katello
 
 %changelog
+* Fri May 04 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.2-1
+- Bump katello-repos to 3.5.2 (akofink@redhat.com)
+
 * Fri Feb 02 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.1-1
 - Bump katello-repos to 3.5.1 (akofink@redhat.com)
 
