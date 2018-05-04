@@ -210,6 +210,10 @@ Useful utilities for managing Katello services
 %{_sysconfdir}/bash_completion.d/katello-service
 
 %changelog
+* Fri May 04 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.2-1
+- Bump rubygem-katello to 3.5.2 (akofink@redhat.com)
+- Fixes #21795 - backup should exclude large directories (jomitsch@redhat.com)
+
 * Fri Feb 02 2018 Eric D. Helms <ericdhelms@gmail.com> 3.5.1-1
 - Bump [rubygem]-katello to 3.5.1 (akofink@redhat.com)
 
